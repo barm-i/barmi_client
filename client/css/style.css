@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -92,7 +92,7 @@ header {
   box-sizing: border-box;
 }
 #logo {
-  width: 150px; /* 로고의 크기 */
+  width: 150px; 
   height: auto;
   margin-bottom: 20px;
 }
@@ -107,8 +107,8 @@ main {
 button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #007bff;/*#007bff;*/ /* 버튼의 배경색 */
-  color: #fff;/* 버튼 텍스트의 색상 */
+  background-color: #007bff;
+  color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -119,7 +119,7 @@ button:hover {
   border-color: #646cff;
 }
 button:focus {
-  outline: none; /* 버튼에 포커스되었을 때의 테두리를 제거. */
+  outline: none; 
 }
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -133,4 +133,4 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
-}
+} */

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export class FormComponent {
-  status = true;
+  status;
   containerElement;
   titleElement;
   usernameElement;
@@ -11,16 +11,12 @@ export class FormComponent {
   buttonElement;
   textAreaElement;
 
-  loginBody = {
-    username: "yechan",
-    password: "1234",
-  };
-
   constructor() {
     this.containerElement = document.createElement("div");
   }
 
   setDomNode() {
+    this.status = true;
     this.containerElement = document.createElement("div");
     this.titleElement = document.createElement("p");
     this.usernameElement = document.createElement("label");
@@ -58,29 +54,70 @@ export class FormComponent {
     this.buttonElement.addEventListener("click", (event) => {
       event.preventDefault();
 
-      login();
-
-      //if (username === "1" && password === "1") {
-      //alert("You have successfully logged in.");
-      //TODO login 로직 짜기(server 통신, local storage 토큰저장)
-      //login 로직
-      //
-      //window.location.href = "mainPage.html";
-      //window.localStorage.setItem(loginId, username);
-      //} else {
-      //alert("정보없음");
-      //}
+      window.location.href = "mainPage.html";
+      // if (this.status) {
+      //   login();
+      // } else {
+      //   register();
+      // }
     });
     const login = async () => {
-      const response = await axios.post(
-        "http://localhost:8080/api/login",
-        JSON.stringify({
-          username: "123",
-          password: "123",
-        }),
-        { "Content-Type": "application/json", withCredentials: true }
-      );
-      console.log(response.json());
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/login",
+          JSON.stringify({
+            username: this.usernameInputElement.value,
+            password: this.passwordInputElement.value,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response);
+        if (response.data.message === "success") {
+          alert("로그인 성공");
+          //window.location.href = "mainPage.html";
+        }
+      } catch (error) {
+        console.log(error.response);
+        if (error.response.data.message === "not-found") {
+          alert("존재하지 않는 아이디입니다.");
+        } else if (error.response.data.message === "failed") {
+          alert("잘못된 비밀번호입니다.");
+        }
+      }
+    };
+
+    const register = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/signup",
+          JSON.stringify({
+            username: this.usernameInputElement.value,
+            password: this.passwordInputElement.value,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.data.message === "Signed up successfully") {
+          alert("회원가입 성공.");
+          window.location.href = "mainPage.html";
+        }
+      } catch (error) {
+        console.log(error.response);
+        if (error.response.data.message === "Username already exists") {
+          alert("이미 존재하는 아이디입니다.");
+        }
+        // } else if (error.response.data.message === "failed") {
+        //   alert("잘못된 비밀번호입니다.");
+        // }
+      }
     };
     let children = [
       this.titleElement,

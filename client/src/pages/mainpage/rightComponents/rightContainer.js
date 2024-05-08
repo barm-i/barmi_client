@@ -1,97 +1,89 @@
+import { CanvasContainer } from "./canvas/canvasContainer.js";
+import { MyPage } from "./myPage.js";
+
 export class RightContainer {
-  status = true;
+  status; //0 = basic, 1 = practice, 2 = mypage
   containerElement;
-  titleElement;
-  usernameElement;
-  passwordElement;
-  usernameInputElement;
-  passwordInputElement;
-  buttonElement;
-  textAreaElement;
+  canvasContainerElement;
+  mypageContainerElement;
+  root;
 
   constructor() {
     this.containerElement = document.createElement("div");
   }
 
-  setDomNode() {
+  setDomNode(root) {
+    this.root = root;
     this.containerElement = document.createElement("div");
-    this.titleElement = document.createElement("p");
-    this.usernameElement = document.createElement("label");
-    this.passwordElement = document.createElement("label");
-    this.usernameInputElement = document.createElement("input");
-    this.passwordInputElement = document.createElement("input");
-    this.underElement = document.createElement("div");
-    this.buttonElement = document.createElement("button");
-    this.textAreaElement = document.createElement("p");
+    this.containerElement.className = "right-side-wrapper";
 
-    this.containerElement.className = "card-container";
-    this.titleElement.className = "title-class";
-    this.usernameElement.className = "label-class";
-    this.passwordElement.className = "label-class";
-    this.usernameInputElement.className = "input-class";
-    this.passwordInputElement.className = "input-class";
-    this.textAreaElement.className = "link-class";
-
-    this.titleElement.innerText = "로그인";
-    this.usernameElement.innerText = "username";
-    this.passwordElement.innerText = "password";
-    this.buttonElement.innerText = "login";
-    this.textAreaElement.innerHTML = `아직 회원이 아니신가요? <a class="text-area" href="#">회원가입</a>하기`;
-
-    this.textAreaElement.addEventListener("click", () => {
-      if (this.status) {
-        this.status = false;
-        this.convertSignUp();
-      } else {
-        this.status = true;
-        this.convertLogIn();
-      }
-    });
-
-    this.buttonElement.addEventListener("click", (event) => {
-      event.preventDefault();
-      const username = this.usernameInputElement.value;
-      const password = this.passwordInputElement.value;
-
-      if (username === "1" && password === "1") {
-        alert("You have successfully logged in.");
-        //TODO login 로직 짜기(server 통신, local storage 토큰저장)
-        //login 로직
-        //
-        window.location.href = "mainPage.html";
-        window.localStorage.setItem(loginId, username);
-      } else {
-      }
-    });
-
-    let children = [
-      this.titleElement,
-      this.usernameElement,
-      this.usernameInputElement,
-      this.passwordElement,
-      this.passwordInputElement,
-      this.buttonElement,
-      this.textAreaElement,
-    ];
-    this.containerElement.append(...children);
+    this.canvasContainerElement = new CanvasContainer();
+    this.canvasContainerElement.id = "canvas-container";
+    this.canvasContainerElement.setDomNode();
+    this.containerElement.appendChild(
+      this.canvasContainerElement.containerElement
+    );
   }
-
-  convertSignUp() {
-    this.titleElement.innerText = "회원가입";
-    this.buttonElement.innerText = "register";
-    this.textAreaElement.innerHTML = `회원이신가요? <a class="text-area" href="#">로그인</a>하기`;
-  }
-
-  convertLogIn() {
-    this.titleElement.innerText = "로그인";
-    this.buttonElement.innerText = "login";
-    this.textAreaElement.innerHTML = `아직 회원이 아니신가요? <a class="text-area" href="#">회원가입</a>하기`;
-  }
-
   render() {
     this.setDomNode();
-    document
-      .getElementById("right-container")
-      .appendChild(this.containerElement);
+    document.getElementById("main-page").appendChild(this.containerElement);
+  }
+
+  convertToCanvasBasic() {
+    if (this.status == 2) {
+      this.removeMyPage();
+      this.canvasContainerElement = new CanvasContainer();
+      this.canvasContainerElement.id = "canvas-container";
+      this.canvasContainerElement.setDomNode(this.root);
+    } else {
+      this.removeCanvas();
+    }
+
+    this.containerElement.appendChild(
+      this.canvasContainerElement.containerElement
+    );
+    this.canvasContainerElement.convertCanvas(this.root, 0);
+    this.status = 0;
+  }
+
+  convertToCanvasPractice() {
+    if (this.status == 2) {
+      this.removeMyPage();
+      this.canvasContainerElement = new CanvasContainer();
+      this.canvasContainerElement.id = "canvas-container";
+      this.canvasContainerElement.setDomNode(this.root);
+    } else {
+      this.removeCanvas();
+    }
+    this.canvasContainerElement.convertCanvas(this.root, 1);
+    this.containerElement.appendChild(
+      this.canvasContainerElement.containerElement
+    );
+    this.status = 1;
+  }
+
+  convertToMyPage() {
+    if (this.status == 2) {
+      this.removeMyPage();
+    } else {
+      this.removeCanvas();
+    }
+    this.status = 2;
+    this.mypageContainerElement = new MyPage();
+    this.mypageContainerElement.setDomNode();
+    this.containerElement.appendChild(
+      this.mypageContainerElement.containerElement
+    );
+  }
+
+  removeMyPage() {
+    this.containerElement.removeChild(
+      this.mypageContainerElement.containerElement
+    );
+  }
+  removeCanvas() {
+    this.containerElement.removeChild(
+      this.canvasContainerElement.containerElement
+    );
   }
 }

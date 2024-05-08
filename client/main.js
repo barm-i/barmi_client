@@ -1,6 +1,6 @@
-import { RightContainer } from "./src/pages/mainpage/rightComponents/rightContainer.js";
-import { LeftContainer } from "./src/pages/mainpage/leftComponents/leftContainer.js";
-const rightContainer = new RightContainer();
-const leftContainer = new LeftContainer();
-rightContainer.render();
-leftContainer.render();
+import { socket } from "./socket.js";
+import { EntirePage } from "./src/pages/entirePage.js";
+import { RightContainer } from "./src/pages/mainPage/rightComponents/rightContainer.js";
+
+const entirePage = new EntirePage();
+entirePage.render();

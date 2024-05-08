@@ -1,42 +1,56 @@
+import { MenuBar } from "./menuBar";
+
 export class LeftContainer {
   status = true;
   containerElement;
   logoElement;
+  exceptLogoElement;
   menuElement;
   leaderBoardElement;
+  root;
 
   constructor() {
     this.containerElement = document.createElement("div");
   }
 
-  setDomNode() {
+  setDomNode(root) {
+    this.root = root;
     this.containerElement = document.createElement("div");
+    this.containerElement.className = "left-side-wrapper";
+
     this.logoElement = document.createElement("p");
-    this.menuElement = document.createElement("p");
+    this.exceptLogoElement = document.createElement("div");
+    this.menuElement = document.createElement("div");
+    this.menuElement.id = "menuWrapper";
     this.leaderBoardElement = document.createElement("p");
 
-    this.containerElement.className = "card-container";
-    this.logoElement.className = "title-class";
-    this.menuElement.className = "title-class";
-    this.leaderBoardElement.className = "title-class";
+    this.logoElement.classList.add("title-class", "logo");
+    this.exceptLogoElement.classList.add("except-logo");
+    this.menuElement.classList.add(
+      "title-class",
+      "component-class",
+      "menu-bar"
+    );
+    this.leaderBoardElement.classList.add(
+      "title-class",
+      "component-class",
+      "leaderboard"
+    );
 
     this.logoElement.innerText = "바르미";
-    this.menuElement.innerText = "Menu";
     this.leaderBoardElement.innerText = "leaderboard";
-    // this.buttonElement.innerText = "login";
-    // this.textAreaElement.innerHTML = `아직 회원이 아니신가요? <a class="text-area" href="#">회원가입</a>하기`;
 
-    let children = [
-      this.logoElement,
-      this.menuElement,
-      this.leaderBoardElement,
-    ];
-    this.containerElement.appendChild(...children);
+    const menus = new MenuBar();
+    menus.setDomNode(root);
+    this.menuElement.appendChild(menus.containerElement);
+
+    this.exceptLogoElement.appendChild(this.menuElement);
+    this.exceptLogoElement.appendChild(this.leaderBoardElement);
+    this.containerElement.appendChild(this.logoElement);
+    this.containerElement.appendChild(this.exceptLogoElement);
   }
   render() {
-    this.setDomNode();
-    document
-      .getElementById("left-container")
-      .appendChild(this.containerElement);
+    // this.setDomNode();
+    // document.getElementById("left-page").appendChild(this.containerElement);
   }
 }
