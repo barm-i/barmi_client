@@ -83,7 +83,12 @@ export class CanvasContainer {
       element.clearCanvas();
     }
   }
-  converToImage() {}
+  convertToImage() {
+    for (const element of this.canvasElement.canvasElements) {
+      element.convertToImage();
+    }
+  }
+
   removeComponents() {
     this.containerElement.removeChild(this.canvasElement.containerElement);
     this.containerElement.removeChild(this.toolBarElement.containerElement);

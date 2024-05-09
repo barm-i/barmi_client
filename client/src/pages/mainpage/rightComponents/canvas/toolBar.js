@@ -45,11 +45,7 @@ export class ToolBar {
       this.parent.clearCanvas();
     });
     this.sendBtnElement.addEventListener("click", () => {
-      //   const imageData = canvas.toDataURL("image/png");
-      //   const link = document.createElement("a");
-      //   link.href = imageData;
-      //   link.download = "canvas_image.png";
-      //   link.click();
+      this.parent.convertToImage();
     });
 
     this.containerElement.append(
