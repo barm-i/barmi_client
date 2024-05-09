@@ -81,8 +81,8 @@ export class CanvasBasicPair {
     this.canvasTextElement.setDomNode("동해물과 백두산이 마르고");
     this.drawGrid();
 
-    //this.canvasWrapper.append(this.gridElement);
     this.canvasWrapper.append(this.canvasElement);
+    this.canvasWrapper.append(this.gridElement);
     this.containerElement.append(this.canvasTextElement.canvasElement);
     this.containerElement.append(this.canvasWrapper);
   }
@@ -90,6 +90,7 @@ export class CanvasBasicPair {
     this.setDomNode();
   }
   draw() {
+    console.log("draw");
     this.ctxElement.beginPath();
     this.ctxElement.moveTo(this.prevX, this.prevY);
     this.ctxElement.lineTo(this.currX, this.currY);
