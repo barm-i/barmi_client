@@ -21,7 +21,7 @@ export class CanvasContainer {
     this.containerElement = document.createElement("div");
     this.toolBarElement = document.createElement("div");
 
-    this.containerElement.classList.add("canvas-wrapper");
+    this.containerElement.classList.add("canvas-page-wrapper");
     this.canvasElement = new CanvasBasic();
     this.toolBarElement = new ToolBar();
     this.canvasElement.setDomNode(root);

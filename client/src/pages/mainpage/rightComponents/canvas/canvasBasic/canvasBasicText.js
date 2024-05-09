@@ -14,7 +14,7 @@ export class CanvasBasicText {
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
     this.canvasElement.height = 50;
-    this.canvasElement.className = "canvas-basic";
+    this.canvasElement.className = "canvas-text";
 
     this.ctxElement = this.canvasElement.getContext("2d");
     this.ctxElement.font = "30px share";
@@ -30,7 +30,7 @@ export class CanvasBasicText {
     this.ctxElement.strokeStyle = "black";
     const str = text;
     for (let i = 0; i < str.length; i++) {
-      this.ctxElement.strokeText(str[i], i * 50 + 10, 35);
+      this.ctxElement.strokeText(str[i], i * 50 + 12, 35);
     }
     this.containerElement.append(this.canvasElement);
   }
