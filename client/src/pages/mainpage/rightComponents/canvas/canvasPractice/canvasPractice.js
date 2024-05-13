@@ -1,4 +1,4 @@
-import { CanvasPracticePair } from "./canvasPracticePair.js";
+import { CanvasPracticePair } from "./canvasPracticePair";
 
 export class CanvasPractice {
   containerElement;
@@ -14,11 +14,19 @@ export class CanvasPractice {
     const canvasElement1 = new CanvasPracticePair();
     const canvasElement2 = new CanvasPracticePair();
     const canvasElement3 = new CanvasPracticePair();
+    const canvasElement4 = new CanvasPracticePair();
     canvasElement1.setDomNode();
     canvasElement2.setDomNode();
     canvasElement3.setDomNode();
+    canvasElement4.setDomNode();
+    this.containerElement.classList.add("canvas-practice-wrapper");
 
-    this.canvasElements = [canvasElement1, canvasElement2, canvasElement3];
+    this.canvasElements = [
+      canvasElement1,
+      canvasElement2,
+      canvasElement3,
+      canvasElement4,
+    ];
     for (const element of this.canvasElements) {
       this.containerElement.append(element.containerElement);
     }

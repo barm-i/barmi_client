@@ -1,4 +1,4 @@
-export class CanvasBasicText {
+export class CanvasPracticeText {
   text;
   containerElement;
 
@@ -14,10 +14,10 @@ export class CanvasBasicText {
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
     this.canvasElement.height = 50;
-    this.canvasElement.className = "canvas-basic-text";
+    this.canvasElement.className = "canvas-practice-text";
 
     this.ctxElement = this.canvasElement.getContext("2d");
-    this.ctxElement.font = "30px Share";
+    this.ctxElement.font = "30px Gulim";
     this.ctxElement.fillStyle = "#fff";
     this.ctxElement.fillRect(
       0,

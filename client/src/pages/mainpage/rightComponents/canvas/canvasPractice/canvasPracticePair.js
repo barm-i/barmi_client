@@ -1,20 +1,30 @@
+import { CanvasPracticeText } from "./canvasPracticeText";
+
 export class CanvasPracticePair {
   text;
   containerElement;
 
+  canvasTextElement;
   canvasElement;
   ctxElement;
+
+  isDrawing;
 
   constructor() {
     this.canvasElement = document.createElement("canvas");
   }
 
   setDomNode() {
+    this.isDrawing = false;
     this.containerElement = document.createElement("div");
+    this.containerElement.classList.add("canvas-practice-pair-wrapper");
+
+    this.canvasTextElement = new CanvasPracticeText();
+
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
-    this.canvasElement.height = 100;
-    this.canvasElement.className = "canvas-basic";
+    this.canvasElement.height = 50;
+    this.canvasElement.className = "canvas-practice";
 
     this.ctxElement = this.canvasElement.getContext("2d");
     this.ctxElement.fillStyle = "#fff";
@@ -24,7 +34,6 @@ export class CanvasPracticePair {
       this.canvasElement.width,
       this.canvasElement.height
     );
-
     this.canvasElement.addEventListener("mousedown", (e) => {
       this.isDrawing = true;
       [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
@@ -46,13 +55,14 @@ export class CanvasPracticePair {
       () => (this.isDrawing = false)
     );
 
+    this.canvasTextElement.setDomNode("동해물과 백두산이 마르고");
+
+    this.containerElement.append(this.canvasTextElement.canvasElement);
     this.containerElement.append(this.canvasElement);
   }
-
   render() {
     this.setDomNode();
   }
-
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
     this.ctxElement.lineWidth = 5;
@@ -66,15 +76,15 @@ export class CanvasPracticePair {
     this.ctxElement.strokeStyle = "#fff";
   }
   clearCanvas() {
-    this.ctxElement.fillRect(
+    this.ctxElement.clearRect(
       0,
       0,
       this.canvasElement.width,
       this.canvasElement.height
     );
   }
-  converToImage() {
-    const imageData = this.canvas.toDataURL("image/png");
+  convertToImage() {
+    const imageData = this.canvasElement.toDataURL("image/png");
     const link = document.createElement("a");
     link.href = imageData;
     link.download = "canvas_image.png";

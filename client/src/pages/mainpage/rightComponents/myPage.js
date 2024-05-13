@@ -7,8 +7,13 @@ export class MyPage {
 
   setDomNode() {
     this.containerElement = document.createElement("div");
-    this.containerElement.classList.add("right-side-wrapper", "title-class");
-    this.containerElement.innerText = "MyPage";
+    this.containerElement.classList.add(
+      "component-class",
+      "mypage",
+      "mypage-wrapper"
+    );
+
+    this.containerElement.textContent = "My Page";
   }
 
   render() {

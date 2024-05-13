@@ -16,7 +16,7 @@ export class CanvasBasicPair {
     this.canvasElement = document.createElement("canvas");
   }
 
-  setDomNode() {
+  setDomNode(text) {
     this.isDrawing = false;
     this.containerElement = document.createElement("div");
     this.containerElement.classList.add("canvas-basic-pair-wrapper");
@@ -72,7 +72,7 @@ export class CanvasBasicPair {
       () => (this.isDrawing = false)
     );
 
-    this.canvasTextElement.setDomNode("동해물과 백두산이 마르고");
+    this.canvasTextElement.setDomNode(text);
     this.drawGrid();
 
     this.canvasWrapper.append(this.canvasElement);
