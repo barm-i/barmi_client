@@ -93,7 +93,6 @@ export class CanvasContainer {
       element.convertToImage();
     }
   }
-
   removeComponents() {
     this.containerElement.removeChild(this.canvasElement.containerElement);
     this.containerElement.removeChild(this.toolBarElement.containerElement);

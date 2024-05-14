@@ -4,7 +4,7 @@ export class ToolBar {
   eraserBtnElement;
   clearBtnElement;
   nextBtnElement;
-  sendBtnElement;
+  feedBackBtnElement;
 
   parent;
   root;
@@ -23,7 +23,7 @@ export class ToolBar {
     this.eraserBtnElement = document.createElement("button");
     this.clearBtnElement = document.createElement("button");
     this.nextBtnElement = document.createElement("button");
-    this.sendBtnElement = document.createElement("button");
+    this.feedBackBtnElement = document.createElement("button");
 
     this.pencilBtnElement.id = "brush-btn";
     this.pencilBtnElement.textContent = "연필";
@@ -36,8 +36,8 @@ export class ToolBar {
 
     this.nextBtnElement.textContent = "다음";
 
-    this.sendBtnElement.id = "send-btn";
-    this.sendBtnElement.textContent = "완료";
+    this.feedBackBtnElement.id = "send-btn";
+    this.feedBackBtnElement.textContent = "피드백";
 
     this.pencilBtnElement.addEventListener("click", () => {
       this.parent.convertToBrush();
@@ -49,10 +49,9 @@ export class ToolBar {
       this.parent.clearCanvas();
     });
     this.nextBtnElement.addEventListener("click", () => {
-      this.parent.convertToImage();
+      this.parent.nextContent();
     });
-
-    this.sendBtnElement.addEventListener("click", () => {
+    this.feedBackBtnElement.addEventListener("click", () => {
       this.parent.convertToImage();
     });
 
@@ -61,7 +60,7 @@ export class ToolBar {
       this.eraserBtnElement,
       this.clearBtnElement,
       this.nextBtnElement,
-      this.sendBtnElement
+      this.feedBackBtnElement
     );
   }
 
