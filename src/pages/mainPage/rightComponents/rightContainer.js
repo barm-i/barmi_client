@@ -10,6 +10,8 @@ export class RightContainer {
 
   constructor() {
     this.containerElement = document.createElement("div");
+    this.canvasContainerElement = new CanvasContainer();
+    this.mypageContainerElement = new MyPage();
   }
 
   setDomNode(root) {

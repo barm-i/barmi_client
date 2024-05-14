@@ -10,6 +10,8 @@ export class CanvasBasicPair {
   gridElement;
   gridCtxElement;
 
+  tooltipElements;
+
   isDrawing;
 
   constructor() {
@@ -158,10 +160,51 @@ export class CanvasBasicPair {
     window.localStorage.setItem("basicPos", current_line + 1);
   }
   convertToImage() {
-    const imageData = this.canvasElement.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = imageData;
-    link.download = "canvas_image.png";
-    link.click();
+    // const imageData = this.canvasElement.toDataURL("image/png");
+    // const link = document.createElement("a");
+    // link.href = imageData;
+    // link.download = "canvas_image.png";
+    // link.click();
+    this.showFeedBack(10, 10, "피드백을 남겨주세요");
+  }
+
+  showFeedBack(x, y, msg) {
+    // 느낌표 그리기
+    this.ctxElement.fillStyle = "#FF0000"; // 빨간색
+    this.ctxElement.beginPath();
+    this.ctxElement.arc(x, y, 5, 0, 2 * Math.PI);
+    this.ctxElement.fill();
+
+    // 마우스 이벤트 감지
+    this.canvasElement.addEventListener("mousemove", (e) => {
+      const mouseX = e.offsetX;
+      const mouseY = e.offsetY;
+
+      // 만약 마우스가 느낌표 위에 있다면 툴팁을 표시
+      if (Math.abs(mouseX - x) < 10 && Math.abs(mouseY - y) < 10) {
+        this.showTooltip(x, y, msg);
+      } else {
+        this.hideTooltip();
+      }
+    });
+  }
+
+  showTooltip(x, y, msg) {
+    // 툴팁 텍스트 스타일 및 위치 설정
+    this.ctxElement.font = "12px Arial";
+    this.ctxElement.fillStyle = "black";
+    this.ctxElement.fillText(msg, x + 5, y - 5);
+  }
+
+  hideTooltip() {
+    // 툴팁을 지우는 함수
+    this.ctxElement.clearRect(
+      0,
+      0,
+      this.canvasElement.width,
+      this.canvasElement.height
+    );
+    // 기존 그림 다시 그리기
+    // this.redraw();
   }
 }
