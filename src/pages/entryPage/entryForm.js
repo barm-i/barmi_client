@@ -54,12 +54,15 @@ export class FormComponent {
     this.buttonElement.addEventListener("click", (event) => {
       event.preventDefault();
 
-      window.location.href = "/mainPage.html";
-      // if (this.status) {
-      //   login();
-      // } else {
-      //   register();
-      // }
+      if (this.status) {
+        //login();
+        window.location.href = "/mainPage.html";
+      } else {
+        //register();
+        //TODO font선택-------------------->
+        createFontModal(["Gulim", "Share", "Arial"]);
+        //<-------------------------------
+      }
     });
     const login = async () => {
       try {
@@ -110,13 +113,10 @@ export class FormComponent {
 
           //TODO font선택-------------------->
           var fontOptions = ["Gulim", "Share", "Arial"];
-          var fontSelected = prompt(
-            "폰트를 선택해주세요. \n" + fontOptions.join(", ")
-          );
 
           //<-------------------------------
 
-          window.location.href = "mainPage.html";
+          //window.location.href = "mainPage.html";
         }
       } catch (error) {
         console.log(error.response);
@@ -169,4 +169,81 @@ export class FormComponent {
     ctx.fillStyle = "#000";
     ctx.fillText("가나다", 10, 50);
   }
+}
+
+function createFontModal(fontOptions) {
+  // 폰트 목록을 스크롤로 선택할 수 있는 드롭다운으로 변환
+  var select = document.createElement("select");
+  select.setAttribute("id", "fontSelect"); // 고유한 ID 추가
+
+  // 각 폰트를 옵션으로 추가
+  fontOptions.forEach(function (font) {
+    var option = document.createElement("option");
+    option.value = font;
+    option.text = font;
+    select.appendChild(option);
+  });
+
+  // 모달 생성
+  var modalContainer = document.createElement("div");
+  modalContainer.className = "modal";
+
+  var modalContent = document.createElement("div");
+  modalContent.className = "modal-content";
+
+  var closeButton = document.createElement("span");
+  closeButton.className = "close";
+  closeButton.innerHTML = "&times;";
+
+  var modalTitle = document.createElement("h2");
+  modalTitle.innerText = "폰트 선택";
+
+  var modalText = document.createElement("p");
+  modalText.innerText = "가나다";
+
+  var modalCanvas = document.createElement("canvas");
+  modalCanvas.id = "fontPreviewCanvas";
+
+  var fontSelectButton = document.createElement("button");
+  fontSelectButton.id = "fontSelectButton";
+  fontSelectButton.innerText = "선택";
+
+  // 각 요소를 모달에 추가
+  modalContent.appendChild(closeButton);
+  modalContent.appendChild(modalTitle);
+  modalContent.appendChild(select);
+  modalContent.appendChild(modalText);
+  modalContent.appendChild(modalCanvas);
+  modalContent.appendChild(fontSelectButton);
+
+  modalContainer.appendChild(modalContent);
+  document.body.appendChild(modalContainer);
+
+  // 모달 닫기 버튼 이벤트 처리
+  closeButton.onclick = function () {
+    modalContainer.remove();
+  };
+
+  // 모달 외부 클릭 시 모달 닫기
+  window.onclick = function (event) {
+    if (event.target == modalContainer) {
+      modalContainer.remove();
+    }
+  };
+
+  // 사용자가 폰트를 선택하고 확인을 클릭했을 때의 처리
+  fontSelectButton.onclick = function () {
+    var selectedFont = document.getElementById("fontSelect").value;
+    var font = "30px " + selectedFont;
+
+    // 캔버스에 폰트 설정하여 가나다 그리기
+    var canvas = document.getElementById("fontPreviewCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = font;
+    ctx.fillText("가나다", 10, 50);
+
+    // 모달 닫기
+    modalContainer.remove();
+  };
 }
