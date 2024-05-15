@@ -1,4 +1,5 @@
 import { CanvasPracticeText } from "./canvasPracticeText.js";
+import { sendLetterImageToServer } from "../api/sendImage.js";
 
 export class CanvasPracticePair {
   text;
@@ -133,10 +134,16 @@ export class CanvasPracticePair {
     window.localStorage.setItem("practicePos", current_line + 1);
   }
   convertToImage() {
-    const imageData = this.canvasElement.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = imageData;
-    link.download = "canvas_image.png";
-    link.click();
+    //const imageData = this.canvasElement.toDataURL("image/png");
+    // const link = document.createElement("a");
+    // link.href = imageData;
+    // link.download = "canvas_image.png";
+    // link.click();
+
+    // TODO :  이미지 전송 API test code. 추후 삭제
+    sendLetterImageToServer(
+      this.canvasElement, // canvas element reference
+      "http://localhost:8080/api/upload_image" // api path
+    );
   }
 }
