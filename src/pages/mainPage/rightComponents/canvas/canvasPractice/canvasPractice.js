@@ -1,4 +1,4 @@
-import { CanvasPracticePair } from "./canvasPracticePair";
+import { CanvasPracticePair } from "./canvasPracticePair.js";
 
 export class CanvasPractice {
   containerElement;

@@ -1,4 +1,4 @@
-import { CanvasBasicText } from "./canvasBasicText";
+import { CanvasBasicText } from "./canvasBasicText.js";
 
 export class CanvasBasicPair {
   text;
@@ -57,11 +57,16 @@ export class CanvasBasicPair {
       this.canvasElement.width,
       this.canvasElement.height
     );
-    this.canvasElement.addEventListener("mousedown", (e) => {
+    this.canvasElement.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+    });
+    this.canvasElement.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
       this.isDrawing = true;
       [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
     });
-    this.canvasElement.addEventListener("mousemove", (e) => {
+    this.canvasElement.addEventListener("pointermove", (e) => {
+      e.preventDefault();
       if (!this.isDrawing) return;
       this.ctxElement.beginPath();
       this.ctxElement.moveTo(this.lastX, this.lastY);
@@ -70,11 +75,11 @@ export class CanvasBasicPair {
       [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
     });
     this.canvasElement.addEventListener(
-      "mouseup",
+      "pointerup",
       () => (this.isDrawing = false)
     );
     this.canvasElement.addEventListener(
-      "mouseout",
+      "pointerout",
       () => (this.isDrawing = false)
     );
 
@@ -82,7 +87,7 @@ export class CanvasBasicPair {
     this.drawGrid();
 
     this.canvasWrapper.append(this.canvasElement);
-    this.canvasWrapper.append(this.gridElement);
+    //this.canvasWrapper.append(this.gridElement);
   }
   render() {
     this.setDomNode();

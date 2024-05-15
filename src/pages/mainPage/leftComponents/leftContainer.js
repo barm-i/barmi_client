@@ -1,4 +1,4 @@
-import { MenuBar } from "./menuBar";
+import { MenuBar } from "./menuBar.js";
 
 export class LeftContainer {
   status = true;

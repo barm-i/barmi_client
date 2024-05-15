@@ -1,4 +1,4 @@
-import { CanvasPracticeText } from "./canvasPracticeText";
+import { CanvasPracticeText } from "./canvasPracticeText.js";
 
 export class CanvasPracticePair {
   text;

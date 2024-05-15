@@ -1,4 +1,4 @@
-import { CanvasBasicPair } from "./canvasBasicPair";
+import { CanvasBasicPair } from "./canvasBasicPair.js";
 
 export class CanvasBasic {
   containerElement;
