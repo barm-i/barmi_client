@@ -128,7 +128,7 @@ export class CanvasBasicPair {
     this.containerElement.appendChild(this.canvasWrapper);
   }
   async fetchData() {
-    const content = await fetch("../../../../../public/contents/애국가.txt");
+    const content = await fetch("../../../../../public/contents/content.txt");
     const data = await content.text();
     const current_line = parseInt(window.localStorage.getItem("basicPos")) || 0;
 

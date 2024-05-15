@@ -27,7 +27,7 @@ export class CanvasBasicText {
     );
     this.drawGrid();
     this.ctxElement.fillStyle = "black";
-    const str = text;
+    const str = text?.toString();
     for (let i = 0; i < str.length; i++) {
       this.ctxElement.fillText(str[i], i * 50 + 13, 35);
     }

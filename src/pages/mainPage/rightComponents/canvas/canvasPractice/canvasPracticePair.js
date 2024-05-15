@@ -34,11 +34,13 @@ export class CanvasPracticePair {
       this.canvasElement.width,
       this.canvasElement.height
     );
-    this.canvasElement.addEventListener("mousedown", (e) => {
+    this.canvasElement.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
       this.isDrawing = true;
       [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
     });
-    this.canvasElement.addEventListener("mousemove", (e) => {
+    this.canvasElement.addEventListener("pointermove", (e) => {
+      e.preventDefault();
       if (!this.isDrawing) return;
       this.ctxElement.beginPath();
       this.ctxElement.moveTo(this.lastX, this.lastY);
@@ -47,11 +49,11 @@ export class CanvasPracticePair {
       [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
     });
     this.canvasElement.addEventListener(
-      "mouseup",
+      "pointerup",
       () => (this.isDrawing = false)
     );
     this.canvasElement.addEventListener(
-      "mouseout",
+      "pointerout",
       () => (this.isDrawing = false)
     );
 
