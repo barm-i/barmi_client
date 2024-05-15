@@ -34,6 +34,9 @@ export class CanvasPracticePair {
       this.canvasElement.width,
       this.canvasElement.height
     );
+    this.canvasElement.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+    });
     this.canvasElement.addEventListener("pointerdown", (e) => {
       e.preventDefault();
       this.isDrawing = true;
