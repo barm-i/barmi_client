@@ -3,22 +3,28 @@ import { CanvasPracticePair } from "./canvasPracticePair.js";
 export class CanvasPractice {
   containerElement;
   canvasElements;
+  strings;
   root;
   constructor() {
     this.containerElement = document.createElement("div");
+    this.strings = [];
   }
 
-  setDomNode(root) {
+  async setDomNode(root) {
     this.root = root;
+    this.strings = [];
     this.containerElement = document.createElement("div");
     const canvasElement1 = new CanvasPracticePair();
     const canvasElement2 = new CanvasPracticePair();
     const canvasElement3 = new CanvasPracticePair();
     const canvasElement4 = new CanvasPracticePair();
-    canvasElement1.setDomNode();
-    canvasElement2.setDomNode();
-    canvasElement3.setDomNode();
-    canvasElement4.setDomNode();
+
+    await this.fetchData();
+
+    canvasElement1.setDomNode(this.strings[0]?.toString());
+    canvasElement2.setDomNode(this.strings[1]?.toString());
+    canvasElement3.setDomNode(this.strings[2]?.toString());
+    canvasElement4.setDomNode(this.strings[3]?.toString());
     this.containerElement.classList.add("canvas-practice-wrapper");
 
     this.canvasElements = [
@@ -31,7 +37,46 @@ export class CanvasPractice {
       this.containerElement.append(element.containerElement);
     }
   }
+  async fetchData() {
+    const content = await fetch("/contents/content.txt");
+    const data = await content.text();
+    const current_line =
+      parseInt(window.localStorage.getItem("practicePos")) || 0;
 
+    const chunks = [];
+    let currentChunk = "";
+    let charCount = 0;
+    for (let i = 0; i < data.length; i++) {
+      if (charCount === 0 && (data[i] === " " || data[i] === "\n")) {
+        continue;
+      }
+      if (data[i] === "\n" || data[i] === "\r") {
+        currentChunk += " ";
+      } else {
+        currentChunk += data[i];
+      }
+      charCount++;
+      if (charCount === 16) {
+        chunks.push(currentChunk);
+        currentChunk = "";
+        charCount = 0;
+      }
+    }
+    // 마지막 남은 부분 추가
+    if (currentChunk.length > 0) {
+      chunks.push(currentChunk);
+    }
+
+    for (let i = current_line; i < current_line + 4 && i < chunks.length; i++) {
+      this.strings.push(chunks[i]);
+    }
+    console.log(this.strings);
+    window.localStorage.setItem("practicePos", current_line + 4);
+  }
+  nextContent() {
+    this.containerElement = document.createElement("div");
+    this.setDomNode(this.root);
+  }
   render() {
     this.setDomNode();
     document

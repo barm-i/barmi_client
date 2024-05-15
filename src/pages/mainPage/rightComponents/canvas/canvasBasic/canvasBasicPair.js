@@ -87,7 +87,7 @@ export class CanvasBasicPair {
     this.drawGrid();
 
     this.canvasWrapper.append(this.canvasElement);
-    //this.canvasWrapper.append(this.gridElement);
+    this.canvasWrapper.append(this.gridElement);
   }
   render() {
     this.setDomNode();
@@ -133,7 +133,7 @@ export class CanvasBasicPair {
     this.containerElement.appendChild(this.canvasWrapper);
   }
   async fetchData() {
-    const content = await fetch("../../../../../public/contents/content.txt");
+    const content = await fetch("/contents/content.txt");
     const data = await content.text();
     const current_line = parseInt(window.localStorage.getItem("basicPos")) || 0;
 
@@ -165,12 +165,12 @@ export class CanvasBasicPair {
     window.localStorage.setItem("basicPos", current_line + 1);
   }
   convertToImage() {
-    // const imageData = this.canvasElement.toDataURL("image/png");
-    // const link = document.createElement("a");
-    // link.href = imageData;
-    // link.download = "canvas_image.png";
-    // link.click();
-    this.showFeedBack(10, 10, "피드백을 남겨주세요");
+    const imageData = this.canvasElement.toDataURL("image/png");
+    const link = document.createElement("a");
+    link.href = imageData;
+    link.download = "canvas_image.png";
+    link.click();
+    //this.showFeedBack(10, 10, "피드백을 남겨주세요");
   }
 
   showFeedBack(x, y, msg) {

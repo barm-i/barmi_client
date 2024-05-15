@@ -107,6 +107,15 @@ export class FormComponent {
         console.log(response.data);
         if (response.data.message === "Signed up successfully") {
           alert("회원가입 성공.");
+
+          //TODO font선택-------------------->
+          var fontOptions = ["Gulim", "Share", "Arial"];
+          var fontSelected = prompt(
+            "폰트를 선택해주세요. \n" + fontOptions.join(", ")
+          );
+
+          //<-------------------------------
+
           window.location.href = "mainPage.html";
         }
       } catch (error) {
@@ -146,5 +155,18 @@ export class FormComponent {
   render() {
     this.setDomNode();
     document.getElementById("wrapper").appendChild(this.containerElement);
+  }
+
+  updateFontPreview() {
+    var selectedFont = document.getElementById("fontSelect").value;
+    var font = "30px " + selectedFont;
+
+    // 캔버스에 폰트 설정하여 가나다 그리기
+    var canvas = document.getElementById("fontPreviewCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = font;
+    ctx.fillStyle = "#000";
+    ctx.fillText("가나다", 10, 50);
   }
 }

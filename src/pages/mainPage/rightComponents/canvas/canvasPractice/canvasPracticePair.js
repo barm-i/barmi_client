@@ -14,13 +14,18 @@ export class CanvasPracticePair {
     this.canvasElement = document.createElement("canvas");
   }
 
-  setDomNode() {
+  setDomNode(text) {
     this.isDrawing = false;
     this.containerElement = document.createElement("div");
     this.containerElement.classList.add("canvas-practice-pair-wrapper");
 
     this.canvasTextElement = new CanvasPracticeText();
+    this.initializeCanvas(text);
+    this.containerElement.append(this.canvasTextElement.canvasElement);
+    this.containerElement.append(this.canvasElement);
+  }
 
+  initializeCanvas(text) {
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
     this.canvasElement.height = 50;
@@ -60,10 +65,7 @@ export class CanvasPracticePair {
       () => (this.isDrawing = false)
     );
 
-    this.canvasTextElement.setDomNode("동해물과 백두산이 마르고");
-
-    this.containerElement.append(this.canvasTextElement.canvasElement);
-    this.containerElement.append(this.canvasElement);
+    this.canvasTextElement.setDomNode(text);
   }
   render() {
     this.setDomNode();
@@ -87,6 +89,48 @@ export class CanvasPracticePair {
       this.canvasElement.width,
       this.canvasElement.height
     );
+  }
+  async nextContent() {
+    await this.fetchData();
+    this.containerElement.removeChild(this.canvasTextElement.canvasElement);
+    this.containerElement.removeChild(this.canvasElement);
+    this.canvasTextElement.setDomNode(this.text);
+    this.initializeCanvas(this.text);
+    this.containerElement.appendChild(this.canvasTextElement.canvasElement);
+    this.containerElement.appendChild(this.canvasElement);
+  }
+  async fetchData() {
+    const content = await fetch("/contents/content.txt");
+    const data = await content.text();
+    const current_line =
+      parseInt(window.localStorage.getItem("practicePos")) || 0;
+
+    const chunks = [];
+    let currentChunk = "";
+    let charCount = 0;
+    for (let i = 0; i < data.length; i++) {
+      if (charCount === 0 && (data[i] === " " || data[i] === "\n")) {
+        continue;
+      }
+      if (data[i] === "\n" || data[i] === "\r") {
+        currentChunk += " ";
+      } else {
+        currentChunk += data[i];
+      }
+      charCount++;
+      if (charCount === 16) {
+        chunks.push(currentChunk);
+        currentChunk = "";
+        charCount = 0;
+      }
+    }
+    // 마지막 남은 부분 추가
+    if (currentChunk.length > 0) {
+      chunks.push(currentChunk);
+    }
+    this.text = chunks[current_line]?.toString();
+    console.log(this.text);
+    window.localStorage.setItem("practicePos", current_line + 1);
   }
   convertToImage() {
     const imageData = this.canvasElement.toDataURL("image/png");

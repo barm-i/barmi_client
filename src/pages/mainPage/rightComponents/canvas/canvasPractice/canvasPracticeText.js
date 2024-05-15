@@ -17,7 +17,7 @@ export class CanvasPracticeText {
     this.canvasElement.className = "canvas-practice-text";
 
     this.ctxElement = this.canvasElement.getContext("2d");
-    this.ctxElement.font = "30px Gulim";
+    this.ctxElement.font = window.localStorage.getItem("font");
     this.ctxElement.fillStyle = "#fff";
     this.ctxElement.fillRect(
       0,
@@ -27,7 +27,7 @@ export class CanvasPracticeText {
     );
     this.drawGrid();
     this.ctxElement.fillStyle = "black";
-    const str = text;
+    const str = text?.toString();
     for (let i = 0; i < str.length; i++) {
       this.ctxElement.fillText(str[i], i * 50 + 13, 35);
     }

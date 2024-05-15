@@ -17,7 +17,7 @@ export class CanvasBasicText {
     this.canvasElement.className = "canvas-basic-text";
 
     this.ctxElement = this.canvasElement.getContext("2d");
-    this.ctxElement.font = "30px Share";
+    this.ctxElement.font = window.localStorage.getItem("font");
     this.ctxElement.fillStyle = "#fff";
     this.ctxElement.fillRect(
       0,
