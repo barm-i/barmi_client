@@ -38,7 +38,7 @@ export class CanvasBasic {
     }
   }
   async fetchData() {
-    const content = await fetch("../../../../../public/contents/content.txt");
+    const content = await fetch("/contents/content.txt");
     const data = await content.text();
     const current_line = parseInt(window.localStorage.getItem("basicPos")) || 0;
 

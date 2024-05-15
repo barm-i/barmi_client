@@ -54,7 +54,7 @@ export class FormComponent {
     this.buttonElement.addEventListener("click", (event) => {
       event.preventDefault();
 
-      window.location.href = "mainPage.html";
+      window.location.href = "/mainPage.html";
       // if (this.status) {
       //   login();
       // } else {
