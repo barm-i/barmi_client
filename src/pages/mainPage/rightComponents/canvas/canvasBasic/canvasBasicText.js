@@ -17,7 +17,10 @@ export class CanvasBasicText {
     this.canvasElement.className = "canvas-basic-text";
 
     this.ctxElement = this.canvasElement.getContext("2d");
-    this.ctxElement.font = window.localStorage.getItem("font");
+
+    const fontName = window.localStorage.getItem("font");
+
+    this.ctxElement.font = `30px ${fontName}`;
     this.ctxElement.fillStyle = "#fff";
     this.ctxElement.fillRect(
       0,
@@ -31,6 +34,8 @@ export class CanvasBasicText {
     for (let i = 0; i < str.length; i++) {
       this.ctxElement.fillText(str[i], i * 50 + 13, 35);
     }
+
+    console.log("after load");
     this.containerElement.append(this.canvasElement);
   }
   drawGrid() {

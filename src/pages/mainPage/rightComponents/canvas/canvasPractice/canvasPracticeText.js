@@ -17,7 +17,7 @@ export class CanvasPracticeText {
     this.canvasElement.className = "canvas-practice-text";
 
     this.ctxElement = this.canvasElement.getContext("2d");
-    this.ctxElement.font = window.localStorage.getItem("font");
+    this.ctxElement.font = "30px " + window.localStorage.getItem("font");
     this.ctxElement.fillStyle = "#fff";
     this.ctxElement.fillRect(
       0,
