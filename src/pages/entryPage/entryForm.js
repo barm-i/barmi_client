@@ -27,6 +27,11 @@ export class FormComponent {
     this.buttonElement = document.createElement("button");
     this.textAreaElement = document.createElement("p");
 
+    // Setting unique IDs
+    this.usernameInputElement.id = "usernameInput";
+    this.passwordInputElement.id = "passwordInput";
+    this.buttonElement.id = "submitButton";
+
     this.containerElement.className = "card-container";
     this.titleElement.className = "title-class";
     this.usernameElement.className = "label-class";
@@ -59,11 +64,10 @@ export class FormComponent {
         window.location.href = "/mainPage.html";
       } else {
         //register();
-        //TODO font선택-------------------->
-        this.createFontModal(["Gulim", "Share", "Arial"]);
-        //<-------------------------------
+        this.createFontModal(["Share", "Share2", "Gulim"]);
       }
     });
+
     const login = async () => {
       try {
         const response = await axios.post(
@@ -111,23 +115,16 @@ export class FormComponent {
         if (response.data.message === "Signed up successfully") {
           alert("회원가입 성공.");
 
-          //TODO font선택-------------------->
-          var fontOptions = ["Gulim", "Share", "Arial"];
-
-          //<-------------------------------
-
-          //window.location.href = "mainPage.html";
+          this.createFontModal(["Gulim", "Share", "Arial"]);
         }
       } catch (error) {
         console.log(error.response);
         if (error.response.data.message === "Username already exists") {
           alert("이미 존재하는 아이디입니다.");
         }
-        // } else if (error.response.data.message === "failed") {
-        //   alert("잘못된 비밀번호입니다.");
-        // }
       }
     };
+
     let children = [
       this.titleElement,
       this.usernameElement,
@@ -161,13 +158,12 @@ export class FormComponent {
     var selectedFont = document.getElementById("fontSelect").value;
     var font = "30px " + selectedFont;
 
-    // 캔버스에 폰트 설정하여 가나다 그리기
     var canvas = document.getElementById("fontPreviewCanvas");
     var ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = font;
     ctx.fillStyle = "#000";
-    ctx.fillText("가나다", 10, 50);
+    ctx.fillText("선택된 폰트입니다.", 10, 50);
   }
 
   createFontModal(fontOptions) {
@@ -175,11 +171,12 @@ export class FormComponent {
     select.setAttribute("id", "fontSelect");
 
     var modalCanvas = document.createElement("canvas");
-    modalCanvas.width = 200;
+    modalCanvas.width = 500;
     modalCanvas.height = 100;
+    modalCanvas.id = "fontPreviewCanvas";
 
     var fontSelectButton = document.createElement("button");
-    fontSelectButton.innerText = "확정";
+    fontSelectButton.innerText = "폰트 선택";
 
     select.classList.add("font-select");
     modalCanvas.classList.add("font-preview-canvas");
@@ -198,24 +195,20 @@ export class FormComponent {
     var modalContent = document.createElement("div");
     modalContent.classList.add("modal-content");
 
-    var closeButton = document.createElement("span");
-    closeButton.classList.add("close");
-    closeButton.innerHTML = "&times;";
-
     var modalTitle = document.createElement("h2");
     modalTitle.innerText = "폰트 선택";
 
-    select.addEventListener("change", function () {
+    select.addEventListener("change", () => {
       var selectedFont = select.value;
       var font = "30px " + selectedFont;
       var ctx = modalCanvas.getContext("2d");
       ctx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
       ctx.font = font;
       ctx.fillStyle = "#000";
-      ctx.fillText("가나다", 10, 50);
+      ctx.fillText("선택된 폰트입니다.", 10, 50);
     });
 
-    modalContent.appendChild(closeButton);
+    // modalContent.appendChild(closeButton);
     modalContent.appendChild(modalTitle);
     modalContent.appendChild(select);
     modalContent.appendChild(modalCanvas);
@@ -224,9 +217,9 @@ export class FormComponent {
     modalContainer.appendChild(modalContent);
     document.body.appendChild(modalContainer);
 
-    closeButton.onclick = function () {
-      modalContainer.remove();
-    };
+    // closeButton.onclick = function () {
+    //   modalContainer.remove();
+    // };
 
     window.onclick = function (event) {
       if (event.target == modalContainer) {

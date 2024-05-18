@@ -35,7 +35,6 @@ export class CanvasBasicText {
       this.ctxElement.fillText(str[i], i * 50 + 13, 35);
     }
 
-    console.log("after load");
     this.containerElement.append(this.canvasElement);
   }
   drawGrid() {
