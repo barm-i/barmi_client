@@ -11,6 +11,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .canvas-basic-pair-wrapper {
   width: 100%;
@@ -120,4 +121,7 @@
   margin: 0%;
   z-index: 1; /* Ensure canvas is above grid */
   position: relative;
+}
+.tool-tip {
+  z-index: 5;
 }

@@ -15,7 +15,8 @@ export class CanvasBasicPair {
   isDrawing;
 
   constructor() {
-    this.canvasElement = document.createElement("canvas");
+    this.containerElement = document.createElement("div");
+    this.tooltipElements = [];
   }
 
   setDomNode(text) {
@@ -116,6 +117,7 @@ export class CanvasBasicPair {
     this.ctxElement.strokeStyle = "#fff";
   }
   clearCanvas() {
+    this.removeFeedback();
     this.ctxElement.clearRect(
       0,
       0,
@@ -124,6 +126,7 @@ export class CanvasBasicPair {
     );
   }
   async nextContent() {
+    this.removeFeedback();
     await this.fetchData();
     this.containerElement.removeChild(this.canvasTextElement.canvasElement);
     this.containerElement.removeChild(this.canvasWrapper);
@@ -164,52 +167,66 @@ export class CanvasBasicPair {
     console.log(this.text);
     window.localStorage.setItem("basicPos", current_line + 1);
   }
-  convertToImage() {
-    const imageData = this.canvasElement.toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = imageData;
-    link.download = "canvas_image.png";
-    link.click();
-    //this.showFeedBack(10, 10, "피드백을 남겨주세요");
+  async convertToImage() {
+    // const imageData = this.canvasElement.toDataURL("image/png");
+    // const link = document.createElement("a");
+    // link.href = imageData;
+    // link.download = "canvas_image.png";
+    // link.click();
+
+    this.removeFeedback();
+    const feedback = [
+      [10, 10, "feedback"],
+      [50, 10, "feedback2"],
+    ];
+    this.showFeedback(feedback);
   }
 
-  showFeedBack(x, y, msg) {
-    // 느낌표 그리기
-    this.ctxElement.fillStyle = "#FF0000"; // 빨간색
-    this.ctxElement.beginPath();
-    this.ctxElement.arc(x, y, 5, 0, 2 * Math.PI);
-    this.ctxElement.fill();
+  showFeedback(feedbackData) {
+    console.log("called");
+    feedbackData.forEach((feedback) => {
+      const x = feedback[0];
+      const y = feedback[1];
+      const text = feedback[2];
+      const image = document.createElement("img");
+      image.src = "/images/!.png";
+      image.position = "absolute";
+      image.width = 20;
+      image.height = 20;
+      image.style.left = `${x}px`;
+      image.style.top = `${y}px`;
+      image.style.position = "absolute";
+      image.style.zIndex = 5;
+      image.style.backgroundColor = "transparent";
 
-    // 마우스 이벤트 감지
-    this.canvasElement.addEventListener("mousemove", (e) => {
-      const mouseX = e.offsetX;
-      const mouseY = e.offsetY;
+      const tooltip = document.createElement("div");
+      tooltip.classList.add("tool-tip");
+      tooltip.style.position = "absolute";
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y - 30}px`;
+      tooltip.style.padding = "5px";
+      tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+      tooltip.style.color = "#fff";
+      tooltip.style.borderRadius = "3px";
+      tooltip.style.fontSize = "12px";
+      tooltip.style.display = "none";
+      tooltip.textContent = text;
 
-      // 만약 마우스가 느낌표 위에 있다면 툴팁을 표시
-      if (Math.abs(mouseX - x) < 10 && Math.abs(mouseY - y) < 10) {
-        this.showTooltip(x, y, msg);
-      } else {
-        this.hideTooltip();
-      }
+      image.addEventListener("click", () => {
+        tooltip.style.display =
+          tooltip.style.display === "none" ? "block" : "none";
+      });
+
+      this.canvasWrapper.appendChild(image);
+      this.canvasWrapper.appendChild(tooltip);
+      this.tooltipElements.push(image);
+      this.tooltipElements.push(tooltip);
     });
   }
-
-  showTooltip(x, y, msg) {
-    // 툴팁 텍스트 스타일 및 위치 설정
-    this.ctxElement.font = "12px Arial";
-    this.ctxElement.fillStyle = "black";
-    this.ctxElement.fillText(msg, x + 5, y - 5);
-  }
-
-  hideTooltip() {
-    // 툴팁을 지우는 함수
-    this.ctxElement.clearRect(
-      0,
-      0,
-      this.canvasElement.width,
-      this.canvasElement.height
-    );
-    // 기존 그림 다시 그리기
-    // this.redraw();
+  removeFeedback() {
+    this.tooltipElements.forEach((element) => {
+      this.canvasWrapper.removeChild(element);
+    });
+    this.tooltipElements = [];
   }
 }
