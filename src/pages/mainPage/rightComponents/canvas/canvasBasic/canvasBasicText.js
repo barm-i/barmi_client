@@ -28,8 +28,8 @@ export class CanvasBasicText {
       this.canvasElement.width,
       this.canvasElement.height
     );
-    //한성이 Test
-    //this.drawGrid();
+    //한성이 Test용 주석
+    this.drawGrid();
     this.ctxElement.fillStyle = "black";
     const str = text?.toString();
     for (let i = 0; i < str.length; i++) {

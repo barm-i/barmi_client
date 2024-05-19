@@ -30,6 +30,7 @@ export class CanvasBasicPair {
     this.containerElement.append(this.canvasWrapper);
   }
   initializeCanvas(text) {
+    this.text = text;
     this.canvasWrapper = document.createElement("div");
     this.canvasWrapper.className = "canvas-basic-grid-wrapper";
 
@@ -168,11 +169,39 @@ export class CanvasBasicPair {
     window.localStorage.setItem("basicPos", current_line + 1);
   }
   async convertToImage() {
-    // const imageData = this.canvasElement.toDataURL("image/png");
-    // const link = document.createElement("a");
-    // link.href = imageData;
-    // link.download = "canvas_image.png";
-    // link.click();
+    const canvasWithoutGrid = document.createElement("canvas");
+    canvasWithoutGrid.width = 800;
+    canvasWithoutGrid.height = 50;
+    canvasWithoutGrid.className = "canvas-basic-text";
+
+    const ctxWithoutGrid = canvasWithoutGrid.getContext("2d");
+    const fontName = window.localStorage.getItem("font");
+
+    ctxWithoutGrid.font = `30px ${fontName}`;
+    ctxWithoutGrid.fillStyle = "#fff";
+    ctxWithoutGrid.fillRect(
+      0,
+      0,
+      canvasWithoutGrid.width,
+      canvasWithoutGrid.height
+    );
+
+    ctxWithoutGrid.fillStyle = "black";
+    const str = this.text?.toString();
+    for (let i = 0; i < str.length; i++) {
+      ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
+    }
+    const textImageData = canvasWithoutGrid.toDataURL("image/png");
+    const textImageLink = document.createElement("a");
+    textImageLink.href = textImageData;
+    textImageLink.download = "withoutGrid.png";
+    textImageLink.click();
+
+    const canvasImageData = this.canvasElement.toDataURL("image/png");
+    const canvasImageLink = document.createElement("a");
+    canvasImageLink.href = canvasImageData;
+    canvasImageLink.download = "UserCanvas.png";
+    canvasImageLink.click();
 
     this.removeFeedback();
     const feedback = [
