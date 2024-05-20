@@ -17,7 +17,16 @@ export class MyPage {
 
     this.fontContainer = document.createElement("div");
     this.fontContainer.classList.add("font-select-container");
-    this.createFontSelector(["Share", "Share2", "Gulim"]); // 예시 폰트 목록
+    this.createFontSelector([
+      "Share",
+      "Share2",
+      "Gulim",
+      "GaramFlower",
+      "Gomshinche",
+      "Ttobagttobag",
+      "Bareunjeongsin",
+      "Okbiche",
+    ]); // 예시 폰트 목록
     this.containerElement.appendChild(this.fontContainer);
   }
 

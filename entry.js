@@ -3,6 +3,12 @@ import { FormComponent } from "./src/pages/entryPage/entryForm.js";
 const fonts = [
   new FontFace("Share", `url(Fonts/Share.ttf)`),
   new FontFace("Share2", `url(Fonts/Share2.ttf)`),
+  new FontFace("Gulim", `url(Fonts/Gulim.ttf)`),
+  new FontFace("GaramFlower", `url(Fonts/GaramFlower.ttf)`),
+  new FontFace("Gomshinche", `url(Fonts/Gomshinche.ttf)`),
+  new FontFace("Ttobagttobag", `url(Fonts/Ttobagttobag.ttf)`),
+  new FontFace("Okbiche", `url(Fonts/Okbiche.ttf)`),
+  new FontFace("Bareunjeongsin", `url(Fonts/Bareunjeongsin.ttf)`),
 ];
 fonts.forEach((font) => {
   font.load().then((loadedFont) => {
