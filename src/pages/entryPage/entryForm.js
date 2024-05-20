@@ -64,7 +64,16 @@ export class FormComponent {
         window.location.href = "/mainPage.html";
       } else {
         //register();
-        this.createFontModal(["Share", "Share2", "Gulim"]);
+        this.createFontModal([
+          "Share",
+          "Share2",
+          "Gulim",
+          "GaramFlower",
+          "Gomshinche",
+          "Ttobagttobag",
+          "Bareunjeongsin",
+          "Okbiche",
+        ]);
       }
     });
 
@@ -115,7 +124,16 @@ export class FormComponent {
         if (response.data.message === "Signed up successfully") {
           alert("회원가입 성공.");
 
-          this.createFontModal(["Gulim", "Share", "Arial"]);
+          this.createFontModal([
+            "Share",
+            "Share2",
+            "Gulim",
+            "GaramFlower",
+            "Gomshinche",
+            "Ttobagttobag",
+            "Bareunjeongsin",
+            "Okbiche",
+          ]);
         }
       } catch (error) {
         console.log(error.response);
