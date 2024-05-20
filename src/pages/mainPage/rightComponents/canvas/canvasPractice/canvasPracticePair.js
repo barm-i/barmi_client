@@ -173,13 +173,13 @@ export class CanvasPracticePair {
     const textImageLink = document.createElement("a");
     textImageLink.href = textImageData;
     textImageLink.download = "withoutGrid.png";
-    //textImageLink.click();
+    textImageLink.click();
 
     const canvasImageData = this.canvasElement.toDataURL("image/png");
     const canvasImageLink = document.createElement("a");
     canvasImageLink.href = canvasImageData;
     canvasImageLink.download = "UserCanvas.png";
-    //canvasImageLink.click();
+    canvasImageLink.click();
 
     this.removeFeedback();
     const feedback = [
