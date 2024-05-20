@@ -19,6 +19,7 @@ export class CanvasPracticePair {
   }
 
   setDomNode(text) {
+    this.text = text;
     this.isDrawing = false;
     this.containerElement = document.createElement("div");
     this.containerElement.classList.add("canvas-practice-pair-wrapper");
@@ -30,6 +31,7 @@ export class CanvasPracticePair {
   }
 
   initializeCanvas(text) {
+    this.text = text;
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
     this.canvasElement.height = 50;
@@ -171,13 +173,13 @@ export class CanvasPracticePair {
     const textImageLink = document.createElement("a");
     textImageLink.href = textImageData;
     textImageLink.download = "withoutGrid.png";
-    textImageLink.click();
+    //textImageLink.click();
 
     const canvasImageData = this.canvasElement.toDataURL("image/png");
     const canvasImageLink = document.createElement("a");
     canvasImageLink.href = canvasImageData;
     canvasImageLink.download = "UserCanvas.png";
-    canvasImageLink.click();
+    //canvasImageLink.click();
 
     this.removeFeedback();
     const feedback = [
@@ -194,7 +196,6 @@ export class CanvasPracticePair {
       const text = feedback[2];
       const image = document.createElement("img");
       image.src = "/images/!.png";
-      image.position = "absolute";
       image.width = 20;
       image.height = 20;
       image.style.left = `${x}px`;
