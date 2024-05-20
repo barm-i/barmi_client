@@ -27,11 +27,8 @@ export class CanvasContainer {
     this.canvasElement.setDomNode(root);
     this.toolBarElement.setDomNode(this, root);
 
-    let children = [
-      this.canvasElement.containerElement,
-      this.toolBarElement.containerElement,
-    ];
-    this.containerElement.append(...children);
+    this.containerElement.appendChild(this.canvasElement.containerElement);
+    this.containerElement.appendChild(this.toolBarElement.containerElement);
   }
 
   convertCanvas(root, status) {
@@ -43,11 +40,8 @@ export class CanvasContainer {
       this.canvasElement.setDomNode(root);
       this.toolBarElement.setDomNode(this, root);
 
-      let children = [
-        this.canvasElement.containerElement,
-        this.toolBarElement.containerElement,
-      ];
-      this.containerElement.append(...children);
+      this.containerElement.appendChild(this.canvasElement.containerElement);
+      this.containerElement.appendChild(this.toolBarElement.containerElement);
     } else if (status == 1) {
       this.canvasFlag = 1;
       this.canvasElement = new CanvasPractice();
@@ -55,17 +49,11 @@ export class CanvasContainer {
       this.canvasElement.setDomNode(root);
       this.toolBarElement.setDomNode(this, root);
 
-      let children = [
-        this.canvasElement.containerElement,
-        this.toolBarElement.containerElement,
-      ];
-      this.containerElement.append(...children);
+      this.containerElement.appendChild(this.canvasElement.containerElement);
+      this.containerElement.appendChild(this.toolBarElement.containerElement);
     } else if (status == 2) {
     }
   }
-
-  convertToCanvasPractice(root, status) {}
-
   convertToCanvasGameSession() {}
 
   convertToBrush() {

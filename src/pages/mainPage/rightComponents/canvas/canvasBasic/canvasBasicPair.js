@@ -127,7 +127,6 @@ export class CanvasBasicPair {
     );
   }
   async nextContent(lineNumber) {
-    console.log(lineNumber);
     this.removeFeedback();
     await this.fetchData(lineNumber);
     this.containerElement.removeChild(this.canvasTextElement.canvasElement);

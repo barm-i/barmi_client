@@ -71,15 +71,15 @@ export class CanvasBasic {
     }
   }
   nextContent() {
-    this.containerElement = document.createElement("div");
     var current_line = parseInt(window.localStorage.getItem("basicPos")) + 4;
+    console.log(current_line);
     for (const element of this.canvasElements) {
       element.nextContent(current_line);
       current_line += 1;
     }
     window.localStorage.setItem(
       "basicPos",
-      parseInt(window.localStorage.getItem("basicPos") + 4)
+      parseInt(window.localStorage.getItem("basicPos")) + 4
     );
   }
   render() {
@@ -89,4 +89,3 @@ export class CanvasBasic {
       .appendChild(this.containerElement);
   }
 }
-``;
