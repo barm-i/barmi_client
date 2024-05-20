@@ -8,11 +8,12 @@ export class MenuBar {
 
   constructor() {
     this.containerElement = document.createElement("div");
+    this.containerElement.id = "menuWrapper";
+    this.containerElement.className = "title-class component-class menu-bar";
   }
 
   setDomNode(root) {
     this.root = root;
-    this.containerElement = document.createElement("div");
     this.myPageButtonElement = document.createElement("button");
     this.basicPracticeButtonElement = document.createElement("button");
     this.practiceButtonElement = document.createElement("button");
@@ -35,7 +36,6 @@ export class MenuBar {
     this.practiceButtonElement.addEventListener("click", () => {
       this.root.convertToCanvasPractice();
     });
-
     let children = [
       this.myPageButtonElement,
       this.basicPracticeButtonElement,
@@ -43,8 +43,8 @@ export class MenuBar {
     ];
     this.containerElement.append(...children);
   }
-  render() {
-    this.setDomNode();
-    document.getElementById("menuWrapper").appendChild(this.containerElement);
+  render(root) {
+    this.setDomNode(root);
+    this.root.appendChild(this.containerElement);
   }
 }

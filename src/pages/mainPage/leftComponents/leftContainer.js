@@ -1,4 +1,5 @@
 import { MenuBar } from "./menuBar.js";
+import { LeaderBoard } from "./leaderBoard.js";
 
 export class LeftContainer {
   status = true;
@@ -7,6 +8,7 @@ export class LeftContainer {
   exceptLogoElement;
   menuElement;
   leaderBoardElement;
+  leaderBoardComponent;
   root;
 
   constructor() {
@@ -18,11 +20,10 @@ export class LeftContainer {
     this.containerElement = document.createElement("div");
     this.containerElement.className = "left-side-wrapper";
 
-    this.logoElement = document.createElement("p");
+    this.logoElement = document.createElement("div");
     this.exceptLogoElement = document.createElement("div");
     this.menuElement = document.createElement("div");
     this.menuElement.id = "menuWrapper";
-    this.leaderBoardElement = document.createElement("p");
 
     this.logoElement.classList.add("title-class", "logo");
     this.exceptLogoElement.classList.add("except-logo");
@@ -31,22 +32,17 @@ export class LeftContainer {
       "component-class",
       "menu-bar"
     );
-    this.leaderBoardElement.classList.add(
-      "title-class",
-      "component-class",
-      "leaderboard"
-    );
 
-    this.logoElement.innerText = "바르미";
-    this.leaderBoardElement.innerText = "leaderboard";
+    this.logoElement.innerText = "barmi";
 
+    this.exceptLogoElement.appendChild(this.logoElement);
+    // menu bar 컴포넌트 생성
     const menus = new MenuBar();
-    menus.setDomNode(root);
-    this.menuElement.appendChild(menus.containerElement);
+    menus.render(this.exceptLogoElement);
+    // leader board 컴포넌트 생성
+    this.leaderBoardComponent = new LeaderBoard();
+    this.leaderBoardComponent.render(this.exceptLogoElement);
 
-    this.exceptLogoElement.appendChild(this.menuElement);
-    this.exceptLogoElement.appendChild(this.leaderBoardElement);
-    this.containerElement.appendChild(this.logoElement);
     this.containerElement.appendChild(this.exceptLogoElement);
   }
   render() {
