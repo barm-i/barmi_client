@@ -22,7 +22,7 @@
   align-items: center;
   position: relative;
 
-  border: 5px solid #007bff;
+  border: 5px solid #5197e2;
 
   border-top-right-radius: 8px;
 }
@@ -34,6 +34,7 @@
   justify-content: center;
   align-items: center;
   padding: 1% 0;
+  position: relative;
 }
 .canvas-basic-text {
   font-family: "Share";

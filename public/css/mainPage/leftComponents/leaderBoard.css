@@ -8,13 +8,13 @@
   flex-direction: column;
   align-items: center;
 
-  border-left: 5px solid #007bff;
-  border-top: 5px solid #007bff;
-  border-bottom: 5px solid #007bff;
+  border-left: 5px solid #5197e2;
+  border-top: 5px solid #5197e2;
+  border-bottom: 5px solid #5197e2;
   border-bottom-left-radius: 8px;
 }
 
-.leaderboardTitle {
+.leaderboard-title {
   width: 90%;
   padding: 5px;
   margin: 5% 2%;
@@ -23,10 +23,31 @@
   font-size: 20px;
 }
 
-.rankListContainer {
+.rank-list-container {
   width: 90%;
-  height: 90%;
+  max-height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
+}
+
+.rank-row {
+  display: flex;
+  justify-content: space-between;
+  background-color: orange;
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.rank {
+  width: 20%;
+}
+
+.username {
+  width: 80%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

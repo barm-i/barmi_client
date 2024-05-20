@@ -64,6 +64,7 @@ export class CanvasBasicPair {
     });
     this.canvasElement.addEventListener("pointerdown", (e) => {
       e.preventDefault();
+
       this.isDrawing = true;
       [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
     });

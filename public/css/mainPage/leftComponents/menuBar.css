@@ -1,7 +1,7 @@
 .menu-bar {
   width: 100%;
-  border-top: 5px solid #007bff;
-  border-left: 5px solid #007bff;
+  border-top: 5px solid #5197e2;
+  border-left: 5px solid #5197e2;
 
   display: flex;
   flex-direction: column;
