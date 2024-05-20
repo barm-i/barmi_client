@@ -1,8 +1,95 @@
-.toolbar {
-  width: 90%;
-  height: 90%;
+.tool-bar {
+  background-color: #fff;
+  width: 100%;
+  height: 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 5px solid #007bff;
+  border-right: 5px solid #007bff;
+  border-bottom: 5px solid #007bff;
+  border-bottom-right-radius: 8px;
+}
+
+.tool-btn {
+  width: 100%;
+  height: 85%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5%;
+}
+
+.painting-tool-container,
+.move-container {
+  display: flex;
+  height: 100%;
+}
+
+.painting-tool-container {
+  column-gap: 2%;
+  width: 20%;
+}
+
+.move-container {
+  width: 15%;
+}
+
+#brush-btn,
+#eraser-btn,
+#clear-btn,
+#next-btn,
+#prev-btn {
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: auto;
+}
+#brush-btn,
+#eraser-btn,
+#clear-btn {
+  width: 25%;
+  background-color: rgba(0, 123, 255, 0.5);
+  border-radius: 15px;
+  transition: all 0.3s;
+}
+
+#brush-btn {
+  background-image: url("../../../icons/pen.png");
+}
+
+#eraser-btn {
+  background-image: url("../../../icons/eraser.png");
+}
+
+#clear-btn {
+  background-image: url("../../../icons/clear.png");
+}
+
+#prev-btn {
+  background-image: url("../../../icons/move.png");
+  transform: scaleX(-1);
+  transition: all 0.3s;
+}
+
+#next-btn {
+  background-image: url("../../../icons/move.png");
+  transition: all 0.3s;
+}
+
+#send-btn {
+  width: 25%; /* Adjust as needed to ensure buttons are squares and fit the toolbar */
+}
+
+#brush-btn:hover,
+#eraser-btn:hover,
+#clear-btn:hover {
+  background-color: rgba(0, 123, 255, 0.8);
+}
+
+#next-btn:hover {
+  transform: scale(1.1);
+}
+
+#prev-btn:hover {
+  transform: scaleX(-1.1) scaleY(1.1);
 }

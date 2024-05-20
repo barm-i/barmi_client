@@ -126,6 +126,16 @@ export class CanvasBasicPair {
       this.canvasElement.height
     );
   }
+  async prevContent(lineNumber) {
+    this.removeFeedback();
+    await this.fetchData(lineNumber);
+    this.containerElement.removeChild(this.canvasTextElement.canvasElement);
+    this.containerElement.removeChild(this.canvasWrapper);
+    this.canvasTextElement.setDomNode(this.text);
+    this.initializeCanvas(this.text);
+    this.containerElement.appendChild(this.canvasTextElement.canvasElement);
+    this.containerElement.appendChild(this.canvasWrapper);
+  }
   async nextContent(lineNumber) {
     this.removeFeedback();
     await this.fetchData(lineNumber);

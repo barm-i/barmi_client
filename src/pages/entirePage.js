@@ -30,15 +30,19 @@ export class EntirePage {
   }
 
   convertToMainPage() {
+    console.log("mainpageconverter");
     this.rightElement.convertToMyPage(this);
   }
   convertToCanvasBasic() {
+    console.log("basicpageconverter");
     this.rightElement.convertToCanvasBasic(this);
   }
   convertToGame() {
+    console.log("gamepageconverter");
     this.rightElement.convertToCanvasGame(this);
   }
   convertToCanvasPractice() {
+    console.log("practicepageconverter");
     this.rightElement.convertToCanvasPractice(this);
   }
 }

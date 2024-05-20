@@ -76,6 +76,9 @@ export class CanvasContainer {
       element.clearCanvas();
     }
   }
+  prevContent() {
+    this.canvasElement.prevContent();
+  }
   nextContent() {
     this.canvasElement.nextContent();
   }

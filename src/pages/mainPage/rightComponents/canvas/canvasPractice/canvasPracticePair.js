@@ -95,6 +95,16 @@ export class CanvasPracticePair {
       this.canvasElement.height
     );
   }
+  async prevContent(lineNumber) {
+    this.removeFeedback();
+    await this.fetchData(lineNumber);
+    this.containerElement.removeChild(this.canvasTextElement.canvasElement);
+    this.containerElement.removeChild(this.canvasElement);
+    this.canvasTextElement.setDomNode(this.text);
+    this.initializeCanvas(this.text);
+    this.containerElement.appendChild(this.canvasTextElement.canvasElement);
+    this.containerElement.appendChild(this.canvasElement);
+  }
   async nextContent(lineNumber) {
     this.removeFeedback();
     await this.fetchData(lineNumber);
