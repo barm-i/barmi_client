@@ -2,12 +2,13 @@ export class LeaderBoard {
   containerElement;
   titleElement;
   rankListContainer;
+  rankTable;
   root;
 
   constructor() {
     this.containerElement = document.createElement("div");
     this.containerElement.id = "leaderboard";
-    this.titleElement = document.createElement("p");
+    this.titleElement = document.createElement("div");
   }
 
   updateRankList(users) {
@@ -32,7 +33,7 @@ export class LeaderBoard {
       row.appendChild(usernameDiv);
 
       // Append the row to rankListContainer
-      this.rankListContainer.appendChild(row);
+      this.rankTable.appendChild(row);
     });
   }
 
@@ -49,6 +50,11 @@ export class LeaderBoard {
     this.rankListContainer = document.createElement("div");
     this.rankListContainer.classList.add("rank-list-container");
 
+    this.rankTable = document.createElement("div");
+    this.rankTable.classList.add("rank-table");
+
+    this.rankListContainer.appendChild(this.rankTable);
+
     // append children to container
     this.containerElement.appendChild(this.titleElement);
     this.containerElement.appendChild(this.rankListContainer);
@@ -62,7 +68,7 @@ export class LeaderBoard {
       "user4",
       "user5",
       "user6",
-      "`user7",
+      "user7",
       "user8",
       "user9",
       "user10",

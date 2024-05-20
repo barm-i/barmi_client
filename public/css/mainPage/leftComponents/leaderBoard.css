@@ -12,6 +12,8 @@
   border-top: 5px solid #5197e2;
   border-bottom: 5px solid #5197e2;
   border-bottom-left-radius: 8px;
+
+  overflow: hidden;
 }
 
 .leaderboard-title {
@@ -29,20 +31,65 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll;
+}
+
+.rank-table {
+  width: 100%;
+  max-height: inherit;
+  overflow: scroll;
+}
+
+.rank-table::-webkit-scrollbar {
+  width: 10px;
+}
+
+.rank-table::-webkit-scrollbar {
+  width: 10px;
+}
+.rank-table::-webkit-scrollbar-track {
+  background-color: rgb(220, 218, 218);
+}
+.rank-table::-webkit-scrollbar-thumb {
+  background-color: rgb(167, 218, 239);
+}
+.rank-table::-webkit-scrollbar-button {
+  display: none;
+}
+.rank-table::-webkit-scrollbar-track:horizontal {
+  display: none;
+}
+
+/* hover 효과 */
+.rank-table::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(67, 166, 237);
+}
+
+/* 코너에 라운드 효과 */
+.rank-table::-webkit-scrollbar-track,
+.rank-table::-webkit-scrollbar-thumb {
+  border-radius: 5px;
 }
 
 .rank-row {
   display: flex;
   justify-content: space-between;
-  background-color: orange;
-  width: 100%;
-  padding: 5px;
+  background-color: rgb(72, 139, 227);
+  width: 95%;
+  padding: 5px 0;
   box-sizing: border-box;
+  border-bottom: 0.5px solid #accdf0;
+
+  font-size: 12px;
+  text-align: center;
 }
 
 .rank {
   width: 20%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border-right: 1px solid #fff;
+  text-align: center;
 }
 
 .username {
@@ -50,4 +97,5 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  text-align: center;
 }
