@@ -9,10 +9,13 @@ export class CanvasPracticePair {
   canvasElement;
   ctxElement;
 
+  tooltipElements;
+
   isDrawing;
 
   constructor() {
     this.canvasElement = document.createElement("canvas");
+    this.tooltipElements = [];
   }
 
   setDomNode(text) {
@@ -73,17 +76,18 @@ export class CanvasPracticePair {
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 5;
+    this.ctxElement.lineWidth = 1;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }
   convertToEraser() {
     this.ctxElement.fillStyle = "#fff";
-    this.ctxElement.lineWidth = 10;
+    this.ctxElement.lineWidth = 5;
     this.ctxElement.lineCap = "round";
     this.ctxElement.strokeStyle = "#fff";
   }
   clearCanvas() {
+    this.removeFeedback();
     this.ctxElement.clearRect(
       0,
       0,
@@ -91,8 +95,10 @@ export class CanvasPracticePair {
       this.canvasElement.height
     );
   }
-  async nextContent() {
-    await this.fetchData();
+  async nextContent(lineNumber) {
+    this.removeFeedback();
+    await this.fetchData(lineNumber);
+
     this.containerElement.removeChild(this.canvasTextElement.canvasElement);
     this.containerElement.removeChild(this.canvasElement);
     this.canvasTextElement.setDomNode(this.text);
@@ -100,12 +106,10 @@ export class CanvasPracticePair {
     this.containerElement.appendChild(this.canvasTextElement.canvasElement);
     this.containerElement.appendChild(this.canvasElement);
   }
-  async fetchData() {
+  async fetchData(lineNumber) {
     const content = await fetch("/contents/content.txt");
     const data = await content.text();
-    const current_line =
-      parseInt(window.localStorage.getItem("practicePos")) || 0;
-
+    var current_line = lineNumber || 0;
     const chunks = [];
     let currentChunk = "";
     let charCount = 0;
@@ -125,25 +129,105 @@ export class CanvasPracticePair {
         charCount = 0;
       }
     }
-    // 마지막 남은 부분 추가
     if (currentChunk.length > 0) {
       chunks.push(currentChunk);
     }
     this.text = chunks[current_line]?.toString();
-    console.log(this.text);
-    window.localStorage.setItem("practicePos", current_line + 1);
   }
-  convertToImage() {
-    //const imageData = this.canvasElement.toDataURL("image/png");
-    // const link = document.createElement("a");
-    // link.href = imageData;
-    // link.download = "canvas_image.png";
-    // link.click();
+  async convertToImage() {
+    const canvasWithoutGrid = document.createElement("canvas");
+    canvasWithoutGrid.width = 800;
+    canvasWithoutGrid.height = 50;
+    canvasWithoutGrid.className = "canvas-practice-text";
 
-    // TODO :  이미지 전송 API test code. 추후 삭제
-    sendLetterImageToServer(
-      this.canvasElement, // canvas element reference
-      "http://localhost:8080/api/upload_image" // api path
+    const ctxWithoutGrid = canvasWithoutGrid.getContext("2d");
+    const fontName = window.localStorage.getItem("font");
+
+    ctxWithoutGrid.font = `30px ${fontName}`;
+    ctxWithoutGrid.fillStyle = "#fff";
+    ctxWithoutGrid.fillRect(
+      0,
+      0,
+      canvasWithoutGrid.width,
+      canvasWithoutGrid.height
     );
+
+    ctxWithoutGrid.fillStyle = "black";
+    const str = this.text?.toString();
+    for (let i = 0; i < str.length; i++) {
+      ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
+    }
+    const textImageData = canvasWithoutGrid.toDataURL("image/png");
+    const textImageLink = document.createElement("a");
+    textImageLink.href = textImageData;
+    textImageLink.download = "withoutGrid.png";
+    textImageLink.click();
+
+    const canvasImageData = this.canvasElement.toDataURL("image/png");
+    const canvasImageLink = document.createElement("a");
+    canvasImageLink.href = canvasImageData;
+    canvasImageLink.download = "UserCanvas.png";
+    canvasImageLink.click();
+
+    this.removeFeedback();
+    const feedback = [
+      [10, 10, "feedback"],
+      [50, 10, "feedback2"],
+    ];
+    this.showFeedback(feedback);
+  }
+
+  showFeedback(feedbackData) {
+    feedbackData.forEach((feedback) => {
+      const x = feedback[0];
+      const y = feedback[1];
+      const text = feedback[2];
+      const image = document.createElement("img");
+      image.src = "/images/!.png";
+      image.position = "absolute";
+      image.width = 20;
+      image.height = 20;
+      image.style.left = `${x}px`;
+      image.style.top = `${y}px`;
+      image.style.position = "absolute";
+      image.style.zIndex = 5;
+      image.style.backgroundColor = "transparent";
+
+      const tooltip = document.createElement("div");
+      tooltip.classList.add("tool-tip");
+      tooltip.style.position = "absolute";
+      tooltip.style.left = `${x}px`;
+      tooltip.style.top = `${y - 30}px`;
+      tooltip.style.padding = "5px";
+      tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+      tooltip.style.color = "#fff";
+      tooltip.style.borderRadius = "3px";
+      tooltip.style.fontSize = "12px";
+      tooltip.style.display = "none";
+      tooltip.textContent = text;
+
+      image.addEventListener("click", () => {
+        tooltip.style.display =
+          tooltip.style.display === "none" ? "block" : "none";
+      });
+
+      this.containerElement.appendChild(image);
+      this.containerElement.appendChild(tooltip);
+      this.tooltipElements.push(image);
+      this.tooltipElements.push(tooltip);
+    });
+  }
+  removeFeedback() {
+    this.tooltipElements.forEach((element) => {
+      this.containerElement.removeChild(element);
+    });
+    this.tooltipElements = [];
   }
 }
+// convertToImage() {
+//   // TODO :  이미지 전송 API test code. 추후 삭제
+//   sendLetterImageToServer(
+//     this.canvasElement, // canvas element reference
+//     "http://localhost:8080/api/upload_image" // api path
+//   );
+// }

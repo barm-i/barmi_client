@@ -113,7 +113,7 @@ export class CanvasBasicPair {
   }
   convertToEraser() {
     this.ctxElement.fillStyle = "#fff";
-    this.ctxElement.lineWidth = 10;
+    this.ctxElement.lineWidth = 5;
     this.ctxElement.lineCap = "round";
     this.ctxElement.strokeStyle = "#fff";
   }
@@ -209,7 +209,6 @@ export class CanvasBasicPair {
   }
 
   showFeedback(feedbackData) {
-    console.log("called");
     feedbackData.forEach((feedback) => {
       const x = feedback[0];
       const y = feedback[1];
