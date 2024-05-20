@@ -26,4 +26,5 @@ const fontPromises = fonts.map((font) =>
 Promise.all(fontPromises).then(() => {
   const entirePage = new EntirePage();
   entirePage.render();
+  console.log("Asdfasdf");
 });
