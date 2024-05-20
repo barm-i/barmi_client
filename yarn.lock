@@ -2268,6 +2268,8 @@ __metadata:
     axios: "npm:^1.6.8"
     babel-loader: "npm:^9.1.3"
     socket.io-client: "npm:^4.7.5"
+    sweetalert: "npm:^2.1.2"
+    sweetalert2: "npm:^11.11.0"
     vite: "npm:^5.2.11"
     webpack: "npm:^5.91.0"
     webpack-cli: "npm:^5.1.4"
@@ -2494,6 +2496,13 @@ __metadata:
   version: 1.5.2
   resolution: "es-module-lexer@npm:1.5.2"
   checksum: 10c0/20b6c668691ee81781a0ae56930560c23aa28fb934fce9137820f12ae3726a25626010cbd8ed1775c217d3bae108e23dd7b805f923133dc633bfbbc2b0020524
+  languageName: node
+  linkType: hard
+
+"es6-object-assign@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "es6-object-assign@npm:1.1.0"
+  checksum: 10c0/11c165ae16866aca897dee9b689402f0e871589e859809343ef9e0fdd067133684db16fd15abdba2a99e7319222b9f43e6b747baabb909cee9d0ecbac8deebee
   languageName: node
   linkType: hard
 
@@ -3472,6 +3481,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"promise-polyfill@npm:^6.0.2":
+  version: 6.1.0
+  resolution: "promise-polyfill@npm:6.1.0"
+  checksum: 10c0/8fa1172b1b50efbc43f5eb8772e6a526ef70b9856f3d49172c8bea0ccee4413b29eb5d7f8b44015fe43b2d77a9db16d4c49d337b48b218661f92e5ab1c1fc672
+  languageName: node
+  linkType: hard
+
 "promise-retry@npm:^2.0.1":
   version: 2.0.1
   resolution: "promise-retry@npm:2.0.1"
@@ -3938,6 +3954,23 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10c0/6c4032340701a9950865f7ae8ef38578d8d7053f5e10518076e6554a9381fa91bd9c6850193695c141f32b21f979c985db07265a758867bac95de05f7d8aeb39
+  languageName: node
+  linkType: hard
+
+"sweetalert2@npm:^11.11.0":
+  version: 11.11.0
+  resolution: "sweetalert2@npm:11.11.0"
+  checksum: 10c0/7cd9d735f0516a3ef5f7eac67e37a4a8ffbc5f94c6f0c7f7020cabf99ecc5eadba081a00d3529ef4e1cdb585693ec8606ab1b3d3f2c70c9e46fc829e9731b83e
+  languageName: node
+  linkType: hard
+
+"sweetalert@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "sweetalert@npm:2.1.2"
+  dependencies:
+    es6-object-assign: "npm:^1.1.0"
+    promise-polyfill: "npm:^6.0.2"
+  checksum: 10c0/a4ae074efc40375d74f499242ec02ff4cb8a19b031e666a4324438fdc655f6d0fa78b600160b374cc78ae6639bd3e0f4a697a46869d75575ece7c3522d7c093a
   languageName: node
   linkType: hard
 

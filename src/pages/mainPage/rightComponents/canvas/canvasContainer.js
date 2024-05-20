@@ -1,5 +1,6 @@
 import { CanvasBasic } from "./canvasBasic/canvasBasic.js";
 import { CanvasPractice } from "./canvasPractice/canvasPractice.js";
+import { CanvasGame } from "./canvasGame/canvasGame.js";
 import { ToolBar } from "./toolBar.js";
 
 export class CanvasContainer {
@@ -39,7 +40,6 @@ export class CanvasContainer {
       this.toolBarElement = new ToolBar();
       this.canvasElement.setDomNode(root);
       this.toolBarElement.setDomNode(this, root);
-
       this.containerElement.appendChild(this.canvasElement.containerElement);
       this.containerElement.appendChild(this.toolBarElement.containerElement);
     } else if (status == 1) {
@@ -48,13 +48,18 @@ export class CanvasContainer {
       this.toolBarElement = new ToolBar();
       this.canvasElement.setDomNode(root);
       this.toolBarElement.setDomNode(this, root);
-
       this.containerElement.appendChild(this.canvasElement.containerElement);
       this.containerElement.appendChild(this.toolBarElement.containerElement);
     } else if (status == 2) {
+      this.canvasFlag = 2;
+      this.canvasElement = new CanvasGame();
+      this.toolBarElement = new ToolBar();
+      this.canvasElement.setDomNode(root);
+      this.toolBarElement.setDomNode(this, root);
+      this.containerElement.appendChild(this.canvasElement.containerElement);
+      this.containerElement.appendChild(this.toolBarElement.containerElement);
     }
   }
-  convertToCanvasGameSession() {}
 
   convertToBrush() {
     for (const element of this.canvasElement.canvasElements) {

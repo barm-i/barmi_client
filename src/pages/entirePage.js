@@ -30,10 +30,13 @@ export class EntirePage {
   }
 
   convertToMainPage() {
-    this.rightElement.convertToMyPage();
+    this.rightElement.convertToMyPage(this);
   }
   convertToCanvasBasic() {
     this.rightElement.convertToCanvasBasic(this);
+  }
+  convertToGame() {
+    this.rightElement.convertToCanvasGame(this);
   }
   convertToCanvasPractice() {
     this.rightElement.convertToCanvasPractice(this);
