@@ -1,0 +1,28 @@
+.mypage {
+  width: 800px;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+  margin: 5%;
+}
+.font-select-container {
+  width: 500px; /* 너비 조정 */
+  height: 200px; /* 높이 조정 */
+  justify-content: flex-start; /* 왼쪽 정렬 */
+  align-items: center;
+
+  padding: 10px; /* 간격 조절 */
+}
+
+.font-preview-canvas {
+  margin-left: auto; /* 미리보기 캔버스를 오른쪽으로 이동 */
+}
+
+.font-select {
+  margin-right: 10px; /* 선택창과 선택 버튼 사이 간격 조절 */
+  margin-left: 5px; /* 선택창과 선택 버튼 사이 간격 조절 */
+}
+
+.font-select-button {
+  cursor: pointer; /* 버튼 커서 설정 */
+}

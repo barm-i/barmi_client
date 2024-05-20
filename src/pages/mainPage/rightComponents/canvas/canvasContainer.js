@@ -84,9 +84,7 @@ export class CanvasContainer {
     }
   }
   nextContent() {
-    for (const element of this.canvasElement.canvasElements) {
-      element.nextContent();
-    }
+    this.canvasElement.nextContent();
   }
   convertToImage() {
     for (const element of this.canvasElement.canvasElements) {

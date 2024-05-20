@@ -107,7 +107,7 @@ export class CanvasBasicPair {
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 5;
+    this.ctxElement.lineWidth = 1;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }
@@ -126,9 +126,10 @@ export class CanvasBasicPair {
       this.canvasElement.height
     );
   }
-  async nextContent() {
+  async nextContent(lineNumber) {
+    console.log(lineNumber);
     this.removeFeedback();
-    await this.fetchData();
+    await this.fetchData(lineNumber);
     this.containerElement.removeChild(this.canvasTextElement.canvasElement);
     this.containerElement.removeChild(this.canvasWrapper);
     this.canvasTextElement.setDomNode(this.text);
@@ -136,11 +137,10 @@ export class CanvasBasicPair {
     this.containerElement.appendChild(this.canvasTextElement.canvasElement);
     this.containerElement.appendChild(this.canvasWrapper);
   }
-  async fetchData() {
+  async fetchData(lineNumber) {
     const content = await fetch("/contents/content.txt");
     const data = await content.text();
-    const current_line = parseInt(window.localStorage.getItem("basicPos")) || 0;
-
+    var current_line = lineNumber || 0;
     const chunks = [];
     let currentChunk = "";
     let charCount = 0;
@@ -160,14 +160,12 @@ export class CanvasBasicPair {
         charCount = 0;
       }
     }
-    // 마지막 남은 부분 추가
     if (currentChunk.length > 0) {
       chunks.push(currentChunk);
     }
     this.text = chunks[current_line]?.toString();
-    console.log(this.text);
-    window.localStorage.setItem("basicPos", current_line + 1);
   }
+
   async convertToImage() {
     const canvasWithoutGrid = document.createElement("canvas");
     canvasWithoutGrid.width = 800;

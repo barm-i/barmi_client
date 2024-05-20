@@ -40,7 +40,7 @@ export class CanvasBasic {
   async fetchData() {
     const content = await fetch("/contents/content.txt");
     const data = await content.text();
-    const current_line = parseInt(window.localStorage.getItem("basicPos")) || 0;
+    var current_line = parseInt(window.localStorage.getItem("basicPos"));
 
     const chunks = [];
     let currentChunk = "";
@@ -69,12 +69,18 @@ export class CanvasBasic {
     for (let i = current_line; i < current_line + 4 && i < chunks.length; i++) {
       this.strings.push(chunks[i]);
     }
-    console.log(this.strings);
-    window.localStorage.setItem("basicPos", current_line + 4);
   }
   nextContent() {
     this.containerElement = document.createElement("div");
-    this.setDomNode(this.root);
+    var current_line = parseInt(window.localStorage.getItem("basicPos")) + 4;
+    for (const element of this.canvasElements) {
+      element.nextContent(current_line);
+      current_line += 1;
+    }
+    window.localStorage.setItem(
+      "basicPos",
+      parseInt(window.localStorage.getItem("basicPos") + 4)
+    );
   }
   render() {
     this.setDomNode();
