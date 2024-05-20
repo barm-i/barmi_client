@@ -2,7 +2,7 @@ import { CanvasContainer } from "./canvas/canvasContainer.js";
 import { MyPage } from "./myPage.js";
 
 export class RightContainer {
-  status; //0 = basic, 1 = practice, 2 = mypage
+  status; //0 = basic, 1 = practice, 2 = mypage, 3 = game
   containerElement;
   canvasContainerElement;
   mypageContainerElement;
@@ -62,6 +62,21 @@ export class RightContainer {
       this.canvasContainerElement.containerElement
     );
     this.status = 1;
+  }
+  convertToCanvasGame() {
+    if (this.status == 2) {
+      this.removeMyPage();
+      this.canvasContainerElement = new CanvasContainer();
+      this.canvasContainerElement.id = "canvas-container";
+      this.canvasContainerElement.setDomNode(this.root);
+    } else {
+      this.removeCanvas();
+    }
+    this.canvasContainerElement.convertCanvas(this.root, 2);
+    this.containerElement.appendChild(
+      this.canvasContainerElement.containerElement
+    );
+    this.status = 3;
   }
 
   convertToMyPage() {

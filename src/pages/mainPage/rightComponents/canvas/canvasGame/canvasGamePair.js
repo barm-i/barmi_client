@@ -1,55 +1,38 @@
-import { CanvasBasicText } from "./canvasBasicText.js";
+import { CanvasGameText } from "./canvasGameText.js";
 
-export class CanvasBasicPair {
+export class CanvasGamePair {
   text;
   containerElement;
 
   canvasTextElement;
   canvasElement;
   ctxElement;
-  gridElement;
-  gridCtxElement;
 
   tooltipElements;
 
   isDrawing;
 
   constructor() {
-    this.containerElement = document.createElement("div");
+    this.canvasElement = document.createElement("canvas");
     this.tooltipElements = [];
   }
 
   setDomNode(text) {
     this.isDrawing = false;
     this.containerElement = document.createElement("div");
-    this.containerElement.classList.add("canvas-basic-pair-wrapper");
+    this.containerElement.classList.add("canvas-practice-pair-wrapper");
 
-    this.canvasTextElement = new CanvasBasicText();
+    this.canvasTextElement = new CanvasGameText();
     this.initializeCanvas(text);
     this.containerElement.append(this.canvasTextElement.canvasElement);
-    this.containerElement.append(this.canvasWrapper);
+    this.containerElement.append(this.canvasElement);
   }
-  initializeCanvas(text) {
-    this.text = text;
-    this.canvasWrapper = document.createElement("div");
-    this.canvasWrapper.className = "canvas-basic-grid-wrapper";
 
+  initializeCanvas(text) {
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
     this.canvasElement.height = 50;
-    this.canvasElement.className = "canvas-basic";
-
-    this.gridElement = document.createElement("canvas");
-    this.gridElement.className = "grid-basic";
-    this.gridElement.width = 800;
-    this.gridElement.height = 50;
-    this.gridCtxElement = this.gridElement.getContext("2d");
-    this.gridCtxElement.clearRect(
-      0,
-      0,
-      this.gridElement.width,
-      this.gridElement.height
-    );
+    this.canvasElement.className = "canvas-practice";
 
     this.ctxElement = this.canvasElement.getContext("2d");
     this.ctxElement.fillStyle = "#fff";
@@ -64,7 +47,6 @@ export class CanvasBasicPair {
     });
     this.canvasElement.addEventListener("pointerdown", (e) => {
       e.preventDefault();
-
       this.isDrawing = true;
       [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
     });
@@ -87,24 +69,9 @@ export class CanvasBasicPair {
     );
 
     this.canvasTextElement.setDomNode(text);
-    this.drawGrid();
-
-    this.canvasWrapper.append(this.canvasElement);
-    this.canvasWrapper.append(this.gridElement);
   }
   render() {
     this.setDomNode();
-  }
-  drawGrid() {
-    const gridSize = 50; // 격자 크기
-    const gridColor = "black"; // 격자 색상
-    this.gridCtxElement.beginPath();
-    for (let x = 0; x <= this.canvasElement.width; x += gridSize) {
-      this.gridCtxElement.moveTo(x, 0);
-      this.gridCtxElement.lineTo(x, this.canvasElement.height);
-    }
-    this.gridCtxElement.strokeStyle = gridColor;
-    this.gridCtxElement.stroke();
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
@@ -127,25 +94,16 @@ export class CanvasBasicPair {
       this.canvasElement.height
     );
   }
-  async prevContent(lineNumber) {
-    this.removeFeedback();
-    await this.fetchData(lineNumber);
-    this.containerElement.removeChild(this.canvasTextElement.canvasElement);
-    this.containerElement.removeChild(this.canvasWrapper);
-    this.canvasTextElement.setDomNode(this.text);
-    this.initializeCanvas(this.text);
-    this.containerElement.appendChild(this.canvasTextElement.canvasElement);
-    this.containerElement.appendChild(this.canvasWrapper);
-  }
   async nextContent(lineNumber) {
     this.removeFeedback();
     await this.fetchData(lineNumber);
+
     this.containerElement.removeChild(this.canvasTextElement.canvasElement);
-    this.containerElement.removeChild(this.canvasWrapper);
+    this.containerElement.removeChild(this.canvasElement);
     this.canvasTextElement.setDomNode(this.text);
     this.initializeCanvas(this.text);
     this.containerElement.appendChild(this.canvasTextElement.canvasElement);
-    this.containerElement.appendChild(this.canvasWrapper);
+    this.containerElement.appendChild(this.canvasElement);
   }
   async fetchData(lineNumber) {
     const content = await fetch("/contents/content.txt");
@@ -175,12 +133,11 @@ export class CanvasBasicPair {
     }
     this.text = chunks[current_line]?.toString();
   }
-
   async convertToImage() {
     const canvasWithoutGrid = document.createElement("canvas");
     canvasWithoutGrid.width = 800;
     canvasWithoutGrid.height = 50;
-    canvasWithoutGrid.className = "canvas-basic-text";
+    canvasWithoutGrid.className = "canvas-practice-text";
 
     const ctxWithoutGrid = canvasWithoutGrid.getContext("2d");
     const fontName = window.localStorage.getItem("font");
@@ -253,16 +210,23 @@ export class CanvasBasicPair {
           tooltip.style.display === "none" ? "block" : "none";
       });
 
-      this.canvasWrapper.appendChild(image);
-      this.canvasWrapper.appendChild(tooltip);
+      this.containerElement.appendChild(image);
+      this.containerElement.appendChild(tooltip);
       this.tooltipElements.push(image);
       this.tooltipElements.push(tooltip);
     });
   }
   removeFeedback() {
     this.tooltipElements.forEach((element) => {
-      this.canvasWrapper.removeChild(element);
+      this.containerElement.removeChild(element);
     });
     this.tooltipElements = [];
   }
 }
+// convertToImage() {
+//   // TODO :  이미지 전송 API test code. 추후 삭제
+//   sendLetterImageToServer(
+//     this.canvasElement, // canvas element reference
+//     "http://localhost:8080/api/upload_image" // api path
+//   );
+// }

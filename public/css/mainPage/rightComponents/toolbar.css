@@ -38,7 +38,8 @@
 #eraser-btn,
 #clear-btn,
 #next-btn,
-#prev-btn {
+#prev-btn,
+#send-btn {
   background-size: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -78,6 +79,7 @@
 
 #send-btn {
   width: 25%; /* Adjust as needed to ensure buttons are squares and fit the toolbar */
+  background-image: url("../../../icons/submit.png");
 }
 
 #brush-btn:hover,

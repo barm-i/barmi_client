@@ -66,7 +66,7 @@ export class ToolBar {
 
     this.feedBackBtnElement.id = "send-btn";
     this.feedBackBtnElement.className = "tool-btn";
-    this.feedBackBtnElement.textContent = "피드백";
+    this.feedBackBtnElement.textContent = "채점";
 
     this.pencilBtnElement.addEventListener("click", () => {
       this.parent.convertToBrush();
@@ -78,8 +78,7 @@ export class ToolBar {
       this.parent.clearCanvas();
     });
     this.prevBtnElement.addEventListener("click", () => {
-      // TODO : 이전 버튼 기능 구현 필요
-      //this.parent.prevContent();
+      this.parent.prevContent();
     });
     this.nextBtnElement.addEventListener("click", () => {
       this.parent.nextContent();

@@ -70,9 +70,21 @@ export class CanvasBasic {
       this.strings.push(chunks[i]);
     }
   }
+  prevContent() {
+    var current_line = parseInt(window.localStorage.getItem("basicPos")) - 4;
+    if (current_line < 0) {
+      current_line = 0;
+    }
+    var pos = current_line;
+    for (const element of this.canvasElements) {
+      element.prevContent(current_line);
+      current_line += 1;
+    }
+
+    window.localStorage.setItem("basicPos", pos);
+  }
   nextContent() {
     var current_line = parseInt(window.localStorage.getItem("basicPos")) + 4;
-    console.log(current_line);
     for (const element of this.canvasElements) {
       element.nextContent(current_line);
       current_line += 1;

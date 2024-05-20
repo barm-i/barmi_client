@@ -1,5 +1,6 @@
-// import { socket } from "./socket.js";
 import { EntirePage } from "./pages/entirePage.js";
+import { ClientSocket } from "./socket.js";
+import { socket } from "./socket.js";
 
 window.localStorage.setItem("basicPos", 0);
 window.localStorage.setItem("practicePos", 0);
@@ -25,6 +26,6 @@ const fontPromises = fonts.map((font) =>
 
 Promise.all(fontPromises).then(() => {
   const entirePage = new EntirePage();
+  let clientSocket = new ClientSocket(entirePage, socket);
   entirePage.render();
-  console.log("Asdfasdf");
 });

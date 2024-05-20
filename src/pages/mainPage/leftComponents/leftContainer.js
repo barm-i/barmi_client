@@ -38,7 +38,7 @@ export class LeftContainer {
     this.exceptLogoElement.appendChild(this.logoElement);
     // menu bar 컴포넌트 생성
     const menus = new MenuBar();
-    menus.render(this.exceptLogoElement);
+    menus.render(root, this.exceptLogoElement);
     // leader board 컴포넌트 생성
     this.leaderBoardComponent = new LeaderBoard();
     this.leaderBoardComponent.render(this.exceptLogoElement);

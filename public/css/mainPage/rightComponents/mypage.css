@@ -1,9 +1,12 @@
 .mypage {
-  width: 800px;
-  height: 500px;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin: 5%;
+  flex: 1;
+
+  border: 5px solid #007bff;
+  border-top-right-radius: 8px;
 }
 .font-select-container {
   width: 500px; /* 너비 조정 */
@@ -12,6 +15,8 @@
   align-items: center;
 
   padding: 10px; /* 간격 조절 */
+  border: 5px solid #007bff;
+  border-top-right-radius: 8px;
 }
 
 .font-preview-canvas {

@@ -5,6 +5,7 @@ export class MenuBar {
   practiceButtonElement;
   fontGenerateButtonElement;
   root;
+  parent;
 
   constructor() {
     this.containerElement = document.createElement("div");
@@ -12,8 +13,9 @@ export class MenuBar {
     this.containerElement.className = "title-class component-class menu-bar";
   }
 
-  setDomNode(root) {
+  setDomNode(root, parent) {
     this.root = root;
+    this.parent = parent;
     this.myPageButtonElement = document.createElement("button");
     this.basicPracticeButtonElement = document.createElement("button");
     this.practiceButtonElement = document.createElement("button");
@@ -43,8 +45,8 @@ export class MenuBar {
     ];
     this.containerElement.append(...children);
   }
-  render(root) {
+  render(root, parent) {
     this.setDomNode(root);
-    this.root.appendChild(this.containerElement);
+    parent.appendChild(this.containerElement);
   }
 }

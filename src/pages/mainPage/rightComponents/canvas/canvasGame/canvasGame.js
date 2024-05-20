@@ -1,6 +1,6 @@
-import { CanvasPracticePair } from "./canvasPracticePair.js";
+import { CanvasGamePair } from "./canvasGamePair.js";
 
-export class CanvasPractice {
+export class CanvasGame {
   containerElement;
   canvasElements;
   strings;
@@ -14,10 +14,10 @@ export class CanvasPractice {
     this.root = root;
     this.strings = [];
     this.containerElement = document.createElement("div");
-    const canvasElement1 = new CanvasPracticePair();
-    const canvasElement2 = new CanvasPracticePair();
-    const canvasElement3 = new CanvasPracticePair();
-    const canvasElement4 = new CanvasPracticePair();
+    const canvasElement1 = new CanvasGamePair();
+    const canvasElement2 = new CanvasGamePair();
+    const canvasElement3 = new CanvasGamePair();
+    const canvasElement4 = new CanvasGamePair();
 
     await this.fetchData();
 
@@ -69,19 +69,6 @@ export class CanvasPractice {
     for (let i = current_line; i < current_line + 4 && i < chunks.length; i++) {
       this.strings.push(chunks[i]);
     }
-  }
-  prevContent() {
-    var current_line = parseInt(window.localStorage.getItem("practicePos")) - 4;
-    if (current_line < 0) {
-      current_line = 0;
-    }
-    var pos = current_line;
-    for (const element of this.canvasElements) {
-      element.prevContent(current_line);
-      current_line += 1;
-    }
-
-    window.localStorage.setItem("practicePos", pos);
   }
   nextContent() {
     var current_line = parseInt(window.localStorage.getItem("practicePos")) + 4;
