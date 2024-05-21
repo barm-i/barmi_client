@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { SERVER_URL } from "../../../entry.js";
 export class FormComponent {
   status;
   containerElement;
@@ -60,27 +60,16 @@ export class FormComponent {
       event.preventDefault();
 
       if (this.status) {
-        //login();
-        window.location.href = "/mainPage.html";
+        login();
       } else {
-        //register();
-        this.createFontModal([
-          "Share",
-          "Share2",
-          "Gulim",
-          "GaramFlower",
-          "Gomshinche",
-          "Ttobagttobag",
-          "Bareunjeongsin",
-          "Okbiche",
-        ]);
+        register();
       }
     });
 
     const login = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/login",
+          `${SERVER_URL}/api/login`,
           JSON.stringify({
             username: this.usernameInputElement.value,
             password: this.passwordInputElement.value,
@@ -94,7 +83,7 @@ export class FormComponent {
         console.log(response);
         if (response.data.message === "success") {
           alert("로그인 성공");
-          //window.location.href = "mainPage.html";
+          window.location.href = "mainPage.html";
         }
       } catch (error) {
         console.log(error.response);
@@ -109,7 +98,7 @@ export class FormComponent {
     const register = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:8080/api/signup",
+          `${SERVER_URL}/api/signup`,
           JSON.stringify({
             username: this.usernameInputElement.value,
             password: this.passwordInputElement.value,
@@ -226,7 +215,6 @@ export class FormComponent {
       ctx.fillText("선택된 폰트입니다.", 10, 50);
     });
 
-    // modalContent.appendChild(closeButton);
     modalContent.appendChild(modalTitle);
     modalContent.appendChild(select);
     modalContent.appendChild(modalCanvas);
@@ -234,10 +222,6 @@ export class FormComponent {
 
     modalContainer.appendChild(modalContent);
     document.body.appendChild(modalContainer);
-
-    // closeButton.onclick = function () {
-    //   modalContainer.remove();
-    // };
 
     window.onclick = function (event) {
       if (event.target == modalContainer) {
@@ -247,9 +231,29 @@ export class FormComponent {
 
     fontSelectButton.onclick = function () {
       var selectedFont = select.value;
-      localStorage.setItem("font", selectedFont);
+      // localStorage.setItem("font", selectedFont);
       modalContainer.remove();
-      alert("선택된 폰트: " + selectedFont);
+
+      window.alert("선택된 폰트: " + selectedFont);
+
+      axios
+        .post(
+          `${SERVER_URL}/api/store_fontstyle`,
+          JSON.stringify({
+            fontstyle: selectedFont,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
   }
 }

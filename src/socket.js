@@ -1,8 +1,8 @@
-// import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 import io from "socket.io-client";
 import Swal from "sweetalert2";
-
-export const socket = io("http://localhost:8080");
+import { SERVER_URL } from "./main.js";
+export const SOCKET_URL = "ws://barmi-server.onrender.com";
+export const socket = io(`${SOCKET_URL}`);
 
 export const gameActions = [];
 

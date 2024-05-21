@@ -1,5 +1,7 @@
 import { FormComponent } from "./src/pages/entryPage/entryForm.js";
 
+export const SERVER_URL = "https://barmi-server.onrender.com";
+
 const fonts = [
   new FontFace("Share", `url(Fonts/Share.ttf)`),
   new FontFace("Share2", `url(Fonts/Share2.ttf)`),
@@ -15,6 +17,6 @@ fonts.forEach((font) => {
     document.fonts.add(loadedFont);
   });
 });
-
 const formComp = new FormComponent();
+console.log("entryForm");
 formComp.render();
