@@ -50,7 +50,7 @@ export class ClientSocket {
           Swal.fire({
             title: "게임 준비중",
             html: "게임이 <b></b> 초 내에 시작합니다.",
-            timer: 15000,
+            timer: 5000,
             allowOutsideClick: false,
             timerProgressBar: true,
             didOpen: () => {
