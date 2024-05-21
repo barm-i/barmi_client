@@ -98,8 +98,8 @@ export class CanvasGamePair {
   }
   async convertToImage() {
     var lineNumber = parseInt(window.localStorage.getItem("gamePos"));
-    await this.fetchData(lineNumber);
     window.localStorage.setItem("gamePos", lineNumber + 1);
+    await this.fetchData(lineNumber);
 
     const canvasWithoutGrid = document.createElement("canvas");
     canvasWithoutGrid.width = 800;
