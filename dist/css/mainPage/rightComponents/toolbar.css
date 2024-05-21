@@ -5,9 +5,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-left: 5px solid #007bff;
-  border-right: 5px solid #007bff;
-  border-bottom: 5px solid #007bff;
+  border-left: 5px solid #5197e2;
+  border-right: 5px solid #5197e2;
+  border-bottom: 5px solid #5197e2;
   border-bottom-right-radius: 8px;
 }
 
@@ -38,7 +38,8 @@
 #eraser-btn,
 #clear-btn,
 #next-btn,
-#prev-btn {
+#prev-btn,
+#send-btn {
   background-size: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -78,6 +79,7 @@
 
 #send-btn {
   width: 25%; /* Adjust as needed to ensure buttons are squares and fit the toolbar */
+  background-image: url("../../../icons/submit.png");
 }
 
 #brush-btn:hover,

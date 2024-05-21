@@ -18,9 +18,10 @@ export class CanvasGamePair {
   }
 
   setDomNode(text) {
+    this.text = text;
     this.isDrawing = false;
     this.containerElement = document.createElement("div");
-    this.containerElement.classList.add("canvas-practice-pair-wrapper");
+    this.containerElement.classList.add("canvas-game-pair-wrapper");
 
     this.canvasTextElement = new CanvasGameText();
     this.initializeCanvas(text);
@@ -29,10 +30,11 @@ export class CanvasGamePair {
   }
 
   initializeCanvas(text) {
+    this.text = text;
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
     this.canvasElement.height = 50;
-    this.canvasElement.className = "canvas-practice";
+    this.canvasElement.className = "canvas-game";
 
     this.ctxElement = this.canvasElement.getContext("2d");
     this.ctxElement.fillStyle = "#fff";
@@ -94,9 +96,45 @@ export class CanvasGamePair {
       this.canvasElement.height
     );
   }
-  async nextContent(lineNumber) {
-    this.removeFeedback();
+  async convertToImage() {
+    var lineNumber = parseInt(window.localStorage.getItem("gamePos"));
     await this.fetchData(lineNumber);
+    window.localStorage.setItem("gamePos", lineNumber + 1);
+
+    const canvasWithoutGrid = document.createElement("canvas");
+    canvasWithoutGrid.width = 800;
+    canvasWithoutGrid.height = 50;
+    canvasWithoutGrid.className = "canvas-game-text";
+
+    const ctxWithoutGrid = canvasWithoutGrid.getContext("2d");
+    const fontName = window.localStorage.getItem("font");
+
+    ctxWithoutGrid.font = `30px ${fontName}`;
+    ctxWithoutGrid.fillStyle = "#fff";
+    ctxWithoutGrid.fillRect(
+      0,
+      0,
+      canvasWithoutGrid.width,
+      canvasWithoutGrid.height
+    );
+
+    ctxWithoutGrid.fillStyle = "black";
+    const str = this.text?.toString();
+    for (let i = 0; i < str.length; i++) {
+      ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
+    }
+    const textImageData = canvasWithoutGrid.toDataURL("image/png");
+    const textImageLink = document.createElement("a");
+    textImageLink.href = textImageData;
+    textImageLink.download = "withoutGrid.png";
+    textImageLink.click();
+
+    const canvasImageData = this.canvasElement.toDataURL("image/png");
+    const canvasImageLink = document.createElement("a");
+    canvasImageLink.href = canvasImageData;
+    canvasImageLink.download = "UserCanvas.png";
+    canvasImageLink.click();
+    //TODO backend image 전송 for 점수화
 
     this.containerElement.removeChild(this.canvasTextElement.canvasElement);
     this.containerElement.removeChild(this.canvasElement);
@@ -132,95 +170,6 @@ export class CanvasGamePair {
       chunks.push(currentChunk);
     }
     this.text = chunks[current_line]?.toString();
-  }
-  async convertToImage() {
-    const canvasWithoutGrid = document.createElement("canvas");
-    canvasWithoutGrid.width = 800;
-    canvasWithoutGrid.height = 50;
-    canvasWithoutGrid.className = "canvas-practice-text";
-
-    const ctxWithoutGrid = canvasWithoutGrid.getContext("2d");
-    const fontName = window.localStorage.getItem("font");
-
-    ctxWithoutGrid.font = `30px ${fontName}`;
-    ctxWithoutGrid.fillStyle = "#fff";
-    ctxWithoutGrid.fillRect(
-      0,
-      0,
-      canvasWithoutGrid.width,
-      canvasWithoutGrid.height
-    );
-
-    ctxWithoutGrid.fillStyle = "black";
-    const str = this.text?.toString();
-    for (let i = 0; i < str.length; i++) {
-      ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
-    }
-    const textImageData = canvasWithoutGrid.toDataURL("image/png");
-    const textImageLink = document.createElement("a");
-    textImageLink.href = textImageData;
-    textImageLink.download = "withoutGrid.png";
-    textImageLink.click();
-
-    const canvasImageData = this.canvasElement.toDataURL("image/png");
-    const canvasImageLink = document.createElement("a");
-    canvasImageLink.href = canvasImageData;
-    canvasImageLink.download = "UserCanvas.png";
-    canvasImageLink.click();
-
-    this.removeFeedback();
-    const feedback = [
-      [10, 10, "feedback"],
-      [50, 10, "feedback2"],
-    ];
-    this.showFeedback(feedback);
-  }
-
-  showFeedback(feedbackData) {
-    feedbackData.forEach((feedback) => {
-      const x = feedback[0];
-      const y = feedback[1];
-      const text = feedback[2];
-      const image = document.createElement("img");
-      image.src = "/images/!.png";
-      image.position = "absolute";
-      image.width = 20;
-      image.height = 20;
-      image.style.left = `${x}px`;
-      image.style.top = `${y}px`;
-      image.style.position = "absolute";
-      image.style.zIndex = 5;
-      image.style.backgroundColor = "transparent";
-
-      const tooltip = document.createElement("div");
-      tooltip.classList.add("tool-tip");
-      tooltip.style.position = "absolute";
-      tooltip.style.left = `${x}px`;
-      tooltip.style.top = `${y - 30}px`;
-      tooltip.style.padding = "5px";
-      tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-      tooltip.style.color = "#fff";
-      tooltip.style.borderRadius = "3px";
-      tooltip.style.fontSize = "12px";
-      tooltip.style.display = "none";
-      tooltip.textContent = text;
-
-      image.addEventListener("click", () => {
-        tooltip.style.display =
-          tooltip.style.display === "none" ? "block" : "none";
-      });
-
-      this.containerElement.appendChild(image);
-      this.containerElement.appendChild(tooltip);
-      this.tooltipElements.push(image);
-      this.tooltipElements.push(tooltip);
-    });
-  }
-  removeFeedback() {
-    this.tooltipElements.forEach((element) => {
-      this.containerElement.removeChild(element);
-    });
-    this.tooltipElements = [];
   }
 }
 // convertToImage() {

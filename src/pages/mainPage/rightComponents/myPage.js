@@ -1,5 +1,6 @@
 export class MyPage {
   containerElement;
+  fontSelectWrapper;
   fontContainer;
   previewCanvas;
 
@@ -15,6 +16,9 @@ export class MyPage {
       "mypage-wrapper"
     );
 
+    this.fontSelectWrapper = document.createElement("div");
+    this.fontSelectWrapper.classList.add("font-select-wrapper");
+
     this.fontContainer = document.createElement("div");
     this.fontContainer.classList.add("font-select-container");
     this.createFontSelector([
@@ -27,7 +31,8 @@ export class MyPage {
       "Bareunjeongsin",
       "Okbiche",
     ]); // 예시 폰트 목록
-    this.containerElement.appendChild(this.fontContainer);
+    this.fontSelectWrapper.appendChild(this.fontContainer);
+    this.containerElement.appendChild(this.fontSelectWrapper);
   }
 
   updateFontPreview(selectedFont) {

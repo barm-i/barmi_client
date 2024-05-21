@@ -14,7 +14,7 @@ export class CanvasGameText {
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
     this.canvasElement.height = 50;
-    this.canvasElement.className = "canvas-practice-text";
+    this.canvasElement.className = "canvas-game-text";
 
     this.ctxElement = this.canvasElement.getContext("2d");
 
