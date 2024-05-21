@@ -77,12 +77,6 @@ export class ClientSocket {
       });
     });
 
-    // socket.on("game:start", (data) => {
-    //   // game:start 이벤트가 발생하면 게임 시작
-    //   console.log(data);
-    //   this.entirePage.startGame(data); // `startGame` 메서드 호출
-    // });
-
     socket.on("game:over", (data) => {
       // 점수 계산 로딩 창 띄우고 convertToBasic
     });

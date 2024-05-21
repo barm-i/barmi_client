@@ -2,6 +2,7 @@ import { CanvasBasic } from "./canvasBasic/canvasBasic.js";
 import { CanvasPractice } from "./canvasPractice/canvasPractice.js";
 import { CanvasGame } from "./canvasGame/canvasGame.js";
 import { ToolBar } from "./toolBar.js";
+import { GameToolBar } from "./canvasGame/gameToolBar.js";
 
 export class CanvasContainer {
   canvasFlag; //0:practice-basic 1:practice-real 2:game-session
@@ -53,7 +54,7 @@ export class CanvasContainer {
     } else if (status == 2) {
       this.canvasFlag = 2;
       this.canvasElement = new CanvasGame();
-      this.toolBarElement = new ToolBar();
+      this.toolBarElement = new GameToolBar();
       this.canvasElement.setDomNode(root);
       this.toolBarElement.setDomNode(this, root);
       this.containerElement.appendChild(this.canvasElement.containerElement);

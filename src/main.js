@@ -4,9 +4,8 @@ import { socket } from "./socket.js";
 
 window.localStorage.setItem("basicPos", 0);
 window.localStorage.setItem("practicePos", 0);
+window.localStorage.setItem("gamePos", 0);
 window.localStorage.setItem("font", "Share2");
-
-const fontName = window.localStorage.getItem("font");
 
 const fonts = [
   new FontFace("Share", `url(Fonts/Share.ttf)`),
