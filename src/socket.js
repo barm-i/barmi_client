@@ -22,9 +22,8 @@ export class ClientSocket {
 
   setupSocketListeners() {
     socket.on("game:open", (arg, callback) => {
-      //game session opened (대기시간 1분)
+      // 게임 세션 열림 (대기 시간 1분)
       let timerInterval;
-      var ifParticipate = false;
       Swal.fire({
         title: "게임에 참여하시겠습니까?",
         html: "<b></b> 초 후에 창이 닫힙니다.",
@@ -46,43 +45,46 @@ export class ClientSocket {
       }).then((result) => {
         if (result.isConfirmed) {
           callback("yes");
-          ifParticipate = true;
+
+          Swal.fire({
+            title: "게임 준비중",
+            html: "게임이 <b></b> 초 내에 시작합니다.",
+            timer: 15000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            },
+          }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+              // 게임 시작
+              this.entirePage.convertToGame();
+            }
+          });
+
+          // 게임 시작 신호가 오면 SweetAlert을 닫고 게임 시작
+          socket.once("game:start", (data) => {
+            Swal.close(); // SweetAlert 닫기
+            this.entirePage.convertToGame(); // 게임 시작
+          });
         }
       });
-      if (ifParticipate) {
-        let timerInterval;
-        Swal.fire({
-          title: "게임 준비중",
-          html: "게임이 <b></b> 안에 시작합니다.",
-          timer: 15000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-            const timer = Swal.getPopup().querySelector("b");
-            timerInterval = setInterval(() => {
-              timer.textContent = `${Swal.getTimerLeft()}`;
-            }, 100);
-          },
-          willClose: () => {
-            clearInterval(timerInterval);
-          },
-        }).then((result) => {
-          /* Read more about handling dismissals below */
-          if (result.dismiss === Swal.DismissReason.timer) {
-            this.entirePage.convertToGame();
-          }
-        });
-      }
     });
 
-    socket.on("game:start", (data) => {
-      //game started
-      console.log(data);
-      //this.entirePage.startGame(data); // `startGame` 메서드 호출
-    });
+    // socket.on("game:start", (data) => {
+    //   // game:start 이벤트가 발생하면 게임 시작
+    //   console.log(data);
+    //   this.entirePage.startGame(data); // `startGame` 메서드 호출
+    // });
 
     socket.on("game:over", (data) => {
-      //점수계산 Loading창 띄우고 convertToBasic
+      // 점수 계산 로딩 창 띄우고 convertToBasic
     });
   }
 }
