@@ -1,3 +1,7 @@
+import axios from "axios";
+
+const ONE_MINUTE = 60000;
+
 export class LeaderBoard {
   containerElement;
   titleElement;
@@ -11,17 +15,29 @@ export class LeaderBoard {
     this.titleElement = document.createElement("div");
   }
 
-  updateRankList(users) {
-    users.forEach((username, index) => {
-      console.log("asdfasd");
-      // Create a div for the row
+  async fetchAndUpdateLeaderboard() {
+    try {
+      const response = await axios.get(
+        "http://localhost:8080/api/leaderboard/rows"
+      );
+      const users = response.data.rows;
+      this.updateRankList(users);
+    } catch (error) {
+      console.error("Error fetching leaderboard rows:", error);
+    }
+  }
+
+  async updateRankList(users) {
+    for (let user of users) {
+      const { username, rank } = user;
+
       const row = document.createElement("div");
       row.className = "rank-row";
 
       // Create a div for the rank and set its text content to the index + 1
       const rankDiv = document.createElement("div");
       rankDiv.className = "rank";
-      rankDiv.textContent = index + 1;
+      rankDiv.textContent = rank;
 
       // Create a div for the username and set its text content to the username
       const usernameDiv = document.createElement("div");
@@ -34,7 +50,7 @@ export class LeaderBoard {
 
       // Append the row to rankListContainer
       this.rankTable.appendChild(row);
-    });
+    }
   }
 
   setDomNode(root) {
@@ -61,29 +77,12 @@ export class LeaderBoard {
   }
   render(root) {
     this.setDomNode(root);
-    const mockUSers = [
-      "user1",
-      "user2",
-      "user3",
-      "user4",
-      "user5",
-      "user6",
-      "user7",
-      "user8",
-      "user9",
-      "user10",
-      "user1",
-      "user2",
-      "user3",
-      "user4",
-      "user5",
-      "user6",
-      "`user7",
-      "user8",
-      "user9",
-      "user10",
-    ];
-    this.updateRankList(mockUSers);
+    // setInterval(() => {
+    //   this.fetchAndUpdateLeaderboard();
+    // }, ONE_MINUTE);
+    console.log("render called");
+    this.fetchAndUpdateLeaderboard();
+
     this.root.appendChild(this.containerElement);
   }
 }
