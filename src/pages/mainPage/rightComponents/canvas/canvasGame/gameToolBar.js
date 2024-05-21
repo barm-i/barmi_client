@@ -4,6 +4,7 @@ export class GameToolBar {
   eraserBtnElement;
   clearBtnElement;
   feedBackBtnElement;
+  timerElement;
 
   // containers
   paintingToolContainer;
@@ -64,10 +65,44 @@ export class GameToolBar {
       this.parent.convertToImage();
     });
 
+    // 타이머 요소 생성 및 초기화
+    this.timerElement = document.createElement("div");
+    this.timerElement.id = "timer";
+    this.timerElement.className = "timer";
+    this.timerElement.textContent = "01:00"; // 초기 타이머 시간
+
     this.containerElement.append(
       this.paintingToolContainer,
-      this.feedBackBtnElement
+      this.feedBackBtnElement,
+      this.timerElement
     );
+
+    this.startTimer(60); // 1분 타이머 시작
+  }
+
+  startTimer(duration) {
+    let timer = duration,
+      minutes,
+      seconds;
+    const interval = setInterval(() => {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      this.timerElement.textContent = minutes + ":" + seconds;
+
+      if (--timer < 0) {
+        clearInterval(interval);
+        this.onTimerEnd();
+      }
+    }, 1000);
+  }
+
+  onTimerEnd() {
+    //alert("Time's up!");
+    // 여기에서 타이머가 종료되었을 때의 추가 동작을 정의할 수 있습니다.
   }
 
   render() {

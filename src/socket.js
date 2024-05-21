@@ -29,10 +29,11 @@ export class ClientSocket {
         html: "<b></b> 초 후에 창이 닫힙니다.",
         timer: 5000,
         timerProgressBar: true,
+        allowOutsideClick: false,
         showConfirmButton: true,
-        showCancelButton: false,
+        showCancelButton: true,
         confirmButtonText: "참가",
-        cancelButtonText: "참가하지 않음",
+        cancelButtonText: "거절",
         didOpen: () => {
           const timer = Swal.getHtmlContainer().querySelector("b");
           timerInterval = setInterval(() => {
@@ -49,7 +50,8 @@ export class ClientSocket {
           Swal.fire({
             title: "게임 준비중",
             html: "게임이 <b></b> 초 내에 시작합니다.",
-            timer: 15000,
+            timer: 5000,
+            allowOutsideClick: false,
             timerProgressBar: true,
             didOpen: () => {
               Swal.showLoading();
@@ -73,12 +75,33 @@ export class ClientSocket {
             Swal.close(); // SweetAlert 닫기
             this.entirePage.convertToGame(); // 게임 시작
           });
+        } else if (result.isDenied) {
+          callback("no");
         }
       });
     });
 
     socket.on("game:over", (data) => {
-      // 점수 계산 로딩 창 띄우고 convertToBasic
+      let timerInterval;
+      Swal.fire({
+        title: "점수 계산중!",
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const timer = Swal.getPopup().querySelector("b");
+          timerInterval = setInterval(() => {
+            timer.textContent = `${Swal.getTimerLeft()}`;
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+      });
     });
   }
 }
