@@ -8,7 +8,6 @@ export const SERVER_URL = "http://localhost:8080";
 window.localStorage.setItem("basicPos", 0);
 window.localStorage.setItem("practicePos", 0);
 window.localStorage.setItem("gamePos", 0);
-window.localStorage.setItem("font", "Share2");
 
 const fonts = [
   new FontFace("Share", `url(Fonts/Share.ttf)`),

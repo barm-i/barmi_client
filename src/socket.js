@@ -85,7 +85,9 @@ export class ClientSocket {
       let timerInterval;
       Swal.fire({
         title: "점수 계산중!",
+        timer: 5000,
         timerProgressBar: true,
+        allowOutsideClick: false,
         didOpen: () => {
           Swal.showLoading();
           const timer = Swal.getPopup().querySelector("b");
@@ -99,7 +101,8 @@ export class ClientSocket {
       }).then((result) => {
         /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
-          console.log("I was closed by the timer");
+          //TODO Leaderboard update
+          //TODO Convert to Basic page
         }
       });
     });

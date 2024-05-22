@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SERVER_URL } from "../../../entry.js";
+import { SERVER_URL } from "../../main.js";
 export class FormComponent {
   status;
   containerElement;
@@ -83,6 +83,11 @@ export class FormComponent {
         console.log(response);
         if (response.data.message === "success") {
           alert("로그인 성공");
+          window.localStorage.setItem(
+            "username",
+            this.usernameInputElement.value
+          );
+          window.localStorage.setItem("font", response.data.fontstyle);
           window.location.href = "mainPage.html";
         }
       } catch (error) {
