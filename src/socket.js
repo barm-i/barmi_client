@@ -1,8 +1,9 @@
 import io from "socket.io-client";
 import Swal from "sweetalert2";
-import { SERVER_URL } from "./main.js";
-// export const SOCKET_URL = "ws://barmi-server.onrender.com";
-export const SOCKET_URL = "http://localhost:8080";
+
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "ws://barmi-server.onrender.com";
+//export const SOCKET_URL = "http://localhost:8080";
 export const socket = io(`${SOCKET_URL}`);
 
 export const gameActions = [];
@@ -102,14 +103,14 @@ export class ClientSocket {
       }).then((result) => {
         /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
-          //TODO Leaderboard update
-          //TODO Convert to Basic page
+          this.entirePage.leftContainer.leaderBoardComponent.fetchAndUpdateLeaderboard();
+          this.entirePage.convertToBasicPage();
         }
       });
     });
     //TODO Not game participants
     socket.on("game:over", (data) => {
-      //TODO Leaderboard update
+      this.entirePage.leftContainer.leaderBoardComponent.fetchAndUpdateLeaderboard();
     });
   }
 }

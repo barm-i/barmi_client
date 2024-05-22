@@ -1,4 +1,4 @@
-import { SERVER_URL } from "../../../main.js";
+const SERVER_URL = "https://barmi-server.onrender.com";
 
 export class MyPage {
   containerElement;

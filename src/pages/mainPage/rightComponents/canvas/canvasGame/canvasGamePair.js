@@ -1,5 +1,7 @@
 import { CanvasGameText } from "./canvasGameText.js";
 
+const SERVER_URL = "https://barmi-server.onrender.com";
+
 export class CanvasGamePair {
   text;
   containerElement;

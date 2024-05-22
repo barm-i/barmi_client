@@ -1,5 +1,7 @@
 import { CanvasBasicText } from "./canvasBasicText.js";
 
+const SERVER_URL = "https://barmi-server.onrender.com";
+
 export class CanvasBasicPair {
   text;
   containerElement;

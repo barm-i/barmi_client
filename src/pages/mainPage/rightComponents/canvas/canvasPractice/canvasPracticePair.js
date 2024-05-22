@@ -1,6 +1,8 @@
 import { CanvasPracticeText } from "./canvasPracticeText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
 
+const SERVER_URL = "https://barmi-server.onrender.com";
+
 export class CanvasPracticePair {
   text;
   containerElement;

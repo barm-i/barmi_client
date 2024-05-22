@@ -1,5 +1,6 @@
 import axios from "axios";
-import { SERVER_URL } from "../../../main.js";
+
+const SERVER_URL = "https://barmi-server.onrender.com";
 const ONE_MINUTE = 60000;
 
 export class LeaderBoard {
@@ -17,7 +18,7 @@ export class LeaderBoard {
 
   async fetchAndUpdateLeaderboard() {
     try {
-      //const response = await axios.get(`${SERVER_URL}/api/leaderboard/rows`);
+      const response = await axios.get(`${SERVER_URL}/api/leaderboard/rows`);
       const users = response.data.rows;
       this.updateRankList(users);
     } catch (error) {
