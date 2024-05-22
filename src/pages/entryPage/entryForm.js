@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 // const SERVER_URL = "https://barmi-server.onrender.com";
 // const SOCKET_URL = "ws://barmi-server.onrender.com";
 const SERVER_URL = "http://localhost:8080";
@@ -86,7 +87,13 @@ export class FormComponent {
         );
         console.log(response);
         if (response.data.message === "success") {
-          alert("로그인 성공");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login 성공",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           window.localStorage.setItem(
             "username",
             this.usernameInputElement.value
@@ -97,9 +104,21 @@ export class FormComponent {
         }
       } catch (error) {
         if (error.response && error.response.data.message === "not-found") {
-          alert("존재하지 않는 아이디입니다.");
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "존재하지 않는 아이디입니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         } else if (error.response && error.response.data.message === "failed") {
-          alert("잘못된 비밀번호입니다.");
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "잘못된 비밀번호입니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
       }
     };
@@ -234,7 +253,13 @@ export class FormComponent {
         console.log(response.data);
         if (response.data.message === "Signed up successfully") {
           modalContainer.remove();
-          alert("회원가입 성공.");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "회원가입 성공",
+            showConfirmButton: false,
+            timer: 1500,
+          });
           window.location.href = "/index.html";
         }
       } catch (error) {
@@ -242,7 +267,13 @@ export class FormComponent {
           error.response &&
           error.response.data.message === "Username already exists"
         ) {
-          alert("이미 존재하는 아이디입니다.");
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "이미 존재하는 아이디입니다.",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
         console.log(error);
       }

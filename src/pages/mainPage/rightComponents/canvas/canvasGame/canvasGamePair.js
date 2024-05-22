@@ -129,7 +129,7 @@ export class CanvasGamePair {
       ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
     }
 
-    sendLetterImageToServer(
+    const response = sendLetterImageToServer(
       canvasWithoutGrid, //text canvas
       this.canvasElement, // user canvas
       this.text,

@@ -175,7 +175,9 @@ export class CanvasPracticePair {
       ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
     }
 
-    sendLetterImageToServer(
+    this.removeFeedback();
+
+    const response = await sendLetterImageToServer(
       canvasWithoutGrid, //text canvas
       this.canvasElement, // user canvas
       this.text,
@@ -183,7 +185,6 @@ export class CanvasPracticePair {
       `${SERVER_URL}/api/upload_image` // api path
     );
 
-    this.removeFeedback();
     const feedback = [
       [10, 10, "feedback"],
       [50, 10, "feedback2"],

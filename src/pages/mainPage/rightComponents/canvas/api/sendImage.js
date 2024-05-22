@@ -23,8 +23,8 @@ export const sendLetterImageToServer = async (
 
   try {
     const formData = new FormData();
-    formData.append("image1", textCanvasImageBlob, "textCanvasImage.png");
-    formData.append("image2", userCanvasImageBlob, "userCanvasImage.png");
+    formData.append("image", textCanvasImageBlob, "textCanvasImage.png");
+    formData.append("image", userCanvasImageBlob, "userCanvasImage.png");
     formData.append("text", textContent);
     formData.append("flag", flag);
 
@@ -33,7 +33,8 @@ export const sendLetterImageToServer = async (
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response.data); // response from server . 성공 시 200
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error("error while sending canvas capture image :" + error);
   }
