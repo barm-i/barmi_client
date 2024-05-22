@@ -128,19 +128,9 @@ export class CanvasGamePair {
     for (let i = 0; i < str.length; i++) {
       ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
     }
-    // const textImageData = canvasWithoutGrid.toDataURL("image/png");
-    // const textImageLink = document.createElement("a");
-    // textImageLink.href = textImageData;
-    // textImageLink.download = "withoutGrid.png";
-    // textImageLink.click();
 
-    // const canvasImageData = this.canvasElement.toDataURL("image/png");
-    // const canvasImageLink = document.createElement("a");
-    // canvasImageLink.href = canvasImageData;
-    // canvasImageLink.download = "UserCanvas.png";
-    // canvasImageLink.click();
     sendLetterImageToServer(
-      this.canvasWithoutGrid, //text canvas
+      canvasWithoutGrid, //text canvas
       this.canvasElement, // user canvas
       this.text,
       "game",
