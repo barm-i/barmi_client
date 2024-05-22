@@ -1,3 +1,5 @@
+import { SERVER_URL } from "../../../main.js";
+
 export class MyPage {
   containerElement;
   fontSelectWrapper;
@@ -86,12 +88,29 @@ export class MyPage {
 
     fontSelectButton.onclick = () => {
       var selectedFont = select.value;
-      localStorage.setItem("font", selectedFont);
       currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
       alert("선택된 폰트: " + selectedFont);
-    };
 
-    // this.updateFontPreview(localStorage.getItem("font"));
+      localStorage.setItem("font", selectedFont);
+      axios
+        .post(
+          `${SERVER_URL}/api/store_fontstyle`,
+          JSON.stringify({
+            fontstyle: selectedFont,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
   }
 
   render() {
