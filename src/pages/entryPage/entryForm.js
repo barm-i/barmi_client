@@ -90,13 +90,13 @@ export class FormComponent {
             this.usernameInputElement.value
           );
           window.localStorage.setItem("font", response.data.fontstyle);
+
           window.location.href = "/mainPage.html";
         }
       } catch (error) {
-        console.log(error.response);
-        if (error.response.data.message === "not-found") {
+        if (error.response && error.response.data.message === "not-found") {
           alert("존재하지 않는 아이디입니다.");
-        } else if (error.response.data.message === "failed") {
+        } else if (error.response && error.response.data.message === "failed") {
           alert("잘못된 비밀번호입니다.");
         }
       }
@@ -132,10 +132,13 @@ export class FormComponent {
           ]);
         }
       } catch (error) {
-        console.log(error.response);
-        if (error.response.data.message === "Username already exists") {
+        if (
+          error.response &&
+          error.response.data.message === "Username already exists"
+        ) {
           alert("이미 존재하는 아이디입니다.");
         }
+        console.log(error);
       }
     };
 
@@ -238,9 +241,6 @@ export class FormComponent {
 
     fontSelectButton.onclick = function () {
       var selectedFont = select.value;
-      // localStorage.setItem("font", selectedFont);
-      modalContainer.remove();
-
       window.alert("선택된 폰트: " + selectedFont);
 
       axios
@@ -255,8 +255,11 @@ export class FormComponent {
             },
           }
         )
-        .then((res) => {
-          console.log(res.data);
+        .then((response) => {
+          console.log(selectedFont);
+          window.localStorage.setItem("font", selectedFont);
+          modalContainer.remove();
+          window.href = "/index.html";
         })
         .catch((err) => {
           console.log(err);

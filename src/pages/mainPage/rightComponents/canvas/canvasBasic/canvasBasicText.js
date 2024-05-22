@@ -19,7 +19,7 @@ export class CanvasBasicText {
     this.ctxElement = this.canvasElement.getContext("2d");
 
     const fontName = window.localStorage.getItem("font");
-
+    console.log(fontName);
     this.ctxElement.font = `30px ${fontName}`;
     this.ctxElement.fillStyle = "#fff";
     this.ctxElement.fillRect(

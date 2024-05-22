@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const SERVER_URL = "https://barmi-server.onrender.com";
 
 export class MyPage {
@@ -91,7 +93,7 @@ export class MyPage {
       currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
       alert("선택된 폰트: " + selectedFont);
 
-      localStorage.setItem("font", selectedFont);
+      window.localStorage.setItem("font", selectedFont);
       axios
         .post(
           `${SERVER_URL}/api/store_fontstyle`,
