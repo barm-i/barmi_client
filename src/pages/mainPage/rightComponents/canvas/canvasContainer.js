@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 import { CanvasBasic } from "./canvasBasic/canvasBasic.js";
 import { CanvasPractice } from "./canvasPractice/canvasPractice.js";
 import { CanvasGame } from "./canvasGame/canvasGame.js";
@@ -84,9 +86,35 @@ export class CanvasContainer {
     this.canvasElement.nextContent();
   }
   convertToImage() {
-    for (const element of this.canvasElement.canvasElements) {
-      element.convertToImage();
-    }
+    Swal.fire({
+      title: "피드백을 요청하시겠습니까?",
+      icon: "question",
+      showDenyButton: true,
+      confirmButtonText: "네",
+      denyButtonText: `아니오`,
+      heightAuto: false,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire({
+          title:
+            "요청을 성공적으로 보냈습니다!\n AI가 열심히 분석중이니 잠시만 기다려주세요.😊",
+          icon: "success",
+          heightAuto: false,
+        });
+
+        // TODO: 요청 수락 시 로직 진행
+        for (const element of this.canvasElement.canvasElements) {
+          element.convertToImage();
+        }
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: "피드백 요청을 취소했습니다.",
+          icon: "cancel",
+          heightAuto: false,
+        });
+      }
+    });
   }
   removeComponents() {
     this.containerElement.removeChild(this.canvasElement.containerElement);

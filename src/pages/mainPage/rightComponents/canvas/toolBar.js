@@ -41,12 +41,15 @@ export class ToolBar {
 
     this.pencilBtnElement.id = "brush-btn";
     this.pencilBtnElement.className = "tool-btn";
+    this.pencilBtnElement.title = "펜";
 
     this.eraserBtnElement.id = "eraser-btn";
     this.eraserBtnElement.className = "tool-btn";
+    this.eraserBtnElement.title = "지우개";
 
     this.clearBtnElement.id = "clear-btn";
     this.clearBtnElement.className = "tool-btn";
+    this.clearBtnElement.title = "비우기";
 
     // 지우개, 펜, 지우기 버튼을 paintingToolContainer에 추가
     this.paintingToolContainer.append(
@@ -57,16 +60,18 @@ export class ToolBar {
 
     this.nextBtnElement.id = "next-btn";
     this.nextBtnElement.className = "tool-btn";
+    this.nextBtnElement.title = "다음 페이지";
 
     this.prevBtnElement.id = "prev-btn";
     this.prevBtnElement.className = "tool-btn";
+    this.prevBtnElement.title = "이전 페이지";
 
     // 이전, 다음 버튼을 moveContainer에 추가
     this.moveContainer.append(this.prevBtnElement, this.nextBtnElement);
 
     this.feedBackBtnElement.id = "send-btn";
     this.feedBackBtnElement.className = "tool-btn";
-    this.feedBackBtnElement.textContent = "채점";
+    this.feedBackBtnElement.title = "제출하기";
 
     this.pencilBtnElement.addEventListener("click", () => {
       this.parent.convertToBrush();

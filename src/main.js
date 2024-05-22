@@ -2,7 +2,8 @@ import { EntirePage } from "./pages/entirePage.js";
 import { ClientSocket } from "./socket.js";
 import { socket } from "./socket.js";
 
-//SERVER_URL = "http://localhost:8080";
+// export const SERVER_URL = "https://barmi-server.onrender.com";
+export const SERVER_URL = "http://localhost:8080";
 
 window.localStorage.setItem("basicPos", 0);
 window.localStorage.setItem("practicePos", 0);
