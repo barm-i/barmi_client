@@ -7,8 +7,9 @@ export class EntirePage {
   rightElement;
   leftElement;
 
-  constructor() {
+  constructor(socket) {
     this.containerElement = document.createElement("div");
+    this.socket = socket;
   }
 
   setDomNode() {
@@ -42,7 +43,7 @@ export class EntirePage {
         confirmButtonText: "퇴장",
       }).then((result) => {
         if (result.isConfirmed) {
-          socket.emit("game:exit");
+          this.socket.emit("game:exit");
           this.rightElement.convertToMainPage(this);
         }
       });
@@ -62,7 +63,7 @@ export class EntirePage {
         confirmButtonText: "퇴장",
       }).then((result) => {
         if (result.isConfirmed) {
-          socket.emit("game:exit");
+          this.socket.emit("game:exit");
           this.rightElement.convertToCanvasBasic(this);
         }
       });
@@ -82,7 +83,7 @@ export class EntirePage {
         confirmButtonText: "퇴장",
       }).then((result) => {
         if (result.isConfirmed) {
-          socket.emit("game:exit");
+          this.socket.emit("game:exit");
           this.rightElement.convertToCanvasPractice(this);
         }
       });

@@ -1,18 +1,6 @@
-import io from "socket.io-client";
 import Swal from "sweetalert2";
 
-// const SERVER_URL = "https://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-// const SOCKET_URL = "ws://barmi-server.onrender.com";
-const SOCKET_URL = "ws://localhost:8080";
-//export const SOCKET_URL = "http://localhost:8080";
-export const socket = io(`${SOCKET_URL}`);
-
 export const gameActions = [];
-
-socket.on("lobby", () => {
-  console.log("Connected to server, welcome!");
-});
 
 export class ClientSocket {
   entirePage;
@@ -25,8 +13,18 @@ export class ClientSocket {
   }
 
   setupSocketListeners() {
-    socket.on("game:open", (arg, callback) => {
+    this.socket.on("lobby", () => {
+      console.log("Connected to server, welcome!");
+    });
+    this.socket.on("game:open", (arg, callback) => {
       // 게임 세션 열림 (대기 시간 1분)
+      console.log("arg from server: ", arg);
+
+      let remainTime = Number(arg);
+      let decTime = setInterval(() => {
+        remainTime -= 100;
+      }, 100);
+
       let timerInterval;
       Swal.fire({
         title: "게임에 참여하시겠습니까?",
@@ -54,17 +52,18 @@ export class ClientSocket {
           Swal.fire({
             title: "게임 준비중",
             html: "게임이 <b></b> 초 내에 시작합니다.",
-            timer: 5000,
+            timer: remainTime,
             allowOutsideClick: false,
             timerProgressBar: true,
             didOpen: () => {
               Swal.showLoading();
               const timer = Swal.getPopup().querySelector("b");
               timerInterval = setInterval(() => {
-                timer.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+                timer.textContent = Math.ceil(remainTime / 1000);
               }, 100);
             },
             willClose: () => {
+              clearInterval(decTime);
               clearInterval(timerInterval);
             },
           }).then((result) => {
@@ -75,7 +74,7 @@ export class ClientSocket {
           });
 
           // 게임 시작 신호가 오면 SweetAlert을 닫고 게임 시작
-          socket.once("game:start", (data) => {
+          this.socket.once("game:start", (data) => {
             Swal.close(); // SweetAlert 닫기
             this.entirePage.convertToGame(); // 게임 시작
           });
@@ -85,7 +84,7 @@ export class ClientSocket {
       });
     });
     //TODO game participants
-    socket.on("game:over", (data) => {
+    this.socket.on("game:over", (data) => {
       let timerInterval;
       Swal.fire({
         title: "점수 계산중!",
@@ -111,7 +110,7 @@ export class ClientSocket {
       });
     });
     //TODO Not game participants
-    socket.on("game:over", (data) => {
+    this.socket.on("game:over", (data) => {
       this.entirePage.leftContainer.leaderBoardComponent.fetchAndUpdateLeaderboard();
     });
   }
