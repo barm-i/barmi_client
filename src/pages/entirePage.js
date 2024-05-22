@@ -31,18 +31,66 @@ export class EntirePage {
 
   convertToMainPage() {
     console.log("mainpageconverter");
-    this.rightElement.convertToMyPage(this);
+    if (this.rightElement.status == "3") {
+      Swal.fire({
+        title: "퇴장하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "퇴장",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //TODO: 서버에게 퇴장 메시지 전송
+          this.rightElement.convertToMainPage(this);
+        }
+      });
+    } else {
+      this.rightElement.convertToMyPage(this);
+    }
   }
   convertToCanvasBasic() {
     console.log("basicpageconverter");
-    this.rightElement.convertToCanvasBasic(this);
+    if (this.rightElement.status == "3") {
+      Swal.fire({
+        title: "퇴장하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "퇴장",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //TODO: 서버에게 퇴장 메시지 전송
+          this.rightElement.convertToCanvasBasic(this);
+        }
+      });
+    } else {
+      this.rightElement.convertToCanvasBasic(this);
+    }
+  }
+  convertToCanvasPractice() {
+    console.log("practicepageconverter");
+    if (this.rightElement.status == "3") {
+      Swal.fire({
+        title: "퇴장하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "퇴장",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          //TODO: 서버에게 퇴장 메시지 전송
+          this.rightElement.convertToCanvasPractice(this);
+        }
+      });
+    } else {
+      this.rightElement.convertToCanvasPractice(this);
+    }
   }
   convertToGame() {
     console.log("gamepageconverter");
     this.rightElement.convertToCanvasGame(this);
-  }
-  convertToCanvasPractice() {
-    console.log("practicepageconverter");
-    this.rightElement.convertToCanvasPractice(this);
   }
 }

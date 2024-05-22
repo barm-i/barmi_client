@@ -1,7 +1,8 @@
 import io from "socket.io-client";
 import Swal from "sweetalert2";
 import { SERVER_URL } from "./main.js";
-export const SOCKET_URL = "ws://barmi-server.onrender.com";
+// export const SOCKET_URL = "ws://barmi-server.onrender.com";
+export const SOCKET_URL = "localhost:8080";
 export const socket = io(`${SOCKET_URL}`);
 
 export const gameActions = [];

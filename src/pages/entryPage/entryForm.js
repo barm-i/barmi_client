@@ -88,7 +88,7 @@ export class FormComponent {
             this.usernameInputElement.value
           );
           window.localStorage.setItem("font", response.data.fontstyle);
-          window.location.href = "mainPage.html";
+          window.location.href = "/mainPage.html";
         }
       } catch (error) {
         console.log(error.response);
