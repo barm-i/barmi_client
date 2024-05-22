@@ -41,6 +41,7 @@ export class EntirePage {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "퇴장",
+        heightAuto: false,
       }).then((result) => {
         if (result.isConfirmed) {
           this.socket.emit("game:exit");
@@ -61,6 +62,7 @@ export class EntirePage {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "퇴장",
+        heightAuto: false,
       }).then((result) => {
         if (result.isConfirmed) {
           this.socket.emit("game:exit");
@@ -81,6 +83,7 @@ export class EntirePage {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "퇴장",
+        heightAuto: false,
       }).then((result) => {
         if (result.isConfirmed) {
           this.socket.emit("game:exit");

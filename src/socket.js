@@ -36,6 +36,7 @@ export class ClientSocket {
         showCancelButton: true,
         confirmButtonText: "참가",
         cancelButtonText: "거절",
+        heightAuto: false,
         didOpen: () => {
           const timer = Swal.getHtmlContainer().querySelector("b");
           timerInterval = setInterval(() => {
@@ -55,6 +56,7 @@ export class ClientSocket {
             timer: remainTime,
             allowOutsideClick: false,
             timerProgressBar: true,
+            heightAuto: false,
             didOpen: () => {
               Swal.showLoading();
               const timer = Swal.getPopup().querySelector("b");
@@ -91,6 +93,7 @@ export class ClientSocket {
         timer: 5000,
         timerProgressBar: true,
         allowOutsideClick: false,
+        heightAuto: false,
         didOpen: () => {
           Swal.showLoading();
           const timer = Swal.getPopup().querySelector("b");
