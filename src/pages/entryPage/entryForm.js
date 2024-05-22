@@ -1,6 +1,9 @@
 import axios from "axios";
-
-const SERVER_URL = "https://barmi-server.onrender.com";
+// const SERVER_URL = "https://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://barmi-server.onrender.com";
+const SOCKET_URL = "ws://localhost:8080";
+//export const SOCKET_URL = "http://localhost:8080";
 
 export class FormComponent {
   status;
@@ -103,16 +106,20 @@ export class FormComponent {
     };
 
     const register = async () => {
-      this.createFontModal([
-        "Share",
-        "Share2",
-        "Gulim",
-        "GaramFlower",
-        "Gomshinche",
-        "Ttobagttobag",
-        "Bareunjeongsin",
-        "Okbiche",
-      ]);
+      this.createFontModal(
+        [
+          "Share",
+          "Share2",
+          "Gulim",
+          "GaramFlower",
+          "Gomshinche",
+          "Ttobagttobag",
+          "Bareunjeongsin",
+          "Okbiche",
+        ],
+        this.usernameInputElement.value,
+        this.passwordInputElement.value
+      );
     };
 
     let children = [
@@ -156,7 +163,7 @@ export class FormComponent {
     ctx.fillText("선택된 폰트입니다.", 10, 50);
   }
 
-  createFontModal(fontOptions) {
+  createFontModal(fontOptions, username, password) {
     var select = document.createElement("select");
     select.setAttribute("id", "fontSelect");
 
@@ -208,14 +215,15 @@ export class FormComponent {
 
     fontSelectButton.onclick = async function () {
       var selectedFont = select.value;
+      console.log(selectedFont);
       window.localStorage.setItem("font", selectedFont);
 
       try {
         const response = await axios.post(
           `${SERVER_URL}/api/signup`,
           JSON.stringify({
-            username: this.usernameInputElement.value,
-            password: this.passwordInputElement.value,
+            username,
+            password,
             fontstyle: window.localStorage.getItem("font"),
           }),
           {
