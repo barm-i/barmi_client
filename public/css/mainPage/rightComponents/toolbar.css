@@ -9,6 +9,8 @@
   border-right: 5px solid #5197e2;
   border-bottom: 5px solid #5197e2;
   border-bottom-right-radius: 8px;
+
+  column-gap: 3%;
 }
 
 .tool-btn {
@@ -26,12 +28,11 @@
 }
 
 .painting-tool-container {
-  column-gap: 2%;
   width: 20%;
 }
 
 .move-container {
-  width: 15%;
+  width: 8%;
 }
 
 #brush-btn,
@@ -69,17 +70,22 @@
 #prev-btn {
   background-image: url("../../../icons/move.png");
   transform: scaleX(-1);
+  background-size: 80%;
   transition: all 0.3s;
 }
 
 #next-btn {
   background-image: url("../../../icons/move.png");
+  background-size: 80%;
   transition: all 0.3s;
 }
 
 #send-btn {
-  width: 25%; /* Adjust as needed to ensure buttons are squares and fit the toolbar */
-  background-image: url("../../../icons/submit.png");
+  width: 8%; /* Adjust as needed to ensure buttons are squares and fit the toolbar */
+  background-image: url("../../../icons/upload.png");
+  background-size: 50%;
+  transition: all 0.3s;
+  margin-right: 0;
 }
 
 #brush-btn:hover,
@@ -94,4 +100,8 @@
 
 #prev-btn:hover {
   transform: scaleX(-1.1) scaleY(1.1);
+}
+
+#send-btn:hover {
+  transform: scale(1.1);
 }

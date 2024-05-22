@@ -1,5 +1,4 @@
 import axios from "axios";
-import { SERVER_URL } from "../../../../entry.js";
 const ONE_MINUTE = 60000;
 
 export class LeaderBoard {
