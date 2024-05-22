@@ -1,9 +1,8 @@
 import axios from "axios";
 // const SERVER_URL = "https://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
 // const SOCKET_URL = "ws://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
 const SOCKET_URL = "ws://localhost:8080";
-//export const SOCKET_URL = "http://localhost:8080";
 
 export class FormComponent {
   status;

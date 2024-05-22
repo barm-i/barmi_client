@@ -1,10 +1,9 @@
 import { CanvasBasicText } from "./canvasBasicText.js";
-
+import { sendLetterImageToServer } from "../api/sendImage.js";
 // const SERVER_URL = "https://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
 // const SOCKET_URL = "ws://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
 const SOCKET_URL = "ws://localhost:8080";
-//export const SOCKET_URL = "http://localhost:8080";
 
 export class CanvasBasicPair {
   text;
@@ -205,17 +204,26 @@ export class CanvasBasicPair {
     for (let i = 0; i < str.length; i++) {
       ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
     }
-    const textImageData = canvasWithoutGrid.toDataURL("image/png");
-    const textImageLink = document.createElement("a");
-    textImageLink.href = textImageData;
-    textImageLink.download = "withoutGrid.png";
-    textImageLink.click();
+    // const textImageData = canvasWithoutGrid.toDataURL("image/png");
+    // const textImageLink = document.createElement("a");
+    // textImageLink.href = textImageData;
+    // textImageLink.download = "withoutGrid.png";
+    // textImageLink.click();
 
-    const canvasImageData = this.canvasElement.toDataURL("image/png");
-    const canvasImageLink = document.createElement("a");
-    canvasImageLink.href = canvasImageData;
-    canvasImageLink.download = "UserCanvas.png";
-    canvasImageLink.click();
+    // const canvasImageData = this.canvasElement.toDataURL("image/png");
+    // const canvasImageLink = document.createElement("a");
+    // canvasImageLink.href = canvasImageData;
+    // canvasImageLink.download = "UserCanvas.png";
+    // canvasImageLink.click();
+
+    //TODO  text, textImage, image => pair로 전송
+    sendLetterImageToServer(
+      this.canvasWithoutGrid, //text canvas
+      this.canvasElement, // user canvas
+      this.text,
+      "canvasBasic",
+      `${SERVER_URL}/api/upload_image` // api path
+    );
 
     this.removeFeedback();
     const feedback = [

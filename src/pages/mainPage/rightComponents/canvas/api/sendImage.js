@@ -1,13 +1,32 @@
 import axios from "axios";
 
-export const sendLetterImageToServer = async (canvasElement, apiPath) => {
-  const imageData = canvasElement.toDataURL("image/png");
+export const sendLetterImageToServer = async (
+  canvasTextElement,
+  canvasUserElement,
+  text,
+  flag,
+  apiPath
+) => {
+  // const imageData = canvasElement.toDataURL("image/png");
+  const textCanvasImageData = canvasTextElement.toDataURL("image/png");
+  const userCanvasImageData = canvasUserElement.toDataURL("image/png");
+  const text = text;
+  const flag = flag; //"game" or else
+
   // image string to blob 변환
-  const imageBlob = await fetch(imageData).then((res) => res.blob());
+  const textCanvasImageBlob = await fetch(textCanvasImageData).then((res) =>
+    res.blob()
+  );
+  const userCanvasImageBlob = await fetch(userCanvasImageData).then((res) =>
+    res.blob()
+  );
 
   try {
     const formData = new FormData();
-    formData.append("image", imageBlob, "canvas_image.png");
+    formData.append("image1", textCanvasImageBlob, "textCanvasImage.png");
+    formData.append("image2", userCanvasImageBlob, "userCanvasImage.png");
+    formData.append("text", this.text);
+    formData.append("flag", this.flag);
 
     const response = await axios.post(apiPath, formData, {
       headers: {

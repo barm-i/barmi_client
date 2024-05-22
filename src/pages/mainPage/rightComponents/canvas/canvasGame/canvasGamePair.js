@@ -1,9 +1,10 @@
 import { CanvasGameText } from "./canvasGameText.js";
+import { sendLetterImageToServer } from "../api/sendImage.js";
+
 // const SERVER_URL = "https://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
 // const SOCKET_URL = "ws://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
 const SOCKET_URL = "ws://localhost:8080";
-//export const SOCKET_URL = "http://localhost:8080";
 
 export class CanvasGamePair {
   text;
@@ -127,18 +128,24 @@ export class CanvasGamePair {
     for (let i = 0; i < str.length; i++) {
       ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
     }
-    const textImageData = canvasWithoutGrid.toDataURL("image/png");
-    const textImageLink = document.createElement("a");
-    textImageLink.href = textImageData;
-    textImageLink.download = "withoutGrid.png";
-    textImageLink.click();
+    // const textImageData = canvasWithoutGrid.toDataURL("image/png");
+    // const textImageLink = document.createElement("a");
+    // textImageLink.href = textImageData;
+    // textImageLink.download = "withoutGrid.png";
+    // textImageLink.click();
 
-    const canvasImageData = this.canvasElement.toDataURL("image/png");
-    const canvasImageLink = document.createElement("a");
-    canvasImageLink.href = canvasImageData;
-    canvasImageLink.download = "UserCanvas.png";
-    canvasImageLink.click();
-    //TODO backend image 전송 for 점수화
+    // const canvasImageData = this.canvasElement.toDataURL("image/png");
+    // const canvasImageLink = document.createElement("a");
+    // canvasImageLink.href = canvasImageData;
+    // canvasImageLink.download = "UserCanvas.png";
+    // canvasImageLink.click();
+    sendLetterImageToServer(
+      this.canvasWithoutGrid, //text canvas
+      this.canvasElement, // user canvas
+      this.text,
+      "game",
+      `${SERVER_URL}/api/upload_image` // api path
+    );
 
     this.containerElement.removeChild(this.canvasTextElement.canvasElement);
     this.containerElement.removeChild(this.canvasElement);
@@ -176,10 +183,3 @@ export class CanvasGamePair {
     this.text = chunks[current_line]?.toString();
   }
 }
-// convertToImage() {
-//   // TODO :  이미지 전송 API test code. 추후 삭제
-//   sendLetterImageToServer(
-//     this.canvasElement, // canvas element reference
-//     "http://localhost:8080/api/upload_image" // api path
-//   );
-// }
