@@ -42,7 +42,7 @@ export class EntirePage {
         confirmButtonText: "퇴장",
       }).then((result) => {
         if (result.isConfirmed) {
-          //TODO: 서버에게 퇴장 메시지 전송
+          socket.emit("game:exit");
           this.rightElement.convertToMainPage(this);
         }
       });
@@ -62,7 +62,7 @@ export class EntirePage {
         confirmButtonText: "퇴장",
       }).then((result) => {
         if (result.isConfirmed) {
-          //TODO: 서버에게 퇴장 메시지 전송
+          socket.emit("game:exit");
           this.rightElement.convertToCanvasBasic(this);
         }
       });
@@ -82,7 +82,7 @@ export class EntirePage {
         confirmButtonText: "퇴장",
       }).then((result) => {
         if (result.isConfirmed) {
-          //TODO: 서버에게 퇴장 메시지 전송
+          socket.emit("game:exit");
           this.rightElement.convertToCanvasPractice(this);
         }
       });
