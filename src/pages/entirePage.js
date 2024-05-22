@@ -1,5 +1,6 @@
 import { RightContainer } from "./mainPage/rightComponents/rightContainer.js";
 import { LeftContainer } from "./mainPage/leftComponents/leftContainer.js";
+import Swal from "sweetalert2";
 
 export class EntirePage {
   containerElement;

@@ -2,7 +2,7 @@ import io from "socket.io-client";
 import Swal from "sweetalert2";
 import { SERVER_URL } from "./main.js";
 // export const SOCKET_URL = "ws://barmi-server.onrender.com";
-export const SOCKET_URL = "localhost:8080";
+export const SOCKET_URL = "http://localhost:8080";
 export const socket = io(`${SOCKET_URL}`);
 
 export const gameActions = [];
@@ -81,7 +81,7 @@ export class ClientSocket {
         }
       });
     });
-
+    //TODO game participants
     socket.on("game:over", (data) => {
       let timerInterval;
       Swal.fire({
@@ -106,6 +106,10 @@ export class ClientSocket {
           //TODO Convert to Basic page
         }
       });
+    });
+    //TODO Not game participants
+    socket.on("game:over", (data) => {
+      //TODO Leaderboard update
     });
   }
 }
