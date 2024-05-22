@@ -113,34 +113,6 @@ export class FormComponent {
         "Bareunjeongsin",
         "Okbiche",
       ]);
-
-      try {
-        const response = await axios.post(
-          `${SERVER_URL}/api/signup`,
-          JSON.stringify({
-            username: this.usernameInputElement.value,
-            password: this.passwordInputElement.value,
-            fontstyle: window.localStorage.getItem("font"),
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(response.data);
-        if (response.data.message === "Signed up successfully") {
-          alert("회원가입 성공.");
-        }
-      } catch (error) {
-        if (
-          error.response &&
-          error.response.data.message === "Username already exists"
-        ) {
-          alert("이미 존재하는 아이디입니다.");
-        }
-        console.log(error);
-      }
     };
 
     let children = [
@@ -234,11 +206,39 @@ export class FormComponent {
     modalContainer.appendChild(modalContent);
     document.body.appendChild(modalContainer);
 
-    fontSelectButton.onclick = function () {
+    fontSelectButton.onclick = async function () {
       var selectedFont = select.value;
-      window.alert("선택된 폰트: " + selectedFont);
       window.localStorage.setItem("font", selectedFont);
-      modalContainer.remove();
+
+      try {
+        const response = await axios.post(
+          `${SERVER_URL}/api/signup`,
+          JSON.stringify({
+            username: this.usernameInputElement.value,
+            password: this.passwordInputElement.value,
+            fontstyle: window.localStorage.getItem("font"),
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.data.message === "Signed up successfully") {
+          modalContainer.remove();
+          alert("회원가입 성공.");
+          window.location.href = "/index.html";
+        }
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.data.message === "Username already exists"
+        ) {
+          alert("이미 존재하는 아이디입니다.");
+        }
+        console.log(error);
+      }
     };
   }
 }
