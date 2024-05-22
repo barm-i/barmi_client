@@ -103,12 +103,24 @@ export class FormComponent {
     };
 
     const register = async () => {
+      this.createFontModal([
+        "Share",
+        "Share2",
+        "Gulim",
+        "GaramFlower",
+        "Gomshinche",
+        "Ttobagttobag",
+        "Bareunjeongsin",
+        "Okbiche",
+      ]);
+
       try {
         const response = await axios.post(
           `${SERVER_URL}/api/signup`,
           JSON.stringify({
             username: this.usernameInputElement.value,
             password: this.passwordInputElement.value,
+            fontstyle: window.localStorage.getItem("font"),
           }),
           {
             headers: {
@@ -119,17 +131,6 @@ export class FormComponent {
         console.log(response.data);
         if (response.data.message === "Signed up successfully") {
           alert("회원가입 성공.");
-
-          this.createFontModal([
-            "Share",
-            "Share2",
-            "Gulim",
-            "GaramFlower",
-            "Gomshinche",
-            "Ttobagttobag",
-            "Bareunjeongsin",
-            "Okbiche",
-          ]);
         }
       } catch (error) {
         if (
@@ -233,37 +234,11 @@ export class FormComponent {
     modalContainer.appendChild(modalContent);
     document.body.appendChild(modalContainer);
 
-    window.onclick = function (event) {
-      if (event.target == modalContainer) {
-        modalContainer.remove();
-      }
-    };
-
     fontSelectButton.onclick = function () {
       var selectedFont = select.value;
       window.alert("선택된 폰트: " + selectedFont);
-
-      axios
-        .post(
-          `${SERVER_URL}/api/store_fontstyle`,
-          JSON.stringify({
-            fontstyle: selectedFont,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => {
-          console.log(selectedFont);
-          window.localStorage.setItem("font", selectedFont);
-          modalContainer.remove();
-          window.href = "/index.html";
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      window.localStorage.setItem("font", selectedFont);
+      modalContainer.remove();
     };
   }
 }
