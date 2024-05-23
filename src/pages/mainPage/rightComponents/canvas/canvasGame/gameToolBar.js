@@ -50,7 +50,7 @@ export class GameToolBar {
 
     this.feedBackBtnElement.id = "send-btn";
     this.feedBackBtnElement.className = "tool-btn";
-    this.feedBackBtnElement.textContent = "채점";
+    this.feedBackBtnElement.textContent = "";
 
     this.pencilBtnElement.addEventListener("click", () => {
       this.parent.convertToBrush();
