@@ -128,14 +128,17 @@ export class CanvasGamePair {
     for (let i = 0; i < str.length; i++) {
       ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
     }
-
-    const response = sendLetterImageToServer(
-      canvasWithoutGrid, //text canvas
-      this.canvasElement, // user canvas
-      this.text,
-      "game",
-      `${SERVER_URL}/api/upload_image` // api path
-    );
+    try {
+      const response = sendLetterImageToServer(
+        canvasWithoutGrid, //text canvas
+        this.canvasElement, // user canvas
+        this.text,
+        "game",
+        `${SERVER_URL}/api/upload_image` // api path
+      );
+    } catch (error) {
+      console.log(error);
+    }
 
     this.containerElement.removeChild(this.canvasTextElement.canvasElement);
     this.containerElement.removeChild(this.canvasElement);

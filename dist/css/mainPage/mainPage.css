@@ -33,7 +33,7 @@ button {
 .title-class {
   font-family: Arial, sans-serif;
   text-align: center;
-  color: #007bff;
+  color: #5197e2;
   /*TODO font-size 비율로*/
   font-size: 20px;
   font-weight: 700;
@@ -81,12 +81,15 @@ button {
   height: 6%;
   margin: 0;
   padding: 0;
+  padding-top: 10px;
+
+  background-color: #68a2e0;
 
   border-top: 5px solid #5197e2;
   border-left: 5px solid #5197e2;
   border-top-left-radius: 8px;
 
   text-align: center;
-  color: #5197e2;
+  color: #fff;
   font-size: 25px;
 }

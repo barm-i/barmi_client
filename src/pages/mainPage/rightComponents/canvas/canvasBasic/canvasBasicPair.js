@@ -217,8 +217,8 @@ export class CanvasBasicPair {
       );
 
       console.log(response);
+      this.showFeedback(response.feedbacks);
       resolve(response);
-      this.showFeedback(feedback);
     } catch (error) {
       reject(new Error(error.message));
     }
