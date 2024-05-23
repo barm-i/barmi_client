@@ -1,9 +1,9 @@
 import axios from "axios";
-
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "ws://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+import Swal from "sweetalert2";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 export class MyPage {
   containerElement;
@@ -94,7 +94,14 @@ export class MyPage {
     fontSelectButton.onclick = () => {
       var selectedFont = select.value;
       currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
-      alert("선택된 폰트: " + selectedFont);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `폰트 변경 : ${selectedFont}`,
+        showConfirmButton: false,
+        heightAuto: false,
+        timer: 1500,
+      });
 
       window.localStorage.setItem("font", selectedFont);
       axios

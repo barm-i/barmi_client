@@ -1,10 +1,10 @@
 import { CanvasPracticeText } from "./canvasPracticeText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
 
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "ws://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 export class CanvasPracticePair {
   text;
@@ -83,7 +83,7 @@ export class CanvasPracticePair {
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 1;
+    this.ctxElement.lineWidth = 1.1;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }
@@ -184,52 +184,53 @@ export class CanvasPracticePair {
       "canvasPractice",
       `${SERVER_URL}/api/upload_image` // api path
     );
-
-    const feedback = [
-      [10, 10, "feedback"],
-      [50, 10, "feedback2"],
-    ];
+    console.log(this.text + ":" + response);
+    console.log(response);
+    const feedback = response.feedbacks;
     this.showFeedback(feedback);
   }
 
   showFeedback(feedbackData) {
-    feedbackData.forEach((feedback) => {
-      const x = feedback[0];
-      const y = feedback[1];
-      const text = feedback[2];
-      const image = document.createElement("img");
-      image.src = "/images/!.png";
-      image.width = 20;
-      image.height = 20;
-      image.style.left = `${x}px`;
-      image.style.top = `${y}px`;
-      image.style.position = "absolute";
-      image.style.zIndex = 5;
-      image.style.backgroundColor = "transparent";
+    if (feedbackData) {
+      feedbackData.forEach((feedback) => {
+        const x = feedback.coordinates.x;
+        const y = feedback.coordinates.y;
+        const text = feedback.feedback;
+        const image = document.createElement("img");
+        image.src = "/images/!.png";
+        image.position = "absolute";
+        image.width = 20;
+        image.height = 20;
+        image.style.left = `${x}px`;
+        image.style.top = `${y + 35}px`;
+        image.style.position = "absolute";
+        image.style.zIndex = 5;
+        image.style.backgroundColor = "transparent";
 
-      const tooltip = document.createElement("div");
-      tooltip.classList.add("tool-tip");
-      tooltip.style.position = "absolute";
-      tooltip.style.left = `${x}px`;
-      tooltip.style.top = `${y - 30}px`;
-      tooltip.style.padding = "5px";
-      tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-      tooltip.style.color = "#fff";
-      tooltip.style.borderRadius = "3px";
-      tooltip.style.fontSize = "12px";
-      tooltip.style.display = "none";
-      tooltip.textContent = text;
+        const tooltip = document.createElement("div");
+        tooltip.classList.add("tool-tip");
+        tooltip.style.position = "absolute";
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y + 5}px`;
+        tooltip.style.padding = "5px";
+        tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+        tooltip.style.color = "#fff";
+        tooltip.style.borderRadius = "3px";
+        tooltip.style.fontSize = "12px";
+        tooltip.style.display = "none";
+        tooltip.textContent = text;
 
-      image.addEventListener("click", () => {
-        tooltip.style.display =
-          tooltip.style.display === "none" ? "block" : "none";
+        image.addEventListener("click", () => {
+          tooltip.style.display =
+            tooltip.style.display === "none" ? "block" : "none";
+        });
+
+        this.containerElement.appendChild(image);
+        this.containerElement.appendChild(tooltip);
+        this.tooltipElements.push(image);
+        this.tooltipElements.push(tooltip);
       });
-
-      this.containerElement.appendChild(image);
-      this.containerElement.appendChild(tooltip);
-      this.tooltipElements.push(image);
-      this.tooltipElements.push(tooltip);
-    });
+    }
   }
   removeFeedback() {
     this.tooltipElements.forEach((element) => {

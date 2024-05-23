@@ -2,10 +2,10 @@ import { EntirePage } from "./pages/entirePage.js";
 import { ClientSocket } from "./socket.js";
 import { io } from "socket.io-client";
 
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "ws://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 window.localStorage.setItem("basicPos", 0);
 window.localStorage.setItem("practicePos", 0);

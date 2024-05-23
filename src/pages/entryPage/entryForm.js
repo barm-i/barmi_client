@@ -1,9 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "ws://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 export class FormComponent {
   status;
@@ -92,6 +92,7 @@ export class FormComponent {
             icon: "success",
             title: "Login 성공",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
           window.localStorage.setItem(
@@ -109,6 +110,7 @@ export class FormComponent {
             icon: "error",
             title: "존재하지 않는 아이디입니다.",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
         } else if (error.response && error.response.data.message === "failed") {
@@ -117,6 +119,7 @@ export class FormComponent {
             icon: "error",
             title: "잘못된 비밀번호입니다.",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
         }
@@ -233,7 +236,6 @@ export class FormComponent {
 
     fontSelectButton.onclick = async function () {
       var selectedFont = select.value;
-      console.log(selectedFont);
       window.localStorage.setItem("font", selectedFont);
 
       try {
@@ -258,6 +260,7 @@ export class FormComponent {
             icon: "success",
             title: "회원가입 성공",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
           window.location.href = "/index.html";
@@ -272,6 +275,7 @@ export class FormComponent {
             icon: "error",
             title: "이미 존재하는 아이디입니다.",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
         }
