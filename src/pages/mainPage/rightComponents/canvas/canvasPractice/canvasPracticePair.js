@@ -204,7 +204,7 @@ export class CanvasPracticePair {
         image.position = "absolute";
         image.width = 20;
         image.height = 20;
-        image.style.left = `${x}px`;
+        image.style.left = `${x - 15}px`;
         image.style.top = `${y + 35}px`;
         image.style.position = "absolute";
         image.style.zIndex = 5;
@@ -213,7 +213,7 @@ export class CanvasPracticePair {
         const tooltip = document.createElement("div");
         tooltip.classList.add("tool-tip");
         tooltip.style.position = "absolute";
-        tooltip.style.left = `${x}px`;
+        tooltip.style.left = `${x - 15}px`;
         tooltip.style.top = `${y + 5}px`;
         tooltip.style.padding = "5px";
         tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
