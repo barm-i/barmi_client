@@ -83,7 +83,7 @@ export class CanvasGamePair {
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 1;
+    this.ctxElement.lineWidth = 1.1;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }

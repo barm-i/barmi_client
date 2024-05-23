@@ -92,6 +92,7 @@ export class FormComponent {
             icon: "success",
             title: "Login 성공",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
           window.localStorage.setItem(
@@ -109,6 +110,7 @@ export class FormComponent {
             icon: "error",
             title: "존재하지 않는 아이디입니다.",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
         } else if (error.response && error.response.data.message === "failed") {
@@ -117,6 +119,7 @@ export class FormComponent {
             icon: "error",
             title: "잘못된 비밀번호입니다.",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
         }
@@ -258,6 +261,7 @@ export class FormComponent {
             icon: "success",
             title: "회원가입 성공",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
           window.location.href = "/index.html";
@@ -272,6 +276,7 @@ export class FormComponent {
             icon: "error",
             title: "이미 존재하는 아이디입니다.",
             showConfirmButton: false,
+            heightAuto: false,
             timer: 1500,
           });
         }
