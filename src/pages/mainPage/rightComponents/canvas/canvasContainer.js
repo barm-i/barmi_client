@@ -101,10 +101,7 @@ export class CanvasContainer {
       }).then((result) => {
         /* Read more about isConfirmed, isDenied below */
         if (result.isConfirmed) {
-          // TODO: 요청 수락 시 로직 진행
-          for (const element of this.canvasElement.canvasElements) {
-            element.convertToImage();
-          }
+          console.log("canvas basic upload request");
           // 요청이 올때까지 로딩 시작
           Swal.fire({
             title:
@@ -112,10 +109,17 @@ export class CanvasContainer {
             didOpen: () => {
               Swal.showLoading();
               let convertPromiseQueue = [];
-              this.canvasElement.canvasElements.foreach((element) => {
-                convertQueue.push(new Promise(element.convertToImage));
-              });
-              Promise.all(convertPromiseQueue).then(() => {
+
+              for (const element of this.canvasElement.canvasElements) {
+                convertPromiseQueue.push(
+                  new Promise((resolve, reject) => {
+                    element.convertToImage(resolve, reject);
+                  })
+                );
+              }
+
+              Promise.all(convertPromiseQueue).then((response) => {
+                console.log(response);
                 Swal.hideLoading();
                 Swal.update({
                   title: "AI가 분석을 완료했습니다!😊",
