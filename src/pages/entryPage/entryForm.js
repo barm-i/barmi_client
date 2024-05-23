@@ -236,7 +236,6 @@ export class FormComponent {
 
     fontSelectButton.onclick = async function () {
       var selectedFont = select.value;
-      console.log(selectedFont);
       window.localStorage.setItem("font", selectedFont);
 
       try {

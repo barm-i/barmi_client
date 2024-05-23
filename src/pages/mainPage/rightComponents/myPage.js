@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import Swal from "sweetalert2";
 // const SERVER_URL = "https://barmi-server.onrender.com";
 // const SOCKET_URL = "ws://barmi-server.onrender.com";
 const SERVER_URL = "http://localhost:8080";
