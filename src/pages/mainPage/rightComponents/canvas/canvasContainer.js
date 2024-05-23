@@ -85,54 +85,7 @@ export class CanvasContainer {
   nextContent() {
     this.canvasElement.nextContent();
   }
-  convertToImage() {
-    Swal.fire({
-      title: "피드백을 요청하시겠습니까?",
-      icon: "question",
-      showDenyButton: true,
-      confirmButtonText: "네",
-      denyButtonText: `아니오`,
-      heightAuto: false,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        // TODO: 요청 수락 시 로직 진행
-        for (const element of this.canvasElement.canvasElements) {
-          element.convertToImage();
-        }
-        // 요청이 올때까지 로딩 시작
-        Swal.fire({
-          title:
-            "피드백 요청을 보냈습니다!\n AI가 열심히 분석중이니 잠시만 기다려주세요.😊",
-          didOpen: () => {
-            Swal.showLoading();
-            let convertPromiseQueue = [];
-            this.canvasElement.canvasElements.foreach((element) => {
-              convertQueue.push(new Promise(element.convertToImage));
-            });
-            Promise.all(convertPromiseQueue).then(() => {
-              Swal.hideLoading();
-              Swal.update({
-                title: "AI가 분석을 완료했습니다!😊",
-                showCloseButton: true,
-                heightAuto: false,
-                icon: "success",
-              });
-            });
-          },
-          allowOutsideClick: false,
-          allowEnterKey: false,
-          heightAuto: false,
-        });
-      } else if (result.isDenied) {
-        Swal.fire({
-          title: "피드백 요청을 취소했습니다.",
-          icon: "cancel",
-          heightAuto: false,
-        });
-      }
-    });
-  }
+  convertToImage() {}
   removeComponents() {
     this.containerElement.removeChild(this.canvasElement.containerElement);
     this.containerElement.removeChild(this.toolBarElement.containerElement);
@@ -144,3 +97,50 @@ export class CanvasContainer {
       .appendChild(this.containerElement);
   }
 }
+
+// Swal.fire({
+//   title: "피드백을 요청하시겠습니까?",
+//   icon: "question",
+//   showDenyButton: true,
+//   confirmButtonText: "네",
+//   denyButtonText: `아니오`,
+//   heightAuto: false,
+// }).then((result) => {
+//   /* Read more about isConfirmed, isDenied below */
+//   if (result.isConfirmed) {
+//     // TODO: 요청 수락 시 로직 진행
+//     for (const element of this.canvasElement.canvasElements) {
+//       element.convertToImage();
+//     }
+//     // 요청이 올때까지 로딩 시작
+//     Swal.fire({
+//       title:
+//         "피드백 요청을 보냈습니다!\n AI가 열심히 분석중이니 잠시만 기다려주세요.😊",
+//       didOpen: () => {
+//         Swal.showLoading();
+//         let convertPromiseQueue = [];
+//         this.canvasElement.canvasElements.foreach((element) => {
+//           convertQueue.push(new Promise(element.convertToImage));
+//         });
+//         Promise.all(convertPromiseQueue).then(() => {
+//           Swal.hideLoading();
+//           Swal.update({
+//             title: "AI가 분석을 완료했습니다!😊",
+//             showCloseButton: true,
+//             heightAuto: false,
+//             icon: "success",
+//           });
+//         });
+//       },
+//       allowOutsideClick: false,
+//       allowEnterKey: false,
+//       heightAuto: false,
+//     });
+//   } else if (result.isDenied) {
+//     Swal.fire({
+//       title: "피드백 요청을 취소했습니다.",
+//       icon: "cancel",
+//       heightAuto: false,
+//     });
+//   }
+// });
