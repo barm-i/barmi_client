@@ -1,10 +1,10 @@
 import { CanvasPracticeText } from "./canvasPracticeText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
 
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "ws://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 export class CanvasPracticePair {
   text;
@@ -185,6 +185,7 @@ export class CanvasPracticePair {
       `${SERVER_URL}/api/upload_image` // api path
     );
     console.log(this.text + ":" + response);
+    console.log(response);
     const feedback = response.feedbacks;
     this.showFeedback(feedback);
   }
@@ -201,7 +202,7 @@ export class CanvasPracticePair {
         image.width = 20;
         image.height = 20;
         image.style.left = `${x}px`;
-        image.style.top = `${y + 50}px`;
+        image.style.top = `${y + 35}px`;
         image.style.position = "absolute";
         image.style.zIndex = 5;
         image.style.backgroundColor = "transparent";
@@ -209,8 +210,8 @@ export class CanvasPracticePair {
         const tooltip = document.createElement("div");
         tooltip.classList.add("tool-tip");
         tooltip.style.position = "absolute";
-        tooltip.style.left = `${x - 15}px`;
-        tooltip.style.top = `${y - 45}px`;
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y + 5}px`;
         tooltip.style.padding = "5px";
         tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
         tooltip.style.color = "#fff";
@@ -224,8 +225,8 @@ export class CanvasPracticePair {
             tooltip.style.display === "none" ? "block" : "none";
         });
 
-        this.canvasElement.appendChild(image);
-        this.canvasElement.appendChild(tooltip);
+        this.containerElement.appendChild(image);
+        this.containerElement.appendChild(tooltip);
         this.tooltipElements.push(image);
         this.tooltipElements.push(tooltip);
       });
@@ -233,7 +234,7 @@ export class CanvasPracticePair {
   }
   removeFeedback() {
     this.tooltipElements.forEach((element) => {
-      this.canvasElement.removeChild(element);
+      this.containerElement.removeChild(element);
     });
     this.tooltipElements = [];
   }
