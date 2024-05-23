@@ -1,26 +1,16 @@
-.mypage {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  flex: 1;
-
-  border: 5px solid #007bff;
-  border-top-right-radius: 8px;
-}
 .font-select-wrapper {
   width: 100%;
-  height: 100%;
+  height: inherit;
 }
 .font-select-container {
+  padding: 2em;
   width: 50%; /* 너비 조정 */
   height: 300px; /* 높이 조정 */
   justify-content: flex-start; /* 왼쪽 정렬 */
   align-items: center;
 
   margin: 3%; /* 간격 조절 */
-  border: 5px solid #007bff;
+  border: 5px solid #5197e2;
   border-top-right-radius: 8px;
 }
 
@@ -34,5 +24,17 @@
 }
 
 .font-select-button {
+  background-color: #5197e2;
+  color: #fff;
+  padding: 2px;
+  font-weight: 700;
+  font-size: 15px;
+  font-family: sans-serif;
+  border-radius: 5px;
   cursor: pointer; /* 버튼 커서 설정 */
+  transition: all 0.3s;
+}
+
+.font-select-button:hover {
+  transform: scale(1.1);
 }
