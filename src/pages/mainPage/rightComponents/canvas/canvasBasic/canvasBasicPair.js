@@ -181,7 +181,7 @@ export class CanvasBasicPair {
     this.text = chunks[current_line]?.toString();
   }
 
-  async convertToImage() {
+  async convertToImage(resolve, reject) {
     const canvasWithoutGrid = document.createElement("canvas");
     canvasWithoutGrid.width = 800;
     canvasWithoutGrid.height = 50;
@@ -207,19 +207,21 @@ export class CanvasBasicPair {
 
     this.removeFeedback();
 
-    const response = await sendLetterImageToServer(
-      canvasWithoutGrid, //text canvas
-      this.canvasElement, // user canvas
-      this.text,
-      "canvasBasic",
-      `${SERVER_URL}/api/upload_image` // api path
-    );
+    try {
+      const response = await sendLetterImageToServer(
+        canvasWithoutGrid, //text canvas
+        this.canvasElement, // user canvas
+        this.text,
+        "canvasBasic",
+        `${SERVER_URL}/api/upload_image` // api path
+      );
 
-    const feedback = [
-      [10, 10, "feedback"],
-      [50, 10, "feedback2"],
-    ];
-    this.showFeedback(feedback);
+      console.log(response);
+      this.showFeedback(feedback);
+      resolve();
+    } catch (error) {
+      reject(new Error(error));
+    }
   }
 
   showFeedback(feedbackData) {

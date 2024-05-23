@@ -96,17 +96,34 @@ export class CanvasContainer {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire({
-          title:
-            "요청을 성공적으로 보냈습니다!\n AI가 열심히 분석중이니 잠시만 기다려주세요.😊",
-          icon: "success",
-          heightAuto: false,
-        });
-
         // TODO: 요청 수락 시 로직 진행
         for (const element of this.canvasElement.canvasElements) {
           element.convertToImage();
         }
+        // 요청이 올때까지 로딩 시작
+        Swal.fire({
+          title:
+            "피드백 요청을 보냈습니다!\n AI가 열심히 분석중이니 잠시만 기다려주세요.😊",
+          didOpen: () => {
+            Swal.showLoading();
+            let convertPromiseQueue = [];
+            this.canvasElement.canvasElements.foreach((element) => {
+              convertQueue.push(new Promise(element.convertToImage));
+            });
+            Promise.all(convertPromiseQueue).then(() => {
+              Swal.hideLoading();
+              Swal.update({
+                title: "AI가 분석을 완료했습니다!😊",
+                showCloseButton: true,
+                heightAuto: false,
+                icon: "success",
+              });
+            });
+          },
+          allowOutsideClick: false,
+          allowEnterKey: false,
+          heightAuto: false,
+        });
       } else if (result.isDenied) {
         Swal.fire({
           title: "피드백 요청을 취소했습니다.",

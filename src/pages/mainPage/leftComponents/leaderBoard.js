@@ -32,8 +32,9 @@ export class LeaderBoard {
   }
 
   async updateRankList(users) {
+    let rank = 1;
     for (let user of users) {
-      const { username, rank } = user;
+      const { username } = user;
 
       const row = document.createElement("div");
       row.className = "rank-row";
@@ -54,6 +55,7 @@ export class LeaderBoard {
 
       // Append the row to rankListContainer
       this.rankTable.appendChild(row);
+      rank++;
     }
   }
 
