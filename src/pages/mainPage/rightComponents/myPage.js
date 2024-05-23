@@ -93,7 +93,6 @@ export class MyPage {
 
     fontSelectButton.onclick = () => {
       var selectedFont = select.value;
-      currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
       Swal.fire({
         position: "top-end",
         icon: "success",
@@ -104,10 +103,12 @@ export class MyPage {
       });
 
       window.localStorage.setItem("font", selectedFont);
+      currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
       axios
         .post(
           `${SERVER_URL}/api/store_fontstyle`,
           JSON.stringify({
+            username: window.localStorage.getItem("username"),
             fontstyle: selectedFont,
           }),
           {

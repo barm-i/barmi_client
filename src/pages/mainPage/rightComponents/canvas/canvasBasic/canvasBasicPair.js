@@ -93,6 +93,7 @@ export class CanvasBasicPair {
 
     this.canvasTextElement.setDomNode(text);
     this.drawGrid();
+    this.convertToBrush();
 
     this.canvasWrapper.append(this.canvasElement);
     this.canvasWrapper.append(this.gridElement);

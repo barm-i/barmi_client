@@ -31,6 +31,8 @@ export class CanvasPracticePair {
 
     this.canvasTextElement = new CanvasPracticeText();
     this.initializeCanvas(text);
+
+    this.convertToBrush();
     this.containerElement.append(this.canvasTextElement.canvasElement);
     this.containerElement.append(this.canvasElement);
   }
