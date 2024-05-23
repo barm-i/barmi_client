@@ -73,6 +73,10 @@ export class EntirePage {
       this.rightElement.convertToCanvasBasic(this);
     }
   }
+  convertToCanvasBasicForce() {
+    console.log("basicpageconverter");
+    this.rightElement.convertToCanvasBasic(this);
+  }
   convertToCanvasPractice() {
     console.log("practicepageconverter");
     if (this.rightElement.status == "3") {

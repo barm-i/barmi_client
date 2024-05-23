@@ -107,7 +107,7 @@ export class ClientSocket {
       }).then((result) => {
         /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
-          this.entirePage.convertToCanvasBasic();
+          this.entirePage.convertToCanvasBasicForce();
         }
       });
     });
