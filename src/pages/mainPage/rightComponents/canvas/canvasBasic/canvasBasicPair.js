@@ -217,8 +217,9 @@ export class CanvasBasicPair {
       );
 
       console.log(response);
-      resolve(response);
       this.showFeedback(feedback);
+
+      resolve(response);
     } catch (error) {
       reject(new Error(error.message));
     }
@@ -266,6 +267,7 @@ export class CanvasBasicPair {
       });
     }
   }
+
   removeFeedback() {
     this.tooltipElements.forEach((element) => {
       this.canvasWrapper.removeChild(element);
