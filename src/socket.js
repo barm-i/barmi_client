@@ -86,7 +86,7 @@ export class ClientSocket {
       });
     });
     //TODO game participants
-    this.socket.on("game:over", (data) => {
+    this.socket.on("game:end", (data) => {
       let timerInterval;
       Swal.fire({
         title: "점수 계산중!",
@@ -107,13 +107,12 @@ export class ClientSocket {
       }).then((result) => {
         /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
-          this.entirePage.leftContainer.leaderBoardComponent.fetchAndUpdateLeaderboard();
           this.entirePage.convertToBasicPage();
         }
       });
     });
     //TODO Not game participants
-    this.socket.on("game:over", (data) => {
+    this.socket.on("game:update", (data) => {
       this.entirePage.leftContainer.leaderBoardComponent.fetchAndUpdateLeaderboard();
     });
   }
