@@ -85,7 +85,7 @@ export class CanvasPracticePair {
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 1.1;
+    this.ctxElement.lineWidth = 1.2;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }
@@ -202,6 +202,7 @@ export class CanvasPracticePair {
         const y = feedback.coordinates.y;
         const text = feedback.feedback;
         const image = document.createElement("img");
+        image.classList.add("tool-tip-image");
         image.src = "/images/!.png";
         image.position = "absolute";
         image.width = 20;

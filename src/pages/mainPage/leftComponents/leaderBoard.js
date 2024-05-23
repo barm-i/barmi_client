@@ -24,7 +24,7 @@ export class LeaderBoard {
     try {
       const response = await axios.get(`${SERVER_URL}/api/leaderboard/rows`);
       const users = response.data.rows;
-      this.updateRankList(users);
+      await this.updateRankList(users);
     } catch (error) {
       console.error("Error fetching leaderboard rows:", error);
     }

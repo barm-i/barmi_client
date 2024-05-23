@@ -114,7 +114,7 @@ export class CanvasBasicPair {
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 1.1;
+    this.ctxElement.lineWidth = 1.2;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }
@@ -239,7 +239,7 @@ export class CanvasBasicPair {
         image.style.left = `${x - 15}px`;
         image.style.top = `${y - 15}px`;
         image.style.position = "absolute";
-        image.style.zIndex = 5;
+        image.style.zIndex = 50;
         image.style.backgroundColor = "transparent";
 
         const tooltip = document.createElement("div");

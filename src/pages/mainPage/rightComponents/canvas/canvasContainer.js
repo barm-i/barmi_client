@@ -33,14 +33,6 @@ export class CanvasContainer {
 
     this.containerElement.appendChild(this.canvasElement.containerElement);
     this.containerElement.appendChild(this.toolBarElement.containerElement);
-
-    this.containerElement.addEventListener("pointerdown", () => {
-      this.canvasElement.canvasElements.foreach((element) => {
-        element.tooltipElements.foreach((tooltip) => {
-          tooltip.style.display = "none";
-        });
-      });
-    });
   }
 
   convertCanvas(root, status) {

@@ -140,6 +140,9 @@
   z-index: 1; /* Ensure canvas is above grid */
   position: relative;
 }
+.tool-tip-image {
+  z-index: 100;
+}
 .tool-tip {
   z-index: 5;
 }

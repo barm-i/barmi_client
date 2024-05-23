@@ -96,10 +96,6 @@ export class ClientSocket {
         heightAuto: false,
         didOpen: () => {
           Swal.showLoading();
-          const timer = Swal.getPopup().querySelector("b");
-          timerInterval = setInterval(() => {
-            timer.textContent = `${Swal.getTimerLeft()}`;
-          }, 100);
         },
         willClose: () => {
           clearInterval(timerInterval);
@@ -111,9 +107,9 @@ export class ClientSocket {
         }
       });
     });
-    //TODO Not game participants
+    //TODO all users
     this.socket.on("game:update", (data) => {
-      this.entirePage.leftContainer.leaderBoardComponent.fetchAndUpdateLeaderboard();
+      this.entirePage.leftElement.leaderBoardComponent.fetchAndUpdateLeaderboard();
     });
   }
 }

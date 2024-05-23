@@ -278,6 +278,7 @@ export class FormComponent {
             heightAuto: false,
             timer: 1500,
           });
+          modalContainer.remove();
         }
         console.log(error);
       }
