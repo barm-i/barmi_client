@@ -266,6 +266,7 @@ export class CanvasBasicPair {
       });
     }
   }
+
   removeFeedback() {
     this.tooltipElements.forEach((element) => {
       this.canvasWrapper.removeChild(element);
