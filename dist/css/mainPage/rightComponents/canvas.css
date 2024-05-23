@@ -169,13 +169,12 @@
 }
 
 .timer {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   color: #fff;
   background-color: #333;
-  padding: 10px 20px;
+  padding: 10px 10px;
   border-radius: 5px;
-  margin-top: 10px;
   animation: borderBlinkTimer 1s infinite; /* .timer에 대한 애니메이션 적용 */
 }
 
