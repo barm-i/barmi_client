@@ -19,6 +19,7 @@ export class MenuBar {
     this.myPageButtonElement = document.createElement("button");
     this.basicPracticeButtonElement = document.createElement("button");
     this.practiceButtonElement = document.createElement("button");
+    this.fontGenerateButtonElement = document.createElement("button");
 
     this.myPageButtonElement.className = "button";
     this.myPageButtonElement.innerText = "MyPage";
@@ -26,8 +27,8 @@ export class MenuBar {
     this.basicPracticeButtonElement.innerText = "격자 연습장";
     this.practiceButtonElement.className = "button";
     this.practiceButtonElement.innerText = "자유 연습장";
-    // this.fontGenerateButtonElement.className = "button";
-    // this.fontGenerateButtonElement.innerText = "폰트 생성기";
+    this.fontGenerateButtonElement.className = "button";
+    this.fontGenerateButtonElement.innerText = "폰트 생성";
 
     this.myPageButtonElement.addEventListener("click", () => {
       this.root.convertToMainPage();
@@ -38,10 +39,14 @@ export class MenuBar {
     this.practiceButtonElement.addEventListener("click", () => {
       this.root.convertToCanvasPractice();
     });
+    this.fontGenerateButtonElement.addEventListener("click", () => {
+      this.root.convertToFontGenerate();
+    });
     let children = [
       this.myPageButtonElement,
       this.basicPracticeButtonElement,
       this.practiceButtonElement,
+      this.fontGenerateButtonElement,
     ];
     this.containerElement.append(...children);
   }

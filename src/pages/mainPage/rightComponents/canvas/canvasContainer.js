@@ -3,11 +3,12 @@ import Swal from "sweetalert2";
 import { CanvasBasic } from "./canvasBasic/canvasBasic.js";
 import { CanvasPractice } from "./canvasPractice/canvasPractice.js";
 import { CanvasGame } from "./canvasGame/canvasGame.js";
+import { CanvasFontGenerate } from "./canvasFontGenerate/canvasFontGenerate.js";
 import { ToolBar } from "./toolBar.js";
 import { GameToolBar } from "./canvasGame/gameToolBar.js";
 
 export class CanvasContainer {
-  canvasFlag; //0:practice-basic 1:practice-real 2:game-session
+  canvasFlag; //0:practice-basic 1:practice-real 2:game-session 3:font generate
   isDrawing; //flag for pencil/eraser
   containerElement;
 
@@ -57,6 +58,14 @@ export class CanvasContainer {
       this.canvasFlag = 2;
       this.canvasElement = new CanvasGame();
       this.toolBarElement = new GameToolBar();
+      this.canvasElement.setDomNode(root);
+      this.toolBarElement.setDomNode(this, root);
+      this.containerElement.appendChild(this.canvasElement.containerElement);
+      this.containerElement.appendChild(this.toolBarElement.containerElement);
+    } else if (status == 3) {
+      this.canvasFlag = 3;
+      this.canvasElement = new CanvasFontGenerate();
+      this.toolBarElement = new ToolBar();
       this.canvasElement.setDomNode(root);
       this.toolBarElement.setDomNode(this, root);
       this.containerElement.appendChild(this.canvasElement.containerElement);
@@ -119,7 +128,6 @@ export class CanvasContainer {
               }
 
               Promise.all(convertPromiseQueue).then((response) => {
-                console.log(response);
                 Swal.hideLoading();
                 Swal.update({
                   title: "AI가 분석을 완료했습니다!😊",

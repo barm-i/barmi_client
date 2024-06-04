@@ -78,6 +78,21 @@ export class RightContainer {
     );
     this.status = 3;
   }
+  convertToFontGenerate() {
+    if (this.status == 2) {
+      this.removeMyPage();
+      this.canvasContainerElement = new CanvasContainer();
+      this.canvasContainerElement.id = "canvas-container";
+      this.canvasContainerElement.setDomNode(this.root);
+    } else {
+      this.removeCanvas();
+    }
+    this.canvasContainerElement.convertCanvas(this.root, 3);
+    this.containerElement.appendChild(
+      this.canvasContainerElement.containerElement
+    );
+    this.status = 3;
+  }
 
   convertToMyPage() {
     if (this.status == 2) {

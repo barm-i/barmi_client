@@ -1,11 +1,11 @@
-import { CanvasBasicText } from "./canvasBasicText.js";
+import { CanvasFontGenerateText } from "./canvasFontGenerateText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
 // const SERVER_URL = "https://barmi-server.onrender.com";
 // const SOCKET_URL = "wss://barmi-server.onrender.com";
 const SERVER_URL = "http://localhost:8080";
 const SOCKET_URL = "ws://localhost:8080";
 
-export class CanvasBasicPair {
+export class CanvasFontGeneratePair {
   text;
   containerElement;
 
@@ -29,7 +29,7 @@ export class CanvasBasicPair {
     this.containerElement = document.createElement("div");
     this.containerElement.classList.add("canvas-basic-pair-wrapper");
 
-    this.canvasTextElement = new CanvasBasicText();
+    this.canvasTextElement = new CanvasFontGenerateText();
     this.initializeCanvas(text);
     this.containerElement.append(this.canvasTextElement.canvasElement);
     this.containerElement.append(this.canvasWrapper);
@@ -154,7 +154,7 @@ export class CanvasBasicPair {
     this.containerElement.appendChild(this.canvasWrapper);
   }
   async fetchData(lineNumber) {
-    const content = await fetch("/contents/content.txt");
+    const content = await fetch("/contents/fontGenerate.txt");
     const data = await content.text();
     var current_line = lineNumber || 0;
     const chunks = [];
@@ -217,7 +217,6 @@ export class CanvasBasicPair {
         `${SERVER_URL}/api/upload_image` // api path
       );
 
-      console.log(response);
       this.showFeedback(response.feedbacks);
       resolve(response);
     } catch (error) {

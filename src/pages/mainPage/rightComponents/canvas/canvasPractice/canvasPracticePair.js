@@ -1,10 +1,10 @@
 import { CanvasPracticeText } from "./canvasPracticeText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
 
-const SERVER_URL = "https://barmi-server.onrender.com";
-const SOCKET_URL = "wss://barmi-server.onrender.com";
-// const SERVER_URL = "http://localhost:8080";
-// const SOCKET_URL = "ws://localhost:8080";
+// const SERVER_URL = "https://barmi-server.onrender.com";
+// const SOCKET_URL = "wss://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
+const SOCKET_URL = "ws://localhost:8080";
 
 export class CanvasPracticePair {
   text;
@@ -187,7 +187,6 @@ export class CanvasPracticePair {
         "canvasPractice",
         `${SERVER_URL}/api/upload_image` // api path
       );
-      console.log(response);
       this.showFeedback(response.feedbacks);
       resolve(response);
     } catch (error) {
