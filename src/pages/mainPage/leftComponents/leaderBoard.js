@@ -32,6 +32,7 @@ export class LeaderBoard {
 
   async updateRankList(users) {
     let rank = 1;
+    this.rankTable.innerHTML = "";
     for (let user of users) {
       const { username } = user;
 
@@ -85,7 +86,7 @@ export class LeaderBoard {
     // setInterval(() => {
     //   this.fetchAndUpdateLeaderboard();
     // }, ONE_MINUTE);
-    console.log("render called");
+    //console.log("render called");
     this.fetchAndUpdateLeaderboard();
 
     this.root.appendChild(this.containerElement);
