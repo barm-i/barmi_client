@@ -7,9 +7,14 @@ const SOCKET_URL = "ws://localhost:8080";
 
 export class MyPage {
   containerElement;
-  fontSelectWrapper;
+  infoElement;
+  userinfoElement;
   fontContainer;
+  fontSelectWrapper;
   previewCanvas;
+  fontText;
+  recordElement;
+  recordTable;
 
   constructor() {
     this.containerElement = document.createElement("div");
@@ -22,9 +27,42 @@ export class MyPage {
       "mypage",
       "mypage-wrapper"
     );
+    this.infoElement = document.createElement("div");
+    this.infoElement.classList.add("info-container");
 
-    this.fontSelectWrapper = document.createElement("div");
-    this.fontSelectWrapper.classList.add("font-select-wrapper");
+    this.userinfoElement = document.createElement("div");
+    this.userinfoElement.classList.add("userinfo-container");
+
+    const username = window.localStorage.getItem("username");
+    var userInfo = document.createElement("div");
+
+    const usernameText = document.createElement("p");
+    usernameText.innerText = `Username: ${username}`;
+    usernameText.classList.add("font-select-title");
+
+    this.fontText = document.createElement("p");
+    this.fontText.innerText = `Font: ${localStorage.getItem("font")}`;
+    this.fontText.classList.add("font-select-title");
+
+    const userRank = 1;
+    const image = document.createElement("img");
+    if (userRank == 1) {
+      image.src = "/icons/bronze.png";
+    } else if (userRank == 2) {
+      image.src = "/icons/silver.png";
+    } else if (userRank == 3) {
+      image.src = "/icons/gold.png";
+    }
+    image.width = 20;
+    image.height = 20;
+    image.style.backgroundColor = "transparent";
+
+    userInfo.classList.add("user-info");
+    userInfo.appendChild(usernameText);
+    userInfo.appendChild(image);
+
+    this.userinfoElement.appendChild(userInfo);
+    this.userinfoElement.appendChild(this.fontText);
 
     this.fontContainer = document.createElement("div");
     this.fontContainer.classList.add("font-select-container");
@@ -38,8 +76,18 @@ export class MyPage {
       "Bareunjeongsin",
       "Okbiche",
     ]); // 예시 폰트 목록
-    this.fontSelectWrapper.appendChild(this.fontContainer);
-    this.containerElement.appendChild(this.fontSelectWrapper);
+    const children = [this.userinfoElement, this.fontContainer];
+    this.infoElement.append(...children);
+
+    this.recordElement = document.createElement("div");
+    this.recordElement.classList.add("record-container");
+    this.recordTable = document.createElement("div");
+    this.recordTable.classList.add("record-table");
+    this.recordElement.appendChild(this.recordTable);
+    this.fetchAndUpdateRecord();
+
+    this.containerElement.appendChild(this.infoElement);
+    this.containerElement.appendChild(this.recordElement);
   }
 
   updateFontPreview(selectedFont) {
@@ -49,7 +97,7 @@ export class MyPage {
     ctx.clearRect(0, 0, this.previewCanvas.width, this.previewCanvas.height);
     ctx.font = selected;
     ctx.fillStyle = "#000";
-    ctx.fillText("선택된 폰트입니다.", 10, 50);
+    ctx.fillText("선택된 폰트입니다.", 10, 30);
   }
 
   createFontSelector(fontOptions) {
@@ -57,13 +105,10 @@ export class MyPage {
     select.setAttribute("id", "fontSelect");
     select.classList.add("font-select");
 
-    var currentFont = document.createElement("p");
-    currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
-
     this.previewCanvas = document.createElement("canvas");
     this.previewCanvas.classList.add("font-preview-canvas");
-    this.previewCanvas.width = 500;
-    this.previewCanvas.height = 100;
+    this.previewCanvas.width = 300;
+    this.previewCanvas.height = 50;
 
     var fontSelectButton = document.createElement("button");
     fontSelectButton.classList.add("font-select-button");
@@ -78,17 +123,20 @@ export class MyPage {
       select.appendChild(option);
     });
 
-    var title = document.createElement("h2");
+    var title = document.createElement("p");
+    title.classList.add("font-select-title");
     title.innerText = "폰트 변경";
 
     select.addEventListener("change", () => {
       this.updateFontPreview(select.value);
     });
+    var fontinfoElement = document.createElement("div");
+    fontinfoElement.classList.add("font-info-container");
+    fontinfoElement.appendChild(title);
+    fontinfoElement.appendChild(select);
+    fontinfoElement.appendChild(fontSelectButton);
 
-    this.fontContainer.appendChild(title);
-    this.fontContainer.appendChild(currentFont);
-    this.fontContainer.appendChild(select);
-    this.fontContainer.appendChild(fontSelectButton);
+    this.fontContainer.appendChild(fontinfoElement);
     this.fontContainer.appendChild(this.previewCanvas);
 
     fontSelectButton.onclick = () => {
@@ -101,8 +149,8 @@ export class MyPage {
         heightAuto: false,
         timer: 1500,
       });
-
       window.localStorage.setItem("font", selectedFont);
+      this.fontText.innerText = `Font: ${localStorage.getItem("font")}`;
       currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
       axios
         .post(
@@ -124,6 +172,73 @@ export class MyPage {
           console.log(err);
         });
     };
+  }
+
+  async fetchAndUpdateRecord() {
+    try {
+      // const response = await axios.get(`${SERVER_URL}/api/leaderboard/rows`);
+      // const records = response.data.rows;
+      const records = [
+        {
+          date: "2021-10-10",
+          photos: [
+            "/test/canvas_image4.png",
+            "/test/canvas_image4.png",
+            "/test/canvas_image4.png",
+            "/test/canvas_image4.png",
+            "/test/canvas_image4.png",
+            "/test/canvas_image4.png",
+            "/test/canvas_image4.png",
+            "/test/canvas_image4.png",
+          ],
+        },
+        {
+          date: "2021-10-10",
+          photos: ["/test/canvas_image4.png", "/test/canvas_image4.png"],
+        },
+        {
+          date: "2021-10-10",
+          photos: ["/test/canvas_image4.png", "/test/canvas_image4.png"],
+        },
+        {
+          date: "2021-10-10",
+          photos: ["/test/canvas_image4.png", "/test/canvas_image4.png"],
+        },
+      ];
+      await this.updateRecordList(records);
+    } catch (error) {
+      console.error("Error fetching record rows:", error);
+    }
+  }
+  async updateRecordList(records) {
+    this.recordTable.innerHTML = "";
+
+    for (let record of records) {
+      var date = record.date.toString();
+
+      const row = document.createElement("button");
+      row.className = "record-row";
+      row.textContent = date;
+
+      row.addEventListener("click", () => {
+        this.showPhotosModal(record.photos);
+      });
+
+      this.recordTable.appendChild(row);
+    }
+  }
+
+  showPhotosModal(photos) {
+    let htmlContent = photos
+      .map((photo) => `<img src="${photo}" alt="Photo" class="modal-photo">`)
+      .join("");
+
+    Swal.fire({
+      html: `<div class="modal-content">${htmlContent}</div>`,
+      width: "850",
+      heightAuto: false,
+      showCloseButton: true,
+    });
   }
 
   render() {

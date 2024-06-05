@@ -100,6 +100,9 @@ export class FormComponent {
             this.usernameInputElement.value
           );
           window.localStorage.setItem("font", response.data.fontstyle);
+          //TODO rank 응답에서 뽑아내서 저장하기
+          //window.localStorage.setItem("rank", response.data.rank);
+          window.localStorage.setItem("rank", 3);
 
           window.location.href = "/mainPage.html";
         }

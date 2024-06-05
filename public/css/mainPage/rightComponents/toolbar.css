@@ -82,7 +82,7 @@
 
 #send-btn {
   width: 8%; /* Adjust as needed to ensure buttons are squares and fit the toolbar */
-  background-image: url("../../../icons/upload.png");
+  background-image: url("../../../icons/grade1.png");
   background-size: 50%;
   transition: all 0.3s;
   margin-right: 0;
