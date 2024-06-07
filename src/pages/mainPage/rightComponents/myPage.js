@@ -176,35 +176,25 @@ export class MyPage {
 
   async fetchAndUpdateRecord() {
     try {
-      // const response = await axios.get(`${SERVER_URL}/api/leaderboard/rows`);
-      // const records = response.data.rows;
-      const records = [
+      const user = window.localStorage.getItem("username");
+      const response = await axios.post(
+        `${SERVER_URL}/api/mypage/metadata`,
+        JSON.stringify({
+          username: user,
+        }),
         {
-          date: "2021-10-10",
-          photos: [
-            "/test/canvas_image4.png",
-            "/test/canvas_image4.png",
-            "/test/canvas_image4.png",
-            "/test/canvas_image4.png",
-            "/test/canvas_image4.png",
-            "/test/canvas_image4.png",
-            "/test/canvas_image4.png",
-            "/test/canvas_image4.png",
-          ],
-        },
-        {
-          date: "2021-10-10",
-          photos: ["/test/canvas_image4.png", "/test/canvas_image4.png"],
-        },
-        {
-          date: "2021-10-10",
-          photos: ["/test/canvas_image4.png", "/test/canvas_image4.png"],
-        },
-        {
-          date: "2021-10-10",
-          photos: ["/test/canvas_image4.png", "/test/canvas_image4.png"],
-        },
-      ];
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      window.localStorage.setItem("point", response.data.point);
+      console.log(response.data);
+      const records = [];
+      for (const [date, data] of Object.entries(response.data.filesGroup)) {
+        records.push({ date: date, photos: data });
+      }
+      console.log(records);
       await this.updateRecordList(records);
     } catch (error) {
       console.error("Error fetching record rows:", error);
