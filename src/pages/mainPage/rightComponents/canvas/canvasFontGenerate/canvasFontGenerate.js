@@ -18,6 +18,10 @@ export class CanvasFontGenerate {
     const canvasElement2 = new CanvasFontGeneratePair();
     const canvasElement3 = new CanvasFontGeneratePair();
     const canvasElement4 = new CanvasFontGeneratePair();
+    const canvasElement5 = new CanvasFontGeneratePair();
+    const canvasElement6 = new CanvasFontGeneratePair();
+    const canvasElement7 = new CanvasFontGeneratePair();
+    const canvasElement8 = new CanvasFontGeneratePair();
 
     await this.fetchData();
 
@@ -25,80 +29,41 @@ export class CanvasFontGenerate {
     canvasElement2.setDomNode(this.strings[1]?.toString());
     canvasElement3.setDomNode(this.strings[2]?.toString());
     canvasElement4.setDomNode(this.strings[3]?.toString());
-    this.containerElement.classList.add("canvas-basic-wrapper");
+    canvasElement5.setDomNode(this.strings[4]?.toString());
+    canvasElement6.setDomNode(this.strings[5]?.toString());
+    canvasElement7.setDomNode(this.strings[6]?.toString());
+    canvasElement8.setDomNode(this.strings[7]?.toString());
+    this.containerElement.classList.add("canvas-font-wrapper");
 
     this.canvasElements = [
       canvasElement1,
       canvasElement2,
       canvasElement3,
       canvasElement4,
+      canvasElement5,
+      canvasElement6,
+      canvasElement7,
+      canvasElement8,
     ];
     for (const element of this.canvasElements) {
       this.containerElement.append(element.containerElement);
     }
   }
   async fetchData() {
-    const content = await fetch("/contents/content.txt");
-    const data = await content.text();
-    var current_line = parseInt(window.localStorage.getItem("fontPos"));
+    try {
+      // 파일에서 텍스트를 읽어옴
+      const response = await fetch("/contents/fontGenerate.txt");
+      const data = await response.text();
 
-    const chunks = [];
-    let currentChunk = "";
-    let charCount = 0;
-    for (let i = 0; i < data.length; i++) {
-      if (charCount === 0 && (data[i] === " " || data[i] === "\n")) {
-        continue;
+      for (let i = 0; i < data.length; i += 16) {
+        let chunk = data.slice(i, i + 16).replace(/[\n\r]/g, " ");
+        this.strings.push(chunk);
       }
-      if (data[i] === "\n" || data[i] === "\r") {
-        currentChunk += " ";
-      } else {
-        currentChunk += data[i];
-      }
-      charCount++;
-      if (charCount === 16) {
-        chunks.push(currentChunk);
-        currentChunk = "";
-        charCount = 0;
-      }
-    }
-    // 마지막 남은 부분 추가
-    if (currentChunk.length > 0) {
-      chunks.push(currentChunk);
-    }
-
-    for (let i = current_line; i < current_line + 4 && i < chunks.length; i++) {
-      this.strings.push(chunks[i]);
+    } catch (error) {
+      console.error("Error fetching or processing data:", error);
     }
   }
-  prevContent() {
-    var current_line = parseInt(window.localStorage.getItem("fontPos")) - 4;
-    if (current_line < 0) {
-      current_line = 0;
-    }
-    var pos = current_line;
-    for (const element of this.canvasElements) {
-      element.prevContent(current_line);
-      current_line += 1;
-    }
 
-    window.localStorage.setItem("fontPos", pos);
-  }
-  nextContent() {
-    //TODO : 폰트생성 글귀길이보고 넘어가지 않도록 수정
-    console.log(window.localStorage.getItem("fontPos"));
-    if (window.localStorage.getItem("fontPos") > 10) {
-      return;
-    }
-    var current_line = parseInt(window.localStorage.getItem("fontPos")) + 4;
-    for (const element of this.canvasElements) {
-      element.nextContent(current_line);
-      current_line += 1;
-    }
-    window.localStorage.setItem(
-      "fontPos",
-      parseInt(window.localStorage.getItem("fontPos")) + 4
-    );
-  }
   render() {
     this.setDomNode();
     document

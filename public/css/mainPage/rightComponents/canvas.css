@@ -236,3 +236,50 @@
   z-index: 1; /* Ensure canvas is above grid */
   position: relative;
 }
+
+.canvas-font-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #fff;
+  position: relative;
+  border: 5px solid #5197e2;
+  border-top-right-radius: 8px;
+
+  max-height: inherit;
+  overflow-y: scroll;
+}
+
+.canvas-font-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.canvas-font-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+.canvas-font-wrapper::-webkit-scrollbar-track {
+  background-color: rgb(220, 218, 218);
+}
+.canvas-font-wrapper::-webkit-scrollbar-thumb {
+  background-color: rgb(167, 218, 239);
+}
+.canvas-font-wrapper::-webkit-scrollbar-button {
+  display: none;
+}
+.canvas-font-wrapper::-webkit-scrollbar-track:horizontal {
+  display: none;
+}
+
+/* hover 효과 */
+.canvas-font-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(67, 166, 237);
+}
+
+/* 코너에 라운드 효과 */
+.canvas-font-wrapper::-webkit-scrollbar-track,
+.canvas-font-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}

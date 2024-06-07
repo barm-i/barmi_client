@@ -6,6 +6,7 @@ import { CanvasGame } from "./canvasGame/canvasGame.js";
 import { CanvasFontGenerate } from "./canvasFontGenerate/canvasFontGenerate.js";
 import { ToolBar } from "./toolBar.js";
 import { GameToolBar } from "./canvasGame/gameToolBar.js";
+import { FontToolBar } from "./canvasFontGenerate/fontToolBar.js";
 
 export class CanvasContainer {
   canvasFlag; //0:practice-basic 1:practice-real 2:game-session 3:font generate
@@ -65,7 +66,7 @@ export class CanvasContainer {
     } else if (status == 3) {
       this.canvasFlag = 3;
       this.canvasElement = new CanvasFontGenerate();
-      this.toolBarElement = new ToolBar();
+      this.toolBarElement = new FontToolBar();
       this.canvasElement.setDomNode(root);
       this.toolBarElement.setDomNode(this, root);
       this.containerElement.appendChild(this.canvasElement.containerElement);
