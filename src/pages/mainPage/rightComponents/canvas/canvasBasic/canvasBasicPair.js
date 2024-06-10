@@ -1,9 +1,9 @@
 import { CanvasBasicText } from "./canvasBasicText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
-const SERVER_URL = "https://barmi-server.onrender.com";
-const SOCKET_URL = "wss://barmi-server.onrender.com";
-// const SERVER_URL = "http://localhost:8080";
-// const SOCKET_URL = "ws://localhost:8080";
+// const SERVER_URL = "https://barmi-server.onrender.com";
+// const SOCKET_URL = "wss://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
+const SOCKET_URL = "ws://localhost:8080";
 
 export class CanvasBasicPair {
   text;
@@ -93,6 +93,7 @@ export class CanvasBasicPair {
 
     this.canvasTextElement.setDomNode(text);
     this.drawGrid();
+    this.convertToBrush();
 
     this.canvasWrapper.append(this.canvasElement);
     this.canvasWrapper.append(this.gridElement);
@@ -113,7 +114,7 @@ export class CanvasBasicPair {
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 1.1;
+    this.ctxElement.lineWidth = 1.2;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }
@@ -238,7 +239,7 @@ export class CanvasBasicPair {
         image.style.left = `${x - 15}px`;
         image.style.top = `${y - 15}px`;
         image.style.position = "absolute";
-        image.style.zIndex = 5;
+        image.style.zIndex = 50;
         image.style.backgroundColor = "transparent";
 
         const tooltip = document.createElement("div");

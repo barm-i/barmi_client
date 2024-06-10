@@ -26,6 +26,7 @@ export const sendLetterImageToServer = async (
     formData.append("image", textCanvasImageBlob, "textCanvasImage.png");
     formData.append("image", userCanvasImageBlob, "userCanvasImage.png");
     formData.append("text", textContent);
+    formData.append("username", window.localStorage.getItem("username"));
     formData.append("flag", flag);
 
     const response = await axios.post(apiPath, formData, {

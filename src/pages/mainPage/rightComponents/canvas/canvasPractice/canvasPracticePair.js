@@ -1,10 +1,10 @@
 import { CanvasPracticeText } from "./canvasPracticeText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
 
-const SERVER_URL = "https://barmi-server.onrender.com";
-const SOCKET_URL = "wss://barmi-server.onrender.com";
-// const SERVER_URL = "http://localhost:8080";
-// const SOCKET_URL = "ws://localhost:8080";
+// const SERVER_URL = "https://barmi-server.onrender.com";
+// const SOCKET_URL = "wss://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
+const SOCKET_URL = "ws://localhost:8080";
 
 export class CanvasPracticePair {
   text;
@@ -31,6 +31,8 @@ export class CanvasPracticePair {
 
     this.canvasTextElement = new CanvasPracticeText();
     this.initializeCanvas(text);
+
+    this.convertToBrush();
     this.containerElement.append(this.canvasTextElement.canvasElement);
     this.containerElement.append(this.canvasElement);
   }
@@ -83,7 +85,7 @@ export class CanvasPracticePair {
   }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 1.1;
+    this.ctxElement.lineWidth = 1.2;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }
@@ -185,7 +187,6 @@ export class CanvasPracticePair {
         "canvasPractice",
         `${SERVER_URL}/api/upload_image` // api path
       );
-      console.log(response);
       this.showFeedback(response.feedbacks);
       resolve(response);
     } catch (error) {
@@ -200,21 +201,22 @@ export class CanvasPracticePair {
         const y = feedback.coordinates.y;
         const text = feedback.feedback;
         const image = document.createElement("img");
+        image.classList.add("tool-tip-image");
         image.src = "/images/!.png";
         image.position = "absolute";
         image.width = 20;
         image.height = 20;
-        image.style.left = `${x}px`;
-        image.style.top = `${y + 35}px`;
+        image.style.left = `${x - 15}px`;
+        image.style.top = `${y + 45}px`;
         image.style.position = "absolute";
-        image.style.zIndex = 5;
+        image.style.zIndex = 50;
         image.style.backgroundColor = "transparent";
 
         const tooltip = document.createElement("div");
         tooltip.classList.add("tool-tip");
         tooltip.style.position = "absolute";
-        tooltip.style.left = `${x}px`;
-        tooltip.style.top = `${y + 5}px`;
+        tooltip.style.left = `${x - 15}px`;
+        tooltip.style.top = `${y + 15}px`;
         tooltip.style.padding = "5px";
         tooltip.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
         tooltip.style.color = "#fff";

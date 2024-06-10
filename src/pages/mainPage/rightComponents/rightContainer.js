@@ -1,8 +1,9 @@
 import { CanvasContainer } from "./canvas/canvasContainer.js";
 import { MyPage } from "./myPage.js";
+import Swal from "sweetalert2";
 
 export class RightContainer {
-  status; //0 = basic, 1 = practice, 2 = mypage, 3 = game
+  status; //0 = basic, 1 = practice, 2 = mypage, 3 = game, 4 = fontGenerate
   containerElement;
   canvasContainerElement;
   mypageContainerElement;
@@ -77,6 +78,33 @@ export class RightContainer {
       this.canvasContainerElement.containerElement
     );
     this.status = 3;
+  }
+  convertToFontGenerate() {
+    //TODO rank check
+    // if (window.localStorage.getItem("point") < 2) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "폰트생성 권한이 없습니다!",
+    //     text: "Gold 이상 폰트를 생성할 수 있습니다!",
+    //     allowOutsideClick: false,
+    //     heightAuto: false,
+    //   });
+    //   return;
+    // }
+
+    if (this.status == 2) {
+      this.removeMyPage();
+      this.canvasContainerElement = new CanvasContainer();
+      this.canvasContainerElement.id = "canvas-container";
+      this.canvasContainerElement.setDomNode(this.root);
+    } else {
+      this.removeCanvas();
+    }
+    this.canvasContainerElement.convertCanvas(this.root, 3);
+    this.containerElement.appendChild(
+      this.canvasContainerElement.containerElement
+    );
+    this.status = 4;
   }
 
   convertToMyPage() {

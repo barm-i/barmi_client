@@ -1,9 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-const SERVER_URL = "https://barmi-server.onrender.com";
-const SOCKET_URL = "wss://barmi-server.onrender.com";
-// const SERVER_URL = "http://localhost:8080";
-// const SOCKET_URL = "ws://localhost:8080";
+// const SERVER_URL = "https://barmi-server.onrender.com";
+// const SOCKET_URL = "wss://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
+const SOCKET_URL = "ws://localhost:8080";
 
 export class FormComponent {
   status;
@@ -100,6 +100,9 @@ export class FormComponent {
             this.usernameInputElement.value
           );
           window.localStorage.setItem("font", response.data.fontstyle);
+          //TODO rank 응답에서 뽑아내서 저장하기
+          //window.localStorage.setItem("rank", response.data.point);
+          window.localStorage.setItem("point", 3);
 
           window.location.href = "/mainPage.html";
         }
@@ -278,6 +281,7 @@ export class FormComponent {
             heightAuto: false,
             timer: 1500,
           });
+          modalContainer.remove();
         }
         console.log(error);
       }

@@ -1,4 +1,4 @@
-export class CanvasBasicText {
+export class CanvasFontGenerateText {
   text;
   containerElement;
 

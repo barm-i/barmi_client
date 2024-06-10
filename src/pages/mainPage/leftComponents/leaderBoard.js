@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const SERVER_URL = "https://barmi-server.onrender.com";
-const SOCKET_URL = "wss://barmi-server.onrender.com";
-// const SERVER_URL = "http://localhost:8080";
-// const SOCKET_URL = "ws://localhost:8080";
+// const SERVER_URL = "https://barmi-server.onrender.com";
+// const SOCKET_URL = "wss://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
+const SOCKET_URL = "ws://localhost:8080";
 
 const ONE_MINUTE = 60000;
 
@@ -24,7 +24,7 @@ export class LeaderBoard {
     try {
       const response = await axios.get(`${SERVER_URL}/api/leaderboard/rows`);
       const users = response.data.rows;
-      this.updateRankList(users);
+      await this.updateRankList(users);
     } catch (error) {
       console.error("Error fetching leaderboard rows:", error);
     }
@@ -32,6 +32,7 @@ export class LeaderBoard {
 
   async updateRankList(users) {
     let rank = 1;
+    this.rankTable.innerHTML = "";
     for (let user of users) {
       const { username } = user;
 
@@ -85,7 +86,7 @@ export class LeaderBoard {
     // setInterval(() => {
     //   this.fetchAndUpdateLeaderboard();
     // }, ONE_MINUTE);
-    console.log("render called");
+    //console.log("render called");
     this.fetchAndUpdateLeaderboard();
 
     this.root.appendChild(this.containerElement);

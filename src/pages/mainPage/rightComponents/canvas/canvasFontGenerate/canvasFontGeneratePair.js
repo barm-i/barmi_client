@@ -1,47 +1,60 @@
-import { CanvasGameText } from "./canvasGameText.js";
+import { CanvasFontGenerateText } from "./canvasFontGenerateText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
-
 // const SERVER_URL = "https://barmi-server.onrender.com";
 // const SOCKET_URL = "wss://barmi-server.onrender.com";
 const SERVER_URL = "http://localhost:8080";
 const SOCKET_URL = "ws://localhost:8080";
 
-export class CanvasGamePair {
+export class CanvasFontGeneratePair {
   text;
   containerElement;
 
   canvasTextElement;
   canvasElement;
   ctxElement;
+  gridElement;
+  gridCtxElement;
 
   tooltipElements;
 
   isDrawing;
 
   constructor() {
-    this.canvasElement = document.createElement("canvas");
+    this.containerElement = document.createElement("div");
     this.tooltipElements = [];
   }
 
   setDomNode(text) {
-    this.text = text;
     this.isDrawing = false;
     this.containerElement = document.createElement("div");
-    this.containerElement.classList.add("canvas-game-pair-wrapper");
+    this.containerElement.classList.add("canvas-basic-pair-wrapper");
 
-    this.canvasTextElement = new CanvasGameText();
+    this.canvasTextElement = new CanvasFontGenerateText();
     this.initializeCanvas(text);
-    this.convertToBrush();
     this.containerElement.append(this.canvasTextElement.canvasElement);
-    this.containerElement.append(this.canvasElement);
+    this.containerElement.append(this.canvasWrapper);
   }
-
   initializeCanvas(text) {
     this.text = text;
+    this.canvasWrapper = document.createElement("div");
+    this.canvasWrapper.className = "canvas-basic-grid-wrapper";
+
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.width = 800;
     this.canvasElement.height = 50;
-    this.canvasElement.className = "canvas-game";
+    this.canvasElement.className = "canvas-basic";
+
+    this.gridElement = document.createElement("canvas");
+    this.gridElement.className = "grid-basic";
+    this.gridElement.width = 800;
+    this.gridElement.height = 50;
+    this.gridCtxElement = this.gridElement.getContext("2d");
+    this.gridCtxElement.clearRect(
+      0,
+      0,
+      this.gridElement.width,
+      this.gridElement.height
+    );
 
     this.ctxElement = this.canvasElement.getContext("2d");
     this.ctxElement.fillStyle = "#fff";
@@ -56,6 +69,7 @@ export class CanvasGamePair {
     });
     this.canvasElement.addEventListener("pointerdown", (e) => {
       e.preventDefault();
+
       this.isDrawing = true;
       [this.lastX, this.lastY] = [e.offsetX, e.offsetY];
     });
@@ -78,13 +92,29 @@ export class CanvasGamePair {
     );
 
     this.canvasTextElement.setDomNode(text);
+    this.drawGrid();
+    this.convertToBrush();
+
+    this.canvasWrapper.append(this.canvasElement);
+    this.canvasWrapper.append(this.gridElement);
   }
   render() {
     this.setDomNode();
   }
+  drawGrid() {
+    const gridSize = 50; // 격자 크기
+    const gridColor = "black"; // 격자 색상
+    this.gridCtxElement.beginPath();
+    for (let x = 0; x <= this.canvasElement.width; x += gridSize) {
+      this.gridCtxElement.moveTo(x, 0);
+      this.gridCtxElement.lineTo(x, this.canvasElement.height);
+    }
+    this.gridCtxElement.strokeStyle = gridColor;
+    this.gridCtxElement.stroke();
+  }
   convertToBrush() {
     this.ctxElement.strokeStyle = "#000";
-    this.ctxElement.lineWidth = 1.1;
+    this.ctxElement.lineWidth = 1.2;
     this.ctxElement.lineCap = "round";
     this.canvasElement.style.cursor = "auto";
   }
@@ -95,6 +125,7 @@ export class CanvasGamePair {
     this.ctxElement.strokeStyle = "#fff";
   }
   clearCanvas() {
+    this.removeFeedback();
     this.ctxElement.clearRect(
       0,
       0,
@@ -102,15 +133,12 @@ export class CanvasGamePair {
       this.canvasElement.height
     );
   }
-  async convertToImage() {
-    var lineNumber = parseInt(window.localStorage.getItem("gamePos"));
-    window.localStorage.setItem("gamePos", lineNumber + 1);
-    await this.fetchData(lineNumber);
 
+  async convertToImage(resolve, reject) {
     const canvasWithoutGrid = document.createElement("canvas");
     canvasWithoutGrid.width = 800;
     canvasWithoutGrid.height = 50;
-    canvasWithoutGrid.className = "canvas-game-text";
+    canvasWithoutGrid.className = "canvas-basic-text";
 
     const ctxWithoutGrid = canvasWithoutGrid.getContext("2d");
     const fontName = window.localStorage.getItem("font");
@@ -129,51 +157,8 @@ export class CanvasGamePair {
     for (let i = 0; i < str.length; i++) {
       ctxWithoutGrid.fillText(str[i], i * 50 + 13, 35);
     }
-    try {
-      const response = sendLetterImageToServer(
-        canvasWithoutGrid, //text canvas
-        this.canvasElement, // user canvas
-        this.text,
-        "game",
-        `${SERVER_URL}/api/upload_image` // api path
-      );
-    } catch (error) {
-      console.log(error);
-    }
 
-    this.containerElement.removeChild(this.canvasTextElement.canvasElement);
-    this.containerElement.removeChild(this.canvasElement);
-    this.canvasTextElement.setDomNode(this.text);
-    this.initializeCanvas(this.text);
-    this.containerElement.appendChild(this.canvasTextElement.canvasElement);
-    this.containerElement.appendChild(this.canvasElement);
-  }
-  async fetchData(lineNumber) {
-    const content = await fetch("/contents/content.txt");
-    const data = await content.text();
-    var current_line = lineNumber || 0;
-    const chunks = [];
-    let currentChunk = "";
-    let charCount = 0;
-    for (let i = 0; i < data.length; i++) {
-      if (charCount === 0 && (data[i] === " " || data[i] === "\n")) {
-        continue;
-      }
-      if (data[i] === "\n" || data[i] === "\r") {
-        currentChunk += " ";
-      } else {
-        currentChunk += data[i];
-      }
-      charCount++;
-      if (charCount === 16) {
-        chunks.push(currentChunk);
-        currentChunk = "";
-        charCount = 0;
-      }
-    }
-    if (currentChunk.length > 0) {
-      chunks.push(currentChunk);
-    }
-    this.text = chunks[current_line]?.toString();
+    try {
+    } catch (error) {}
   }
 }

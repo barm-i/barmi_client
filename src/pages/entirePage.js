@@ -45,7 +45,7 @@ export class EntirePage {
       }).then((result) => {
         if (result.isConfirmed) {
           this.socket.emit("game:exit");
-          this.rightElement.convertToMainPage(this);
+          this.rightElement.convertToMyPage(this);
         }
       });
     } else {
@@ -73,6 +73,10 @@ export class EntirePage {
       this.rightElement.convertToCanvasBasic(this);
     }
   }
+  convertToCanvasBasicForce() {
+    console.log("basicpageconverter");
+    this.rightElement.convertToCanvasBasic(this);
+  }
   convertToCanvasPractice() {
     console.log("practicepageconverter");
     if (this.rightElement.status == "3") {
@@ -97,5 +101,26 @@ export class EntirePage {
   convertToGame() {
     console.log("gamepageconverter");
     this.rightElement.convertToCanvasGame(this);
+  }
+  convertToFontGenerate() {
+    console.log("fontGenerateConverter");
+    if (this.rightElement.status == "3") {
+      Swal.fire({
+        title: "퇴장하시겠습니까?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "퇴장",
+        heightAuto: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.socket.emit("game:exit");
+          this.rightElement.convertToCanvasPractice(this);
+        }
+      });
+    } else {
+      this.rightElement.convertToFontGenerate(this);
+    }
   }
 }
