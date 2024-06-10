@@ -1,9 +1,9 @@
 import { CanvasBasicText } from "./canvasBasicText.js";
 import { sendLetterImageToServer } from "../api/sendImage.js";
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "wss://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 export class CanvasBasicPair {
   text;
