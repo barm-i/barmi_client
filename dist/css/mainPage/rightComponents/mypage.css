@@ -1,19 +1,51 @@
-.font-select-wrapper {
+.info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  height: inherit;
+  height: 20%;
+  border-bottom: 5px solid #5197e2;
+}
+.userinfo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.user-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 .font-select-container {
-  padding: 2em;
-  width: 50%; /* 너비 조정 */
-  height: 300px; /* 높이 조정 */
+  width: 100%; /* 너비 조정 */
+  height: 100%; /* 높이 조정 */
   justify-content: flex-start; /* 왼쪽 정렬 */
   align-items: center;
-
-  margin: 3%; /* 간격 조절 */
-  border: 5px solid #5197e2;
-  border-top-right-radius: 8px;
+  border-left: 5px solid #5197e2;
 }
+.font-info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  width: 100%;
+  height: 25%;
+  padding-top: 2%;
+  padding-bottom: 1%;
+}
+.font-select-title {
+  font-size: 20px; /* 폰트 크기 조정 */
+  font-weight: 700; /* 폰트 굵기 조정 */
 
+  padding: 0;
+  padding-left: 2%;
+  margin: 0;
+}
 .font-preview-canvas {
   margin-left: auto; /* 미리보기 캔버스를 오른쪽으로 이동 */
 }
@@ -37,4 +69,81 @@
 
 .font-select-button:hover {
   transform: scale(1.1);
+}
+.record-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 98%;
+  height: 90%;
+}
+.record-table {
+  width: 100%;
+  height: 100%;
+  max-height: inherit;
+  overflow: scroll;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+.record-table::-webkit-scrollbar {
+  width: 10px;
+}
+
+.record-table::-webkit-scrollbar {
+  width: 10px;
+}
+.record-table::-webkit-scrollbar-track {
+  background-color: rgb(220, 218, 218);
+}
+.record-table::-webkit-scrollbar-thumb {
+  background-color: rgb(167, 218, 239);
+}
+.record-table::-webkit-scrollbar-button {
+  display: none;
+}
+.record-table::-webkit-scrollbar-track:horizontal {
+  display: none;
+}
+
+.record-table::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(67, 166, 237);
+}
+
+.record-table::-webkit-scrollbar-track,
+.record-table::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}
+
+.record-row {
+  display: flex;
+  justify-content: center;
+  background-color: rgb(72, 139, 227);
+  width: 98%;
+  height: 10%;
+  box-sizing: border-box;
+  border-bottom: 0.5px solid #accdf0;
+  border-radius: 5px;
+  text-align: center;
+  align-items: center;
+  color: #fff;
+  font-size: small;
+  font-family: sans-serif;
+  font-weight: 700;
+}
+.record-row:hover {
+  background-color: #0056b3;
+}
+.modal-content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.modal-photo {
+  width: 750px;
+  height: 50px;
+  margin-bottom: 10px;
+  border: 2px solid #000;
+  border-radius: 5px;
 }

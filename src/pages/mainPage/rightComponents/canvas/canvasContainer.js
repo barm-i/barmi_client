@@ -100,6 +100,55 @@ export class CanvasContainer {
       for (const element of this.canvasElement.canvasElements) {
         element.convertToImage();
       }
+    } else if (this.canvasFlag == 3) {
+      Swal.fire({
+        title: "폰트를 생성하시겠습니까?",
+        icon: "question",
+        showDenyButton: true,
+        confirmButtonText: "네",
+        denyButtonText: `아니오`,
+        heightAuto: false,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          console.log("font generate request");
+          // 요청이 올때까지 로딩 시작
+          Swal.fire({
+            title: "폰트생성 요청을 보냈습니다!\n 잠시만 기다려주세요.😊",
+            didOpen: () => {
+              Swal.showLoading();
+              let convertPromiseQueue = [];
+
+              for (const element of this.canvasElement.canvasElements) {
+                convertPromiseQueue.push(
+                  new Promise((resolve, reject) => {
+                    element.convertToImage(resolve, reject);
+                  })
+                );
+              }
+
+              Promise.all(convertPromiseQueue).then((response) => {
+                Swal.hideLoading();
+                Swal.update({
+                  title: "폰트가 생성되었습니다!😊",
+                  showCloseButton: true,
+                  heightAuto: false,
+                  icon: "success",
+                });
+              });
+            },
+            allowOutsideClick: false,
+            allowEnterKey: false,
+            heightAuto: false,
+          });
+        } else if (result.isDenied) {
+          Swal.fire({
+            title: "폰트생성을 취소했습니다.",
+            icon: "cancel",
+            heightAuto: false,
+          });
+        }
+      });
     } else {
       Swal.fire({
         title: "피드백을 요청하시겠습니까?",
