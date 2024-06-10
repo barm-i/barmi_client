@@ -86,59 +86,64 @@ export class ClientSocket {
       });
     });
 
-    // this.socket.on("game:end", (data) => {
-    //   let timerInterval;
-    //   Swal.fire({
-    //     title: "점수 계산중!",
-    //     timer: 5000,
-    //     timerProgressBar: true,
-    //     allowOutsideClick: false,
-    //     heightAuto: false,
-    //     didOpen: () => {
-    //       Swal.showLoading();
-    //     },
-    //     willClose: () => {
-    //       clearInterval(timerInterval);
-    //     },
-    //   }).then((result) => {
-    //     /* Read more about handling dismissals below */
-    //     if (result.dismiss === Swal.DismissReason.timer) {
-    //       this.entirePage.convertToCanvasBasicForce();
-    //     }
-    //   });
-    // });
     this.socket.on("game:end", (data) => {
-      const points = data.points; // 점수 데이터를 받아옵니다.
       let timerInterval;
-      let currentPoints = 0;
-
       Swal.fire({
         title: "점수 계산중!",
-        html: `+<b>${currentPoints}</b>점`,
-        timer: points * 50, // 점수 증가에 맞춰 타이머 설정
+        timer: 5000,
         timerProgressBar: true,
         allowOutsideClick: false,
         heightAuto: false,
         didOpen: () => {
           Swal.showLoading();
-          timerInterval = setInterval(() => {
-            currentPoints += 1; // 1씩 증가
-            Swal.getHtmlContainer().querySelector("b").textContent =
-              currentPoints;
-            if (currentPoints >= points) {
-              clearInterval(timerInterval);
-            }
-          }, 50); // 50ms마다 업데이트
         },
         willClose: () => {
           clearInterval(timerInterval);
         },
       }).then((result) => {
+        /* Read more about handling dismissals below */
         if (result.dismiss === Swal.DismissReason.timer) {
           this.entirePage.convertToCanvasBasicForce();
         }
       });
     });
+    // this.socket.on("game:end", (data) => {
+    //   const username = window.localStorage.getItem("username");
+    //   const userData = data.find((user) => user.username === username); // 점수 데이터를 받아옵니다.
+
+    //   if (userData) {
+    //     const points = userData.deltaScore;
+    //     let timerInterval;
+    //     let currentPoints = 0;
+
+    //     Swal.fire({
+    //       title: "점수 계산중!",
+    //       html: `+<b>${currentPoints}</b>점`,
+    //       timer: points * 50, // 점수 증가에 맞춰 타이머 설정
+    //       timerProgressBar: true,
+    //       allowOutsideClick: false,
+    //       heightAuto: false,
+    //       didOpen: () => {
+    //         Swal.showLoading();
+    //         timerInterval = setInterval(() => {
+    //           currentPoints += 1; // 1씩 증가
+    //           Swal.getHtmlContainer().querySelector("b").textContent =
+    //             currentPoints;
+    //           if (currentPoints >= points) {
+    //             clearInterval(timerInterval);
+    //           }
+    //         }, 50); // 50ms마다 업데이트
+    //       },
+    //       willClose: () => {
+    //         clearInterval(timerInterval);
+    //       },
+    //     }).then((result) => {
+    //       if (result.dismiss === Swal.DismissReason.timer) {
+    //         this.entirePage.convertToCanvasBasicForce();
+    //       }
+    //     });
+    //   }
+    // });
 
     this.socket.on("game:update", (data) => {
       this.entirePage.leftElement.leaderBoardComponent.fetchAndUpdateLeaderboard();
