@@ -45,7 +45,7 @@ export class EntirePage {
       }).then((result) => {
         if (result.isConfirmed) {
           this.socket.emit("game:exit");
-          this.rightElement.convertToMainPage(this);
+          this.rightElement.convertToMyPage(this);
         }
       });
     } else {

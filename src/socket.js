@@ -87,6 +87,17 @@ export class ClientSocket {
     });
 
     this.socket.on("game:end", (data) => {
+      console.log(data);
+      console.log(data);
+
+      // data.deltaScores 배열을 추출
+      const deltaScores = data.deltaScores;
+
+      // window.localStorage에서 사용자 이름 가져오기
+      const username = window.localStorage.getItem("username");
+
+      // deltaScores 배열에서 해당 사용자 이름에 맞는 점수를 찾기
+      const userData = deltaScores.find((user) => user.username === username);
       let timerInterval;
       Swal.fire({
         title: "점수 계산중!",
@@ -108,33 +119,43 @@ export class ClientSocket {
       });
     });
     // this.socket.on("game:end", (data) => {
-    //   const username = window.localStorage.getItem("username");
-    //   const userData = data.find((user) => user.username === username); // 점수 데이터를 받아옵니다.
+    //   console.log("game end");
+    // console.log(data);
+
+    // // data.deltaScores 배열을 추출
+    // const deltaScores = data.deltaScores;
+
+    // // window.localStorage에서 사용자 이름 가져오기
+    // const username = window.localStorage.getItem("username");
+
+    // // deltaScores 배열에서 해당 사용자 이름에 맞는 점수를 찾기
+    // const userData = deltaScores.find((user) => user.username === username);
 
     //   if (userData) {
-    //     const points = userData.deltaScore;
-    //     let timerInterval;
+    //     const points = userData.deltaScore; // 해당 사용자에 대한 점수
     //     let currentPoints = 0;
-
+    //     let timerInterval;
     //     Swal.fire({
     //       title: "점수 계산중!",
     //       html: `+<b>${currentPoints}</b>점`,
-    //       timer: points * 50, // 점수 증가에 맞춰 타이머 설정
+    //       timer: 5000, // 타이머를 5초로 설정
     //       timerProgressBar: true,
     //       allowOutsideClick: false,
     //       heightAuto: false,
     //       didOpen: () => {
     //         Swal.showLoading();
+    //         const increment = points / 100; // 점수를 100단계로 나누기
     //         timerInterval = setInterval(() => {
-    //           currentPoints += 1; // 1씩 증가
-    //           Swal.getHtmlContainer().querySelector("b").textContent =
-    //             currentPoints;
+    //           currentPoints += increment; // 증가분 만큼 점수 증가
     //           if (currentPoints >= points) {
-    //             clearInterval(timerInterval);
+    //             currentPoints = points; // 최종 점수에 도달하면 종료
     //           }
+    //           Swal.getHtmlContainer().querySelector("b").textContent =
+    //             Math.floor(currentPoints);
     //         }, 50); // 50ms마다 업데이트
     //       },
     //       willClose: () => {
+    //         // 타이머가 닫힐 때 인터벌 해제
     //         clearInterval(timerInterval);
     //       },
     //     }).then((result) => {
@@ -142,6 +163,8 @@ export class ClientSocket {
     //         this.entirePage.convertToCanvasBasicForce();
     //       }
     //     });
+    //   } else {
+    //     console.log("해당 사용자에 대한 점수를 찾을 수 없습니다.");
     //   }
     // });
 
