@@ -1,9 +1,9 @@
 import axios from "axios";
 
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "wss://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 const ONE_MINUTE = 60000;
 
@@ -48,6 +48,15 @@ export class LeaderBoard {
       const usernameDiv = document.createElement("div");
       usernameDiv.className = "username";
       usernameDiv.textContent = username;
+
+      const image = document.createElement("img");
+      if (userPoint >= 1000) {
+        image.src = "/icons/gold.png";
+      } else if (userPoint >= 500) {
+        image.src = "/icons/silver.png";
+      } else {
+        image.src = "/icons/bronze.png";
+      }
 
       // Append the divs to the row
       row.appendChild(rankDiv);
