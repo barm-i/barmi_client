@@ -28,20 +28,6 @@ export class CanvasFontGenerate {
       this.containerElement.append(element.containerElement);
     }
   }
-  // async fetchData() {
-  //   try {
-  //     // 파일에서 텍스트를 읽어옴
-  //     const response = await fetch("/contents/fontGenerate.txt");
-  //     const data = await response.text();
-
-  //     for (let i = 0; i < data.length; i += 16) {
-  //       let chunk = data.slice(i, i + 16).replace(/[\n\r]/g, " ");
-  //       this.strings.push(chunk);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching or processing data:", error);
-  //   }
-  // }
 
   render() {
     this.setDomNode();
