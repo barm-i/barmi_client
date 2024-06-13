@@ -23,36 +23,65 @@
   width: 100%;
 }
 .font-select-container {
-  width: 100%; /* 너비 조정 */
-  height: 100%; /* 높이 조정 */
-  justify-content: flex-start; /* 왼쪽 정렬 */
+  width: 100%; /* ë„ˆë¹„ ì¡°ì • */
+  height: 100%; /* ë†’ì´ ì¡°ì • */
+  justify-content: flex-start; /* ì™¼ìª½ ì •ë ¬ */
   align-items: center;
   border-left: 5px solid #5197e2;
 }
+
 .font-info-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: left;
   width: 100%;
-  height: 25%;
+  height: 100%;
   padding-top: 2%;
   padding-bottom: 1%;
+  align-items: center;
 }
+
+.font-test {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35%;
+  width: 80%;
+  font-size: 20px;
+  font-weight: 700;
+  margin: auto 0;
+  border-radius: 25rem;
+  text-align: center;
+  border: 5px solid #5197e2;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.font-test:hover {
+  background-color: #5197e2;
+  color: #fff;
+}
+
+.font-select-row {
+  width: 100%;
+  display: flex;
+}
+
 .font-select-title {
-  font-size: 20px; /* 폰트 크기 조정 */
-  font-weight: 700; /* 폰트 굵기 조정 */
+  font-size: 20px; /* í°íŠ¸ í¬ê¸° ì¡°ì • */
+  font-weight: 700; /* í°íŠ¸ êµµê¸° ì¡°ì • */
 
   padding: 0;
   padding-left: 2%;
   margin: 0;
 }
 .font-preview-canvas {
-  margin-left: auto; /* 미리보기 캔버스를 오른쪽으로 이동 */
+  margin-left: auto; /* ë¯¸ë¦¬ë³´ê¸° ìº”ë²„ìŠ¤ë¥¼ ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™ */
 }
 
 .font-select {
-  margin-right: 10px; /* 선택창과 선택 버튼 사이 간격 조절 */
-  margin-left: 5px; /* 선택창과 선택 버튼 사이 간격 조절 */
+  margin-right: 10px; /* ì„ íƒì°½ê³¼ ì„ íƒ ë²„íŠ¼ ì‚¬ì´ ê°„ê²© ì¡°ì ˆ */
+  margin-left: 5px; /* ì„ íƒì°½ê³¼ ì„ íƒ ë²„íŠ¼ ì‚¬ì´ ê°„ê²© ì¡°ì ˆ */
 }
 
 .font-select-button {
@@ -63,7 +92,7 @@
   font-size: 15px;
   font-family: sans-serif;
   border-radius: 5px;
-  cursor: pointer; /* 버튼 커서 설정 */
+  cursor: pointer; /* ë²„íŠ¼ ì»¤ì„œ ì„¤ì • */
   transition: all 0.3s;
 }
 
