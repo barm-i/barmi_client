@@ -88,15 +88,15 @@ export class RightContainer {
 
   async convertToFontGenerate() {
     //TODO rank check
-    // const username = window.localStorage.getItem("username");
-    // const response = await axios.post(
-    //   `${SERVER_URL}/api/leaderboard/get_point`,
-    //   JSON.stringify({ username }),
-    //   { headers: { "Content-Type": "application/json" } }
-    // );
-    // const point = response.data.point;
+    const username = window.localStorage.getItem("username");
+    const response = await axios.post(
+      `${SERVER_URL}/api/leaderboard/get_point`,
+      JSON.stringify({ username }),
+      { headers: { "Content-Type": "application/json" } }
+    );
+    const point = response.data.point;
     // console.log("point: ", point);
-    const point = 3001;
+    // const point = 3001;
     if (point < 3000) {
       Swal.fire({
         icon: "error",
