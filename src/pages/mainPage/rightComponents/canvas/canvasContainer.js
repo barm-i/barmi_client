@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-
+import axios from "axios";
 import { CanvasBasic } from "./canvasBasic/canvasBasic.js";
 import { CanvasPractice } from "./canvasPractice/canvasPractice.js";
 import { CanvasGame } from "./canvasGame/canvasGame.js";
@@ -142,7 +142,7 @@ export class CanvasContainer {
                 formData.append("files", imageBlob3, "line3.png");
 
                 const response = await axios.post(
-                  `${SERVER_URL}/api/store_fontstyle`,
+                  `${SERVER_URL}/api/fontgen_gen`,
                   formData,
                   {
                     headers: {
