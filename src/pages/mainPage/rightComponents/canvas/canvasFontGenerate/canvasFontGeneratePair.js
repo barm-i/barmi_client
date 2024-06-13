@@ -125,7 +125,6 @@ export class CanvasFontGeneratePair {
     this.ctxElement.strokeStyle = "#fff";
   }
   clearCanvas() {
-    this.removeFeedback();
     this.ctxElement.clearRect(
       0,
       0,

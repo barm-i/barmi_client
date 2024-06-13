@@ -20,7 +20,7 @@ export class CanvasFontGenerate {
 
     canvasElement1.setDomNode("값같곬곶깎넋늪닫닭닻됩뗑략볏밟볘");
     canvasElement2.setDomNode("뺐뽈솩쐐앉않얘얾엌옳읊죡쮜춰츄퀭");
-    canvasElement3.setDomNode("틔핀핥훟궭봷둟똞쏧쮏옚퉲홣퉖놨쨨");
+    canvasElement3.setDomNode("틔핀핱훟궥봽둘뚶쏳쮔옛퉬홤퉢놨쨨");
     this.containerElement.classList.add("canvas-font-wrapper");
 
     this.canvasElements = [canvasElement1, canvasElement2, canvasElement3];
