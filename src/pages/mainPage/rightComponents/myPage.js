@@ -179,7 +179,15 @@ export class MyPage {
         preConfirm: (text) => {
           //TODO : 서버로 텍스트 전송
           console.log(text);
-          //axios.post("url", { text });
+          axios.post(
+            "https://175.196.97.78:6259/generate_image",
+            JSON.stringify({ text: text }),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
           return;
         },
         allowOutsideClick: () => !Swal.isLoading(),
