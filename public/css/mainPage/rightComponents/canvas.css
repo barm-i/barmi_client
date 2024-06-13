@@ -248,9 +248,6 @@
   position: relative;
   border: 5px solid #5197e2;
   border-top-right-radius: 8px;
-
-  max-height: inherit;
-  overflow-y: scroll;
 }
 
 .canvas-font-wrapper::-webkit-scrollbar {
