@@ -81,16 +81,16 @@ export class RightContainer {
   }
   convertToFontGenerate() {
     //TODO rank check
-    // if (window.localStorage.getItem("point") < 2) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "폰트생성 권한이 없습니다!",
-    //     text: "Gold 이상 폰트를 생성할 수 있습니다!",
-    //     allowOutsideClick: false,
-    //     heightAuto: false,
-    //   });
-    //   return;
-    // }
+    if (window.localStorage.getItem("point") < 1000) {
+      Swal.fire({
+        icon: "error",
+        title: "폰트생성 권한이 없습니다!",
+        text: "Gold 이상 폰트를 생성할 수 있습니다!",
+        allowOutsideClick: false,
+        heightAuto: false,
+      });
+      return;
+    }
 
     if (this.status == 2) {
       this.removeMyPage();

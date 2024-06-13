@@ -49,6 +49,15 @@ export class LeaderBoard {
       usernameDiv.className = "username";
       usernameDiv.textContent = username;
 
+      const image = document.createElement("img");
+      if (userPoint >= 1000) {
+        image.src = "/icons/gold.png";
+      } else if (userPoint >= 500) {
+        image.src = "/icons/silver.png";
+      } else {
+        image.src = "/icons/bronze.png";
+      }
+
       // Append the divs to the row
       row.appendChild(rankDiv);
       row.appendChild(usernameDiv);

@@ -59,9 +59,9 @@ export class MyPage {
 
     const userPoint = window.localStorage.getItem("point");
     const image = document.createElement("img");
-    if (userPoint >= 100) {
+    if (userPoint >= 1000) {
       image.src = "/icons/gold.png";
-    } else if (userPoint >= 50) {
+    } else if (userPoint >= 500) {
       image.src = "/icons/silver.png";
     } else {
       image.src = "/icons/bronze.png";
