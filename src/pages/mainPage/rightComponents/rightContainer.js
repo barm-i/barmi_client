@@ -1,6 +1,12 @@
+import axios from "axios";
 import { CanvasContainer } from "./canvas/canvasContainer.js";
 import { MyPage } from "./myPage.js";
 import Swal from "sweetalert2";
+
+// const SERVER_URL = "https://barmi-server.onrender.com";
+// const SOCKET_URL = "wss://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
+const SOCKET_URL = "ws://localhost:8080";
 
 export class RightContainer {
   status; //0 = basic, 1 = practice, 2 = mypage, 3 = game, 4 = fontGenerate
@@ -79,9 +85,18 @@ export class RightContainer {
     );
     this.status = 3;
   }
-  convertToFontGenerate() {
+
+  async convertToFontGenerate() {
     //TODO rank check
-    if (window.localStorage.getItem("point") < 1000) {
+    const username = window.localStorage.getItem("username");
+    const response = await axios.post(
+      `${SERVER_URL}/api/leaderboard/get_point`,
+      JSON.stringify({ username }),
+      { headers: { "Content-Type": "application/json" } }
+    );
+    const point = response.data.point;
+    console.log("point: ", point);
+    if (point < 3000) {
       Swal.fire({
         icon: "error",
         title: "폰트생성 권한이 없습니다!",
@@ -106,7 +121,6 @@ export class RightContainer {
     );
     this.status = 4;
   }
-
   convertToMyPage() {
     if (this.status == 2) {
       this.removeMyPage();

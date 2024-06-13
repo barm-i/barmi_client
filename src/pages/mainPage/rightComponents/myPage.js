@@ -152,11 +152,54 @@ export class MyPage {
     select.addEventListener("change", () => {
       this.updateFontPreview(select.value);
     });
+
+    var fontSelectContainer = document.createElement("div");
+    fontSelectContainer.classList.add("font-select-row");
+    fontSelectContainer.appendChild(title);
+    fontSelectContainer.appendChild(select);
+    fontSelectContainer.appendChild(fontSelectButton);
+
+    // 폰트 테스트 요소
+    var fontTest = document.createElement("div");
+    fontTest.classList.add("font-test");
+    fontTest.innerText = "나만의 폰트 테스트 해보기";
+
+    // 폰트 테스트 이벤트 등록
+    fontTest.addEventListener("click", () => {
+      Swal.fire({
+        title: "원하는 텍스트를 입력해보세요!",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "폰트 샘플 생성하기",
+        showLoaderOnConfirm: true,
+        heightAuto: false,
+        preConfirm: (text) => {
+          //TODO : 서버로 텍스트 전송
+          console.log(text);
+          return;
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Display the server response in an image area
+          const img = document.createElement("img");
+          img.src = result.value.image_url; // Replace 'image_url' with the actual property name in the server response
+          Swal.fire({
+            title: "Test Result",
+            html: img.outerHTML,
+            showCloseButton: true,
+          });
+        }
+      });
+    });
+
     var fontinfoElement = document.createElement("div");
     fontinfoElement.classList.add("font-info-container");
-    fontinfoElement.appendChild(title);
-    fontinfoElement.appendChild(select);
-    fontinfoElement.appendChild(fontSelectButton);
+    fontinfoElement.appendChild(fontSelectContainer);
+    fontinfoElement.appendChild(fontTest);
 
     this.fontContainer.appendChild(fontinfoElement);
     this.fontContainer.appendChild(this.previewCanvas);
