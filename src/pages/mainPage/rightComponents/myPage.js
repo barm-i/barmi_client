@@ -179,6 +179,7 @@ export class MyPage {
         preConfirm: (text) => {
           //TODO : 서버로 텍스트 전송
           console.log(text);
+          //axios.post("url", { text });
           return;
         },
         allowOutsideClick: () => !Swal.isLoading(),
@@ -188,9 +189,10 @@ export class MyPage {
           const img = document.createElement("img");
           img.src = result.value.image_url; // Replace 'image_url' with the actual property name in the server response
           Swal.fire({
-            title: "Test Result",
+            title: "생성 결과",
             html: img.outerHTML,
             showCloseButton: true,
+            heightAuto: false,
           });
         }
       });
@@ -199,10 +201,10 @@ export class MyPage {
     var fontinfoElement = document.createElement("div");
     fontinfoElement.classList.add("font-info-container");
     fontinfoElement.appendChild(fontSelectContainer);
+    fontinfoElement.appendChild(this.previewCanvas);
     fontinfoElement.appendChild(fontTest);
 
     this.fontContainer.appendChild(fontinfoElement);
-    this.fontContainer.appendChild(this.previewCanvas);
 
     fontSelectButton.onclick = () => {
       var selectedFont = select.value;
