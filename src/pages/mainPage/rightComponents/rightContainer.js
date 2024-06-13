@@ -3,10 +3,10 @@ import { CanvasContainer } from "./canvas/canvasContainer.js";
 import { MyPage } from "./myPage.js";
 import Swal from "sweetalert2";
 
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "wss://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 export class RightContainer {
   status; //0 = basic, 1 = practice, 2 = mypage, 3 = game, 4 = fontGenerate
@@ -95,8 +95,9 @@ export class RightContainer {
       { headers: { "Content-Type": "application/json" } }
     );
     const point = response.data.point;
+
     // console.log("point: ", point);
-    // const point = 3001;
+    //const point = 3001;
     if (point < 3000) {
       Swal.fire({
         icon: "error",

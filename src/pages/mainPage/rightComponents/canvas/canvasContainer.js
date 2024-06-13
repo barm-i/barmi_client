@@ -65,6 +65,7 @@ export class CanvasContainer {
       this.containerElement.appendChild(this.toolBarElement.containerElement);
     } else if (status == 3) {
       this.canvasFlag = 3;
+      console.log("font generate converted");
       this.canvasElement = new CanvasFontGenerate();
       this.toolBarElement = new FontToolBar();
       this.canvasElement.setDomNode(root);
