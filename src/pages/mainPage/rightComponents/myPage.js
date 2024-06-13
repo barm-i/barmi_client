@@ -189,14 +189,15 @@ export class MyPage {
           );
           const data = res.data;
           console.log(`font gen test response : ${data}`);
-          return;
+          return res;
         },
         allowOutsideClick: () => !Swal.isLoading(),
       }).then((result) => {
         if (result.isConfirmed) {
+          console.log(result);
           // Display the server response in an image area
           const img = document.createElement("img");
-          img.src = result.value.image_url; // Replace 'image_url' with the actual property name in the server response
+          img.src = result.value.data.url; // Replace 'image_url' with the actual property name in the server response
           Swal.fire({
             title: "생성 결과",
             html: img.outerHTML,

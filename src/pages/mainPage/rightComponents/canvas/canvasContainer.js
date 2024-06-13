@@ -1,4 +1,9 @@
 import Swal from "sweetalert2";
+import axios from "axios";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 import { CanvasBasic } from "./canvasBasic/canvasBasic.js";
 import { CanvasPractice } from "./canvasPractice/canvasPractice.js";
@@ -118,52 +123,93 @@ export class CanvasContainer {
             title: "폰트생성 요청을 보냈습니다!\n 잠시만 기다려주세요.😊",
             didOpen: async () => {
               Swal.showLoading();
-              let convertPromiseQueue = [];
-              let convertPromiseQueue2 = [];
-              let referenceImages = [];
+              // let convertPromiseQueue = [];
+              // let convertPromiseQueue2 = [];
+              // let referenceImages = [];
+
+              // for (const element of this.canvasElement.canvasElements) {
+              //   const imageData = element.canvasElement.toDataURL("image/png");
+              //   convertPromiseQueue.push(
+              //     new Promise((resolve, reject) => {
+              //       referenceImages.push(
+              //         fetch(imageData).then((res) => res.blob())
+              //       );
+              //     })
+              //   );
+              // }
+
+              // Promise.all(convertPromiseQueue).then((response) => {
+              //   convertPromiseQueue2.push(
+              //     new Promise((resolve, reject) => {
+              //       try {
+              //         const imageBlob1 = referenceImages[0];
+              //         const imageBlob2 = referenceImages[1];
+              //         const imageBlob3 = referenceImages[2];
+              //         const formData = new FormData();
+              //         formData.append("files", imageBlob1, "line1.png");
+              //         formData.append("files", imageBlob2, "line2.png");
+              //         formData.append("files", imageBlob3, "line3.png");
+
+              //         const response = axios.post(
+              //           `${SERVER_URL}/api/fontgen/gen`,
+              //           formData,
+              //           {
+              //             headers: {
+              //               "Content-Type": "multipart/form-data",
+              //             },
+              //           }
+              //         );
+              //         console.log(response);
+              //       } catch (error) {
+              //         console.error(
+              //           "error while sending font generator image :" + error
+              //         );
+              //       }
+              //     })
+              //   );
+              // });
+
+              // Promise.all(convertPromiseQueue2, convertPromiseQueue).then(
+              //   (response) => {
+              //     Swal.hideLoading();
+              //     Swal.update({
+              //       title: "폰트가 생성되었습니다!😊",
+              //       showCloseButton: true,
+              //       heightAuto: false,
+              //       icon: "success",
+              //     });
+              //   }
+              // );
+
+              var referenceImages = [];
 
               for (const element of this.canvasElement.canvasElements) {
-                convertPromiseQueue.push(
-                  new Promise((resolve, reject) => {
-                    referenceImages.push(
-                      fetch(element).then((res) => res.blob())
-                    );
-                  })
+                const imageData = element.canvasElement.toDataURL("image/png");
+                referenceImages.push(
+                  await fetch(imageData).then((res) => res.blob())
                 );
               }
 
-              Promise.all(convertPromiseQueue).then((response) => {
-                convertPromiseQueue2.push(
-                  new Promise((resolve, reject) => {
-                    try {
-                      const imageBlob1 = referenceImages[0];
-                      const imageBlob2 = referenceImages[1];
-                      const imageBlob3 = referenceImages[2];
-                      const formData = new FormData();
-                      formData.append("files", imageBlob1, "line1.png");
-                      formData.append("files", imageBlob2, "line2.png");
-                      formData.append("files", imageBlob3, "line3.png");
+              try {
+                const imageBlob1 = referenceImages[0];
+                const imageBlob2 = referenceImages[1];
+                const imageBlob3 = referenceImages[2];
+                const formData = new FormData();
+                formData.append("files", imageBlob1, "line1.png");
+                formData.append("files", imageBlob2, "line2.png");
+                formData.append("files", imageBlob3, "line3.png");
 
-                      const response = axios.post(
-                        `${SERVER_URL}/api/fontgen_gen`,
-                        formData,
-                        {
-                          headers: {
-                            "Content-Type": "multipart/form-data",
-                          },
-                        }
-                      );
-                      console.log(response);
-                    } catch (error) {
-                      console.error(
-                        "error while sending font generator image :" + error
-                      );
-                    }
-                  })
+                const response = await axios.post(
+                  `${SERVER_URL}/api/fontgen/gen`,
+                  formData,
+                  {
+                    headers: {
+                      "Content-Type": "multipart/form-data",
+                    },
+                  }
                 );
-              });
-
-              Promise.all(convertPromiseQueue2).then((response) => {
+                console.log(response);
+                // Swal을 닫고 성공 메시지 업데이트
                 Swal.hideLoading();
                 Swal.update({
                   title: "폰트가 생성되었습니다!😊",
@@ -171,7 +217,19 @@ export class CanvasContainer {
                   heightAuto: false,
                   icon: "success",
                 });
-              });
+              } catch (error) {
+                console.error(
+                  "error while sending font generator image :" + error
+                );
+                // 에러 발생 시 Swal을 닫고 에러 메시지 업데이트
+                Swal.hideLoading();
+                Swal.update({
+                  title: "폰트 생성에 실패했습니다.😞",
+                  showCloseButton: true,
+                  heightAuto: false,
+                  icon: "error",
+                });
+              }
             },
             allowOutsideClick: false,
             allowEnterKey: false,
