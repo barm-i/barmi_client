@@ -1,9 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-const SERVER_URL = "https://barmi-server.onrender.com";
-const SOCKET_URL = "wss://barmi-server.onrender.com";
-// const SERVER_URL = "http://localhost:8080";
-// const SOCKET_URL = "ws://localhost:8080";
+// const SERVER_URL = "https://barmi-server.onrender.com";
+// const SOCKET_URL = "wss://barmi-server.onrender.com";
+const SERVER_URL = "http://localhost:8080";
+const SOCKET_URL = "ws://localhost:8080";
 
 export class MyPage {
   containerElement;
@@ -176,11 +176,10 @@ export class MyPage {
         confirmButtonText: "폰트 샘플 생성하기",
         showLoaderOnConfirm: true,
         heightAuto: false,
-        preConfirm: (text) => {
+        preConfirm: async (text) => {
           //TODO : 서버로 텍스트 전송
-          console.log(text);
-          axios.post(
-            "https://175.196.97.78:6259/generate_image",
+          const res = await axios.post(
+            `${SERVER_URL}/api/fontgen/test`,
             JSON.stringify({ text: text }),
             {
               headers: {
@@ -188,6 +187,8 @@ export class MyPage {
               },
             }
           );
+          const data = res.data;
+          console.log(`font gen test response : ${data}`);
           return;
         },
         allowOutsideClick: () => !Swal.isLoading(),
