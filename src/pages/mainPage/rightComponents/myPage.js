@@ -46,7 +46,7 @@ export class MyPage {
     await this.fetchAndUpdateRecord();
 
     const usernameText = document.createElement("p");
-    usernameText.innerText = `Username: ${username}`;
+    usernameText.innerText = `${username}`;
     usernameText.classList.add("font-select-title");
 
     var pointText = document.createElement("p");
