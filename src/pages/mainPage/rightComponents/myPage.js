@@ -59,12 +59,27 @@ export class MyPage {
 
     const userPoint = window.localStorage.getItem("point");
     const image = document.createElement("img");
-    if (userPoint >= 1000) {
-      image.src = "/icons/gold.png";
+
+    if (userPoint >= 5000) {
+      image.src = "https://static.solved.ac/tier_small/15.svg";
+    } else if (userPoint >= 4000) {
+      image.src = "https://static.solved.ac/tier_small/14.svg";
+    } else if (userPoint >= 3000) {
+      image.src = "https://static.solved.ac/tier_small/13.svg";
+    } else if (userPoint >= 1000) {
+      image.src = "https://static.solved.ac/tier_small/10.svg";
+    } else if (userPoint >= 750) {
+      image.src = "https://static.solved.ac/tier_small/9.svg";
     } else if (userPoint >= 500) {
-      image.src = "/icons/silver.png";
+      image.src = "https://static.solved.ac/tier_small/8.svg";
+    } else if (userPoint >= 100) {
+      image.src = "https://static.solved.ac/tier_small/5.svg";
+    } else if (userPoint >= 50) {
+      image.src = "https://static.solved.ac/tier_small/4.svg";
+    } else if (userPoint >= 25) {
+      image.src = "https://static.solved.ac/tier_small/3.svg";
     } else {
-      image.src = "/icons/bronze.png";
+      image.src = "https://static.solved.ac/tier_small/0.svg";
     }
     image.width = 20;
     image.height = 20;

@@ -42,21 +42,38 @@ export class LeaderBoard {
       // Create a div for the rank and set its text content to the index + 1
       const rankDiv = document.createElement("div");
       rankDiv.className = "rank";
-      rankDiv.textContent = rank;
+      //rankDiv.textContent = rank;
+
+      const rankImage = document.createElement("img");
+      rankImage.className = "rank-image";
+      const userPoint = user.point;
+      if (userPoint >= 5000) {
+        rankImage.src = "https://static.solved.ac/tier_small/15.svg";
+      } else if (userPoint >= 4000) {
+        rankImage.src = "https://static.solved.ac/tier_small/14.svg";
+      } else if (userPoint >= 3000) {
+        rankImage.src = "https://static.solved.ac/tier_small/13.svg";
+      } else if (userPoint >= 1000) {
+        rankImage.src = "https://static.solved.ac/tier_small/10.svg";
+      } else if (userPoint >= 750) {
+        rankImage.src = "https://static.solved.ac/tier_small/9.svg";
+      } else if (userPoint >= 500) {
+        rankImage.src = "https://static.solved.ac/tier_small/8.svg";
+      } else if (userPoint >= 100) {
+        rankImage.src = "https://static.solved.ac/tier_small/5.svg";
+      } else if (userPoint >= 50) {
+        rankImage.src = "https://static.solved.ac/tier_small/4.svg";
+      } else if (userPoint >= 25) {
+        rankImage.src = "https://static.solved.ac/tier_small/3.svg";
+      } else {
+        rankImage.src = "https://static.solved.ac/tier_small/0.svg";
+      }
+      rankDiv.appendChild(rankImage);
 
       // Create a div for the username and set its text content to the username
       const usernameDiv = document.createElement("div");
       usernameDiv.className = "username";
       usernameDiv.textContent = username;
-
-      const image = document.createElement("img");
-      if (userPoint >= 1000) {
-        image.src = "/icons/gold.png";
-      } else if (userPoint >= 500) {
-        image.src = "/icons/silver.png";
-      } else {
-        image.src = "/icons/bronze.png";
-      }
 
       // Append the divs to the row
       row.appendChild(rankDiv);
