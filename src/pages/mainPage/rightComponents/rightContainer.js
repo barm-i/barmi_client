@@ -95,6 +95,7 @@ export class RightContainer {
       { headers: { "Content-Type": "application/json" } }
     );
     const point = response.data.point;
+    window.localStorage.setItem("point", point);
 
     // console.log("point: ", point);
     //const point = 3001;
