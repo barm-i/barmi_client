@@ -11,6 +11,8 @@ export class CanvasFontGenerate {
   }
 
   async setDomNode(root) {
+    const user = window.localStorage.getItem("username");
+    window.localStorage.setItem("username", user);
     this.root = root;
     this.strings = [];
     this.containerElement = document.createElement("div");

@@ -21,6 +21,8 @@ export class MyPage {
   }
 
   async setDomNode() {
+    const user = window.localStorage.getItem("username");
+    window.localStorage.setItem("username", user);
     this.containerElement = document.createElement("div");
     this.containerElement.classList.add(
       "component-class",
@@ -228,7 +230,6 @@ export class MyPage {
       });
       window.localStorage.setItem("font", selectedFont);
       this.fontText.innerText = `Font: ${localStorage.getItem("font")}`;
-      currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
       axios
         .post(
           `${SERVER_URL}/api/store_fontstyle`,
