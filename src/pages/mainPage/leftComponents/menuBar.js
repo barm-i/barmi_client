@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export class MenuBar {
   containerElement;
   myPageButtonElement;

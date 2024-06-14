@@ -1,9 +1,9 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-// const SERVER_URL = "https://barmi-server.onrender.com";
-// const SOCKET_URL = "wss://barmi-server.onrender.com";
-const SERVER_URL = "http://localhost:8080";
-const SOCKET_URL = "ws://localhost:8080";
+const SERVER_URL = "https://barmi-server.onrender.com";
+const SOCKET_URL = "wss://barmi-server.onrender.com";
+// const SERVER_URL = "http://localhost:8080";
+// const SOCKET_URL = "ws://localhost:8080";
 
 export class MyPage {
   containerElement;
@@ -20,7 +20,9 @@ export class MyPage {
     this.containerElement = document.createElement("div");
   }
 
-  setDomNode() {
+  async setDomNode() {
+    const user = window.localStorage.getItem("username");
+    window.localStorage.setItem("username", user);
     this.containerElement = document.createElement("div");
     this.containerElement.classList.add(
       "component-class",
@@ -36,22 +38,50 @@ export class MyPage {
     const username = window.localStorage.getItem("username");
     var userInfo = document.createElement("div");
 
+    this.recordElement = document.createElement("div");
+    this.recordElement.classList.add("record-container");
+    this.recordTable = document.createElement("div");
+    this.recordTable.classList.add("record-table");
+    this.recordElement.appendChild(this.recordTable);
+
+    //TODO : fetch user rank
+    await this.fetchAndUpdateRecord();
+
     const usernameText = document.createElement("p");
-    usernameText.innerText = `Username: ${username}`;
+    usernameText.innerText = `${username}`;
     usernameText.classList.add("font-select-title");
+
+    var pointText = document.createElement("p");
+    pointText.innerText = `Point: ${window.localStorage.getItem("point")}`;
+    pointText.classList.add("font-select-title");
 
     this.fontText = document.createElement("p");
     this.fontText.innerText = `Font: ${localStorage.getItem("font")}`;
     this.fontText.classList.add("font-select-title");
 
-    const userRank = 1;
+    const userPoint = window.localStorage.getItem("point");
     const image = document.createElement("img");
-    if (userRank == 1) {
-      image.src = "/icons/bronze.png";
-    } else if (userRank == 2) {
-      image.src = "/icons/silver.png";
-    } else if (userRank == 3) {
-      image.src = "/icons/gold.png";
+
+    if (userPoint >= 5000) {
+      image.src = "https://static.solved.ac/tier_small/15.svg";
+    } else if (userPoint >= 4000) {
+      image.src = "https://static.solved.ac/tier_small/14.svg";
+    } else if (userPoint >= 3000) {
+      image.src = "https://static.solved.ac/tier_small/13.svg";
+    } else if (userPoint >= 1000) {
+      image.src = "https://static.solved.ac/tier_small/10.svg";
+    } else if (userPoint >= 750) {
+      image.src = "https://static.solved.ac/tier_small/9.svg";
+    } else if (userPoint >= 500) {
+      image.src = "https://static.solved.ac/tier_small/8.svg";
+    } else if (userPoint >= 100) {
+      image.src = "https://static.solved.ac/tier_small/5.svg";
+    } else if (userPoint >= 50) {
+      image.src = "https://static.solved.ac/tier_small/4.svg";
+    } else if (userPoint >= 25) {
+      image.src = "https://static.solved.ac/tier_small/3.svg";
+    } else {
+      image.src = "https://static.solved.ac/tier_small/0.svg";
     }
     image.width = 20;
     image.height = 20;
@@ -62,6 +92,7 @@ export class MyPage {
     userInfo.appendChild(image);
 
     this.userinfoElement.appendChild(userInfo);
+    this.userinfoElement.appendChild(pointText);
     this.userinfoElement.appendChild(this.fontText);
 
     this.fontContainer = document.createElement("div");
@@ -78,13 +109,6 @@ export class MyPage {
     ]); // 예시 폰트 목록
     const children = [this.userinfoElement, this.fontContainer];
     this.infoElement.append(...children);
-
-    this.recordElement = document.createElement("div");
-    this.recordElement.classList.add("record-container");
-    this.recordTable = document.createElement("div");
-    this.recordTable.classList.add("record-table");
-    this.recordElement.appendChild(this.recordTable);
-    this.fetchAndUpdateRecord();
 
     this.containerElement.appendChild(this.infoElement);
     this.containerElement.appendChild(this.recordElement);
@@ -130,14 +154,69 @@ export class MyPage {
     select.addEventListener("change", () => {
       this.updateFontPreview(select.value);
     });
+
+    var fontSelectContainer = document.createElement("div");
+    fontSelectContainer.classList.add("font-select-row");
+    fontSelectContainer.appendChild(title);
+    fontSelectContainer.appendChild(select);
+    fontSelectContainer.appendChild(fontSelectButton);
+
+    // 폰트 테스트 요소
+    var fontTest = document.createElement("div");
+    fontTest.classList.add("font-test");
+    fontTest.innerText = "나만의 폰트 테스트 해보기";
+
+    // 폰트 테스트 이벤트 등록
+    fontTest.addEventListener("click", () => {
+      Swal.fire({
+        title: "원하는 텍스트를 입력해보세요!",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "폰트 샘플 생성하기",
+        showLoaderOnConfirm: true,
+        heightAuto: false,
+        preConfirm: async (text) => {
+          //TODO : 서버로 텍스트 전송
+          const res = await axios.post(
+            `${SERVER_URL}/api/fontgen/test`,
+            JSON.stringify({ text: text }),
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const data = res.data;
+          console.log(`font gen test response : ${data}`);
+          return res;
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          console.log(result);
+          // Display the server response in an image area
+          const img = document.createElement("img");
+          img.src = result.value.data.url; // Replace 'image_url' with the actual property name in the server response
+          Swal.fire({
+            title: "생성 결과",
+            html: img.outerHTML,
+            showCloseButton: true,
+            heightAuto: false,
+          });
+        }
+      });
+    });
+
     var fontinfoElement = document.createElement("div");
     fontinfoElement.classList.add("font-info-container");
-    fontinfoElement.appendChild(title);
-    fontinfoElement.appendChild(select);
-    fontinfoElement.appendChild(fontSelectButton);
+    fontinfoElement.appendChild(fontSelectContainer);
+    fontinfoElement.appendChild(this.previewCanvas);
+    fontinfoElement.appendChild(fontTest);
 
     this.fontContainer.appendChild(fontinfoElement);
-    this.fontContainer.appendChild(this.previewCanvas);
 
     fontSelectButton.onclick = () => {
       var selectedFont = select.value;
@@ -151,7 +230,6 @@ export class MyPage {
       });
       window.localStorage.setItem("font", selectedFont);
       this.fontText.innerText = `Font: ${localStorage.getItem("font")}`;
-      currentFont.innerText = "현재 폰트: " + localStorage.getItem("font");
       axios
         .post(
           `${SERVER_URL}/api/store_fontstyle`,

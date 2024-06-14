@@ -93,6 +93,12 @@
   text-align: center;
 }
 
+.rank-image {
+  max-width: 50%;
+  max-height: 50%;
+  object-fit: contain;
+}
+
 .username {
   width: 80%;
   text-overflow: ellipsis;

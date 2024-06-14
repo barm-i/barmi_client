@@ -85,19 +85,42 @@ export class ClientSocket {
         }
       });
     });
-    //TODO game participants
+
     this.socket.on("game:end", (data) => {
+      console.log(data);
+      console.log(data);
+
+      const deltaScores = data.deltaScores;
+      const username = window.localStorage.getItem("username");
+      const userData = deltaScores.find((user) => user.username === username);
+
       let timerInterval;
+      let currentPoints = 0;
       Swal.fire({
         title: "점수 계산중!",
+        html: `+<b id="pointsDisplay">${currentPoints}</b>점`,
         timer: 5000,
         timerProgressBar: true,
         allowOutsideClick: false,
         heightAuto: false,
         didOpen: () => {
           Swal.showLoading();
+          //
+          const intervalId = setInterval(() => {
+            if (currentPoints < userData.deltaScore) {
+              currentPoints += 1;
+            }
+            document.getElementById("pointsDisplay").innerHTML = currentPoints;
+          }, 50);
+          Swal.getHtmlContainer().setAttribute("data-interval-id", intervalId);
+          //
         },
         willClose: () => {
+          //
+          const intervalId =
+            Swal.getHtmlContainer().getAttribute("data-interval-id");
+          clearInterval(intervalId);
+          //
           clearInterval(timerInterval);
         },
       }).then((result) => {
@@ -107,7 +130,7 @@ export class ClientSocket {
         }
       });
     });
-    //TODO all users
+
     this.socket.on("game:update", (data) => {
       this.entirePage.leftElement.leaderBoardComponent.fetchAndUpdateLeaderboard();
     });

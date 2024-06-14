@@ -69,7 +69,7 @@ export class GameToolBar {
     this.timerElement = document.createElement("div");
     this.timerElement.id = "timer";
     this.timerElement.className = "timer";
-    this.timerElement.textContent = "00:59"; // 초기 타이머 시간
+    this.timerElement.textContent = "01:30"; // 초기 타이머 시간
 
     this.containerElement.append(
       this.paintingToolContainer,
@@ -77,7 +77,7 @@ export class GameToolBar {
       this.timerElement
     );
 
-    this.startTimer(60); // 1분 타이머 시작
+    this.startTimer(90); // 1분 타이머 시작
   }
 
   startTimer(duration) {
